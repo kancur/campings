@@ -1,5 +1,5 @@
 import { IoSearch } from "react-icons/io5";
-import LocationPicker from "../components/search/LocationPicker/LocationPicker";
+import LocationPicker from "./LocationPicker/LocationPicker";
 
 export default function SearchBar(props) {
   return (

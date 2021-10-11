@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import SearchWrapper from '../components/SearchWrapper'
+import SearchBar from '../components/search/SearchBar'
+import SearchWrapper from '../components/search/SearchWrapper'
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SearchWrapper>
-        Place for search input
+        <SearchBar />
       </SearchWrapper>
 
       <style global jsx>{`

@@ -1,8 +1,8 @@
-import { Dropdown } from "../../universal/Dropdown";
-import { FaMountain, FaHome, FaTree } from "react-icons/fa";
-import { ReactComponent as ValleyIcon } from "../../../media/valley-tree.svg";
-import { ReactComponent as FlatIcon } from "../../../media/flat.svg";
-import { classNames } from "../../../helper_functions/classNames";
+import { Dropdown } from '../../building_blocks/Dropdown';
+import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
+import { ReactComponent as ValleyIcon } from '../../../media/valley-tree.svg';
+import { ReactComponent as FlatIcon } from '../../../media/flat.svg';
+import { classNames } from '../../../helper_functions/classNames';
 
 export default function LocationPickerDropdown({
   locations,
@@ -20,8 +20,8 @@ export default function LocationPickerDropdown({
             onMouseLeave={() => setActiveIndex(-1)}
             onClick={() => handleClick(index)}
             className={classNames(
-              "flex items-center py-1 pr-3 cursor-pointer",
-              index === activeIndex && "bg-gray-200"
+              'flex items-center py-1 pr-3 cursor-pointer',
+              index === activeIndex && 'bg-gray-200'
             )}
             tabIndex="-1"
             role="menuitem"
@@ -40,21 +40,21 @@ export default function LocationPickerDropdown({
 
 function getIcon(type) {
   switch (type) {
-    case "village":
+    case 'village':
       return <FaHome className="h-4 w-4 px-2 text-yellow-500 box-content" />;
-    case "mountain_range":
+    case 'mountain_range':
       return <FaMountain className="h-4 w-4 px-2 text-gray-600 box-content" />;
-    case "basin":
+    case 'basin':
       return <FaTree className="h-4 w-4 px-2 text-green-600 box-content" />;
-    case "valley":
+    case 'valley':
       return (
         <ValleyIcon className="h-4 w-4 px-2 text-indigo-500 box-content fill-current" />
       );
-    case "flat":
+    case 'flat':
       return (
         <FlatIcon className="h-4 w-4 px-2 text-yellow-800 box-content fill-current" />
       );
-    case "plain":
+    case 'plain':
       return (
         <FlatIcon className="h-4 w-4 px-2 text-yellow-800 box-content fill-current" />
       );
