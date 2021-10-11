@@ -3,7 +3,7 @@ import Button from "./building_blocks/Button";
 
 export default function Header(props) {
   return (
-    <div className="bg-green-500 p-4">
+    <div className="bg-brand p-4">
       <div className="grid grid-cols-3 items-center gap-2">
         <div></div>
         <div className="flex justify-center">
