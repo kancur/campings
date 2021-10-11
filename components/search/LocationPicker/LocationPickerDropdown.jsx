@@ -2,6 +2,7 @@ import { Dropdown } from '../../building_blocks/Dropdown';
 import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
+import PlateauIcon from '../../../public/icons/Plateau'
 import { classNames } from '../../../helper_functions/classNames';
 
 export default function LocationPickerDropdown({
@@ -58,6 +59,10 @@ function getIcon(type) {
       return (
         <FlatIcon className="h-4 w-4 px-2 text-yellow-800 box-content fill-current" />
       );
+    case 'plateau':
+      return (
+        <PlateauIcon className="h-4 w-4 px-2 text-green-800 box-content fill-current"/>
+      )
     default:
       break;
   }
