@@ -46,8 +46,8 @@ export default function LocationPicker() {
   }, [input]);
 
   return (
-    <div className="flex flex-col">
-      <div className="max-w-input-m">
+    <div className="flex flex-col w-full">
+      <div>
         <label className="flex flex-col	">
           <span className="font-semibold text-gray-600">Lokalita</span>
           <input

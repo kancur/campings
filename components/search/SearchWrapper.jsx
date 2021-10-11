@@ -1,11 +1,14 @@
+import React from 'react';
 import Image from 'next/image';
-import BackgroundImg from '../../media/camping.jpg';
+//import background from '../../public/media/trusalova.jpg';
+import background from '../../public/media/trusalova.jpg';
 
 export default function SearchWrapper(props) {
   return (
     <>
-      <div className="bg-gray-300 text-center p-6">
-        {props.children}
+      <div /* style={{backgroundImage: `url(/media/bonfire.jpg)`}} */ className="p-12 bg-gray-400">
+        {/* <Image src={background} /> */}
+        <div className="text-center flex justify-center">{props.children}</div>
       </div>
     </>
   );

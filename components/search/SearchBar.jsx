@@ -13,7 +13,7 @@ export default function SearchBar(props) {
 
 function SearchButton() {
   return (
-    <button className="bg-yellow-500 rounded-2xl p-3 text-gray-50 font-semibold flex items-center gap-1">
+    <button className="bg-gray-500 rounded-2xl p-3 text-gray-50 font-semibold flex items-center gap-1">
       <IoSearch />
       Hľadať
     </button>

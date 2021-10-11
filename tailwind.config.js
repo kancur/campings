@@ -7,8 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: colors.emerald[500]
-      }
+        brand: colors.coolGray[500]
+      },
+      width: {
+        'searchBar': '400px'
+      },
     },
   },
   variants: {

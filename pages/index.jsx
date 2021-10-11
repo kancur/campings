@@ -19,6 +19,9 @@ export default function Home() {
       div#__next {
         height: 100%;
       }
+      html{
+        overflow-y: scroll;
+      }
       div#__next {
         display: flex;
         flex-direction: column;

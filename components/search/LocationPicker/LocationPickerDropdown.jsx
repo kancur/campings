@@ -1,7 +1,7 @@
 import { Dropdown } from '../../building_blocks/Dropdown';
 import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
-import { ReactComponent as ValleyIcon } from '../../../media/valley-tree.svg';
-import { ReactComponent as FlatIcon } from '../../../media/flat.svg';
+import ValleyIcon from '../../../public/icons/Valley-tree';
+import FlatIcon from '../../../public/icons/Flat';
 import { classNames } from '../../../helper_functions/classNames';
 
 export default function LocationPickerDropdown({
@@ -27,7 +27,7 @@ export default function LocationPickerDropdown({
             role="menuitem"
           >
             {getIcon(loc.type)}
-            <div>
+            <div className="text-left">
               <p>{loc.name}</p>
               <p className="text-xs text-gray-400">{loc.county_name}</p>
             </div>
