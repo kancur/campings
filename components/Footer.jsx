@@ -1,6 +1,6 @@
 export default function Footer(props) {
   return (
-    <div className="bg-gray-100 text-brand p-6 flex items-center justify-center flex-col gap-6">
+    <div className="bg-gray-100 text-brand p-6 flex items-center justify-center flex-col gap-6 mt-8">
       Created by Peter
     </div>
   );
