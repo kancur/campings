@@ -16,8 +16,8 @@ const FAKE_DATA = [
 export default function PopularCampsWrapper() {
   return (
     <div className="grid grid-cols-6 gap-4 px-5">
-      {FAKE_DATA.map((campData) => (
-        <PopularCampCard campData={campData} />
+      {FAKE_DATA.map((campData, index) => (
+        <PopularCampCard key={index} campData={campData} />
       ))}
     </div>
   );

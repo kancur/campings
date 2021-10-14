@@ -10,7 +10,7 @@ module.exports = {
         brand: colors.coolGray[500]
       },
       width: {
-        'searchBar': '400px'
+        'searchBar': '420px'
       },
     },
   },
