@@ -1,4 +1,4 @@
-export default function parseToURLpath(name) {
+export default function toSlug(name) {
   const lowercased = name.toLowerCase()
   const normalized = lowercased.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
   const hyphenized = normalized.split(' ').join('-').toString();

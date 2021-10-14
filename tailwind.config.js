@@ -7,11 +7,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: colors.coolGray[500]
+        brand: colors.emerald[500]
       },
-      width: {
-        'searchBar': '420px'
+      maxWidth: {
+        'searchBar': '500px'
       },
+      fontFamily: {
+        'sans': ['Poppins'],
+      }
     },
   },
   variants: {
