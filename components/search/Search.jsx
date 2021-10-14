@@ -1,16 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
-//import background from '../../public/media/trusalova.jpg';
 import background from '../../public/media/trusalova.jpg';
-import SearchBar from './SearchBar';
+import SearchForm from './SearchForm';
 import PopularLocations from './PopularLocations';
 
-export default function SearchWrapper() {
+export default function Search() {
   return (
     <>
-      <div /* style={{backgroundImage: `url(/media/bonfire.jpg)`}} */ className="p-6 bg-gray-400">
+      <div /* style={{backgroundImage: `url(/media/bonfire.jpg)`}} */ className="p-6 bg-green-500">
         <div className="text-center flex flex-col items-center justify-center space-y-5">
-          <SearchBar />
+          <SearchForm />
           {/* <PopularLocations /> */}
         </div>
       </div>
