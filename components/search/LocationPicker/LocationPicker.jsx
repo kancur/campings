@@ -1,50 +1,58 @@
 import { useEffect, useRef, useState } from 'react';
-import { searchAllTypes } from '../../../helpers/search';
+import { searchEverything } from '../../../helpers/search';
 import LocationPickerDropdown from './LocationPickerDropdown';
 import useDebouncedSearch from '../../../helpers/useDebouncedSearch';
 import LoadingSpinnerSVG from '../../LoadingSpinnerSVG';
 const useMainSearch = () =>
-  useDebouncedSearch((query) => searchAllTypes(query));
+  useDebouncedSearch((query) => searchEverything(query));
 
 export default function LocationPicker(props) {
-  //const [userInputValue, setUserInputValue] = useState('');
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [querriedLocations, setQuerriedLocations] = useState([]);
-  const [chosenLocation, setChosenLocation] = useState();
+  const [inputData, setInputData] = useState();
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [userInputValue, setUserInputValue, searchResults] = useMainSearch();
+  const [currentSuggestions, setCurrentSuggestions] = useState([]);
+  const [searchQuery, setSearchQuery, searchResults] = useMainSearch();
 
   useEffect(() => {
-    console.log('results:', searchResults);
+    if (searchResults.status == 'success') {
+      setCurrentSuggestions(searchResults.result);
+    }
   }, [searchResults]);
 
   useEffect(() => {
-    if (props.inputValue === '') {
+    if (inputData === '') {
       setShowSuggestions(false);
     }
-  }, [props.inputValue]);
-
-  const handleInput = (e) => {
-    setUserInputValue(e.target.value);
-    props.setInputValue(e.target.value);
-    setShowSuggestions(true);
-  };
-
-  const handleSelect = (index) => {
-    if (index === -1) {
-      props.setInputValue(userInputValue);
-    }
-    if (index > -1) {
-      const newInputValue = searchResults.result[index].name;
-      if (newInputValue) {
-        props.setInputValue(newInputValue);
-      }
-    }
-  };
+  }, [inputData]);
 
   useEffect(() => {
     handleSelect(activeIndex);
   }, [activeIndex]);
+
+  const handleInput = (e) => {
+    setSearchQuery(e.target.value);
+    setInputData({ name: e.target.value });
+    setShowSuggestions(true);
+    setActiveIndex(-1);
+  };
+
+  const handleSelect = (index) => {
+    if (index === -1) {
+      setInputData({ name: searchQuery });
+    }
+    if (index > -1) {
+      const newInputData = currentSuggestions[index];
+      if (newInputData) {
+        setInputData(newInputData);
+      }
+    }
+  };
+
+  const handleSubmit = (index) => {
+    setShowSuggestions(false);
+    handleSelect(index);
+    props.setSubmittedData(currentSuggestions[index]);
+  };
 
   const handleKeyDown = (e) => {
     if (showSuggestions) {
@@ -56,7 +64,7 @@ export default function LocationPicker(props) {
       }
       if (e.code === 'ArrowDown') {
         e.preventDefault();
-        if (activeIndex < searchResults.result.length - 1) {
+        if (activeIndex < currentSuggestions.length - 1) {
           setActiveIndex((prevState) => prevState + 1);
         }
       }
@@ -65,15 +73,10 @@ export default function LocationPicker(props) {
           // dont submit the field if dropdown is shown
         }
         setShowSuggestions(false);
+        handleSubmit(activeIndex);
       }
     }
   };
-
-  useEffect(() => {
-    setActiveIndex(-1);
-    console.log('user input value:', userInputValue);
-    //setQuerriedLocations(searchAllTypes(userInputValue));
-  }, [userInputValue]);
 
   return (
     <div className="flex flex-col">
@@ -90,7 +93,7 @@ export default function LocationPicker(props) {
                 'bg-transparent focus:outline-none text-gray-600 border-b border-gray-300 w-full'
               }
               type="text"
-              value={props.inputValue || ''}
+              value={inputData?.name || ''}
               aria-haspopup="true"
               aria-controls="suggestions"
             />
@@ -98,14 +101,13 @@ export default function LocationPicker(props) {
           </div>
         </label>
       </div>
-      {searchResults.result &&
-        searchResults.result.length > 0 &&
+      {currentSuggestions &&
+        currentSuggestions.length > 0 &&
         showSuggestions && (
           <LocationPickerDropdown
             activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-            locations={searchResults.result}
-            handleClick={handleSelect}
+            locations={currentSuggestions}
+            handleClick={handleSubmit}
           />
         )}
     </div>

@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 export default function LocationPickerDropdown({
   locations,
   activeIndex,
-  setActiveIndex,
   handleClick,
 }) {
 
@@ -19,13 +18,12 @@ export default function LocationPickerDropdown({
     setSelectedIndex(activeIndex)
   },[activeIndex])
 
-
   return (
     <Dropdown>
       <ul id="suggestions" className="flex flex-col divide-y divide-gray-200">
         {locations.map((loc, index) => (
           <li
-            key={loc.node_id}
+            key={index}
             onMouseEnter={() => setSelectedIndex(index)}
             onMouseLeave={() => setSelectedIndex(-1)}
             onClick={() => handleClick(index)}
