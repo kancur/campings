@@ -11,7 +11,11 @@ const VillagePage = ({ data }) => {
     <>
       <Search />
       <Main>
-        <LocationHeading pretitle="Skvelé kempy v obci" title={data.name} />
+        <LocationHeading
+          pretitle="Skvelé kempy v obci"
+          title={data.name}
+          subtitle={data.parents.county_name}
+        />
         Hey, you visited a location with slug {locationName}
         <div>Slug: {data.name}</div>
       </Main>
@@ -36,7 +40,9 @@ export async function getStaticProps({ params }) {
   const village_slug = params.village_slug;
   const encodedName = encodeURI(village_slug);
 
-  const res = await fetch(`http://localhost:3000/api/village/slug/${encodedName}`);
+  const res = await fetch(
+    `http://localhost:3000/api/village/slug/${encodedName}`
+  );
   const data = await res.json();
   return {
     props: {
