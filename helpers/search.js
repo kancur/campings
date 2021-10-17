@@ -2,9 +2,17 @@ import obceSK from '../data/obceSK.js';
 import geomorphological from '../data/geomorphological'
 const NR_OF_RESULTS = 5
 
+// server side search
+export async function searchEverything(query) {
+  const fetched = await fetch(`http://localhost:3000/api/search/?q=${query}`)
+  const json = await fetched.json()
+  return json
+}
 
 // client side search
-export function searchAllTypes(query) {
+// deprecated
+
+/* export function searchAllTypes(query) {
   const normalizedQuery = normalizeDiacritics(query.toLowerCase());
   const villages = searchVillages(normalizedQuery)
   const geomorphounits = searchGeomorphological(normalizedQuery);
@@ -53,3 +61,4 @@ function normalizeDiacritics(query) {
     query.normalize("NFD").replace(/[\u0300-\u036f]/g, '')
   )
 }
+ */
