@@ -2,7 +2,7 @@ import LocationPicker from "./LocationPicker/LocationPicker";
 import Router from 'next/router'
 import { SearchButton } from "./SearchButton";
 import { useState } from "react";
-import toSlug from "../../helper_functions/toSlug";
+import toSlug from "../../helpers/toSlug";
 
 export default function SearchForm(props) {
   const [inputValue, setInputValue] = useState()

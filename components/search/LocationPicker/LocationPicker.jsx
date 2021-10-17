@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { searchAllTypes } from '../../../helper_functions/search';
+import { searchAllTypes } from '../../../helpers/search';
 import LocationPickerDropdown from './LocationPickerDropdown';
 
 export default function LocationPicker(props) {
@@ -8,6 +8,12 @@ export default function LocationPicker(props) {
   const [querriedLocations, setQuerriedLocations] = useState([]);
   const [chosenLocation, setChosenLocation] = useState();
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  useEffect(() => {
+    if (props.inputValue === '') {
+      setShowSuggestions(false);
+    }
+  }, [props.inputValue]);
 
   const handleInput = (e) => {
     setUserInputValue(e.target.value);
@@ -79,15 +85,14 @@ export default function LocationPicker(props) {
           />
         </label>
       </div>
-      {querriedLocations.length > 0 &&
-        showSuggestions && (
-          <LocationPickerDropdown
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-            locations={querriedLocations}
-            handleClick={handleSelect}
-          />
-        )}
+      {querriedLocations.length > 0 && showSuggestions && (
+        <LocationPickerDropdown
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          locations={querriedLocations}
+          handleClick={handleSelect}
+        />
+      )}
     </div>
   );
 }

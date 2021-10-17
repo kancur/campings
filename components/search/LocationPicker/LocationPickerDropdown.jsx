@@ -3,7 +3,8 @@ import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
 import PlateauIcon from '../../../public/icons/Plateau'
-import { classNames } from '../../../helper_functions/classNames';
+import { classNames } from '../../../helpers/classNames';
+import { useEffect, useState } from 'react';
 
 export default function LocationPickerDropdown({
   locations,
@@ -11,18 +12,26 @@ export default function LocationPickerDropdown({
   setActiveIndex,
   handleClick,
 }) {
+
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  useEffect(() => {
+    setSelectedIndex(activeIndex)
+  },[activeIndex])
+
+
   return (
     <Dropdown>
       <ul id="suggestions" className="flex flex-col divide-y divide-gray-200">
         {locations.map((loc, index) => (
           <li
             key={loc.node_id}
-            onMouseEnter={() => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(-1)}
+            onMouseEnter={() => setSelectedIndex(index)}
+            onMouseLeave={() => setSelectedIndex(-1)}
             onClick={() => handleClick(index)}
             className={classNames(
               'flex items-center py-1 pr-3 cursor-pointer',
-              index === activeIndex && 'bg-gray-200'
+              index === selectedIndex && 'bg-gray-200'
             )}
             tabIndex="-1"
             role="menuitem"
