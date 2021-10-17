@@ -6,11 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "awesome-debounce-promise": "^2.1.0",
     "next": "latest",
     "react": "^17.0.2",
+    "react-async-hook": "^4.0.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
-    "react-spring": "^9.3.0"
+    "react-spring": "^9.3.0",
+    "use-constant": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

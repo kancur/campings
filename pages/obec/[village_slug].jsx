@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import Main from '../components/Main';
-import Search from '../components/search/Search';
-import LocationHeading from '../components/locationPage/LocationHeading';
+import Main from '../../components/Main';
+import Search from '../../components/search/Search';
+import LocationHeading from '../../components/locationPage/LocationHeading';
 
-const LocationPage = ({ data }) => {
+const VillagePage = ({ data }) => {
   const router = useRouter();
   const { locationName } = router.query;
 
@@ -11,21 +11,21 @@ const LocationPage = ({ data }) => {
     <>
       <Search />
       <Main>
-        <LocationHeading pretitle="Skvelé kempy v lokalite" title={data.properties.name} />
+        <LocationHeading pretitle="Skvelé kempy v obci" title={data.name} />
         Hey, you visited a location with slug {locationName}
-        <div>Slug: {data.properties.name}</div>
+        <div>Slug: {data.name}</div>
       </Main>
     </>
   );
 };
 
 export async function getStaticPaths() {
-  const res = await fetch('http://localhost:3000/api/geo/list/');
+  const res = await fetch('http://localhost:3000/api/village/list/');
   const data = await res.json();
   const namesArray = data.map(({ slug }) => {
     return {
       params: {
-        location_slug: slug,
+        village_slug: slug,
       },
     };
   });
@@ -33,10 +33,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const location_slug = params.location_slug;
-  const encodedName = encodeURI(location_slug);
+  const village_slug = params.village_slug;
+  const encodedName = encodeURI(village_slug);
 
-  const res = await fetch(`http://localhost:3000/api/geo/slug/${encodedName}`);
+  const res = await fetch(`http://localhost:3000/api/village/slug/${encodedName}`);
   const data = await res.json();
   return {
     props: {
@@ -45,4 +45,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export default LocationPage;
+export default VillagePage;

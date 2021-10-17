@@ -3,6 +3,7 @@ import geomorphological from '../data/geomorphological'
 const NR_OF_RESULTS = 5
 
 
+// client side search
 export function searchAllTypes(query) {
   const normalizedQuery = normalizeDiacritics(query.toLowerCase());
   const villages = searchVillages(normalizedQuery)
