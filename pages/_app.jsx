@@ -3,11 +3,15 @@ import Layout from "../components/Layout";
 import '../styles/styles.css'
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <Layout>
+  const wrappedComponent = Component.Layout ? (
+    <Component.Layout>
       <Component {...pageProps} />
-    </Layout>
-  );
+    </Component.Layout>
+  ) : (
+    <Component {...pageProps} />
+  )
+
+  return wrappedComponent
 }
 
 export default MyApp;
