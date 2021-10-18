@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   mode: 'jit',
@@ -7,18 +7,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: colors.emerald[500]
+        brand: colors.emerald[500],
       },
       maxWidth: {
-        'searchBar': '500px'
+        searchBar: '500px',
       },
       fontFamily: {
-        'sans': ['Poppins'],
-      }
+        sans: [
+          'Poppins',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'Noto Sans',
+          'sans-serif',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          'Noto Color Emoji'
+        ],
+      },
     },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};
