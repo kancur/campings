@@ -17,7 +17,7 @@ export default function MainInterface({children}) {
           {children}
         </main>
       </div>
-      <Footer />
+     {/*  <Footer /> */}
     </>
   );
 }
