@@ -1,9 +1,13 @@
 import dynamic from "next/dynamic"
+import AdminLayout from '../../components/admin/AdminLayout'
 
-const Admin = dynamic(() => import("../../admin/MainInterface"), {
+const Admin = dynamic(() => import("../../components/admin/AdminPage"), {
   ssr: false,
 })
 
-const HomePage = () => <Admin />
+const AdminPageComponent = () => <Admin />
 
-export default HomePage
+export default AdminPageComponent
+
+AdminPageComponent.Layout = AdminLayout
+  
