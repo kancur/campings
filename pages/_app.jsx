@@ -1,17 +1,18 @@
-import "tailwindcss/tailwind.css";
-import Layout from "../components/Layout";
-import '../styles/styles.css'
-
+import '../styles/tailwind.css';
+import Layout from '../components/Layout';
+  
 function MyApp({ Component, pageProps }) {
   const wrappedComponent = Component.Layout ? (
     <Component.Layout>
       <Component {...pageProps} />
     </Component.Layout>
   ) : (
-    <Component {...pageProps} />
-  )
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 
-  return wrappedComponent
+  return wrappedComponent;
 }
 
 export default MyApp;
