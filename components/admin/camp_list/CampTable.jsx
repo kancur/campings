@@ -1,4 +1,15 @@
+import { FaEdit } from 'react-icons/fa';
+import { EditableText } from '../EditableText';
+
 export default function CampTable({ camps }) {
+
+  const handleSave = (_id, field, value) => {
+    console.log('handling saving of id', _id, '| field:', field, '| value:', value)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve("failed somehow"), 1000)
+    })
+  }
+
   return (
     <div className="container mx-auto">
       <div>
@@ -14,9 +25,15 @@ export default function CampTable({ camps }) {
               </thead>
               <tbody>
                 {camps.map((camp) => (
-                  <tr>
-                    <Td>{camp.name}</Td>
-                    <Td>{camp.lat}, {camp.lon}</Td>
+                  <tr key={camp._id}>
+                    <Td>
+                      <div className="flex">
+                        <EditableText text={camp.name} onSave={(value) => handleSave(camp._id, "name", value)} />
+                      </div>
+                    </Td>
+                    <Td>
+                      {camp.coords.lat}, {camp.coords.lon}
+                    </Td>
                     <Td>Edit me</Td>
                   </tr>
                 ))}
@@ -41,7 +58,7 @@ const Th = ({ children }) => (
 const Td = ({ children }) => (
   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
     <div className="ml-3">
-      <p className="text-gray-900 whitespace-no-wrap">{children}</p>
+      <div className="text-gray-900 whitespace-no-wrap">{children}</div>
     </div>
   </td>
 );
