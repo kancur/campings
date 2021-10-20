@@ -19,7 +19,6 @@ export default function SearchForm(props) {
   const handleSubmit = () => {
     const type = submittedData?.type;
 
-    console.log('type ==>', type);
     if (type === 'village') {
       Router.push(`/obec/${submittedData.slug}`);
     } else if (type?.length > 0) {
