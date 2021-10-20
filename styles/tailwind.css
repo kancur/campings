@@ -11,7 +11,7 @@
   }
 
   p {
-    @apply text-gray-600
+    @apply text-gray-600;
   }
 
   html,
@@ -25,6 +25,14 @@
   div#__next {
     display: flex;
     flex-direction: column;
+  }
+
+  .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent !important;
+    border-right: 8px solid transparent !important;
+    border-bottom: 8px solid;
   }
 }
 
