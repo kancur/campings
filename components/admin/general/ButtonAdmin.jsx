@@ -1,4 +1,4 @@
-export function ButtonAdmin(props) {
+export default function ButtonAdmin(props) {
   return (
     <button
       {...props}

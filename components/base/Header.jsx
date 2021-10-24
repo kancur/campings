@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Button from './building_blocks/Button';
+import Button from '../general/Button';
 
 export default function Header(props) {
   return (

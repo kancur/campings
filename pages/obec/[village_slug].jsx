@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import Main from '../../components/Main';
 import Search from '../../components/search/Search';
 import LocationHeading from '../../components/locationPage/LocationHeading';
+import { CampListing } from '../../components/general/CampListing';
+import Main from '../../components/base/Main';
 
 const VillagePage = ({ village, campings }) => {
   return (
@@ -16,21 +16,7 @@ const VillagePage = ({ village, campings }) => {
 
         <div className="p-4 flex flex-col gap-4 max-w-screen-md mx-auto">
           {campings.map((camp) => (
-            <div className="shadow-lg border border-opacity-40 p-5 bg-white flex gap-4">
-              <Image src="/camp_placeholder.png" height={200} width={200} />
-              <div>
-                <h2 className="text-2xl font-semibold">{camp.name}</h2>
-                <div className="flex">
-                  <p className="text-gray-400">
-                    {camp.villages[0].name}, {'okres '}
-                    {camp.villages[0].parents.county_name}
-                  </p>
-                </div>
-                <p className="text-gray-500">
-                  {Math.round(camp.distance / 1000)} km
-                </p>
-              </div>
-            </div>
+            <CampListing camp={camp} />
           ))}
         </div>
 
@@ -41,9 +27,7 @@ const VillagePage = ({ village, campings }) => {
 };
 
 export async function getStaticPaths() {
-  const {
-    DB_HOST,
-  } = require('../../OPTIONS');
+  const { DB_HOST } = require('../../OPTIONS');
   const res = await fetch(`${DB_HOST}/api/village/list/`);
   const data = await res.json();
   const namesArray = data.map(({ slug }) => {

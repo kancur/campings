@@ -1,5 +1,5 @@
 import '../styles/tailwind.css';
-import Layout from '../components/Layout';
+import Layout from '../components/base/Layout';
   
 function MyApp({ Component, pageProps }) {
   const wrappedComponent = Component.Layout ? (

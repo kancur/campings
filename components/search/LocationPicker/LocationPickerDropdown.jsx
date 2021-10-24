@@ -1,4 +1,4 @@
-import { Dropdown } from '../../building_blocks/Dropdown';
+import { Dropdown } from '../../general/Dropdown';
 import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';

@@ -6,7 +6,7 @@ import { useTransition, animated } from 'react-spring';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { ButtonAdmin } from './ButtonAdmin';
 
-export function EditableText({
+export default function EditableText({
   onSave,
   isFocused,
   minLength,

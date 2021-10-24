@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
-import { ButtonAdmin } from '../ButtonAdmin';
-import ConfirmationDialog from '../ConfirmationDialog';
+import ButtonAdmin from '../general/ButtonAdmin';
+import ConfirmationDialog from '../general/ConfirmationDialog';
 
 const myRef = React.createRef();
 

@@ -1,5 +1,5 @@
-import Footer from '../Footer';
-import Header from '../Header';
+import Footer from '../base/Footer';
+import Header from '../base/Header';
 import AdminSidebar from './Sidebar';
 
 export default function MainInterface({ children }) {
