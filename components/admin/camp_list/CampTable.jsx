@@ -29,7 +29,7 @@ export default function CampTable({ camps }) {
   }
 
   return (
-    <div className="min-w-full shadow rounded-md p-2 bg-white">
+    <div className="min-w-full admin-main-wrapper">
       <table className="min-w-full leading-normal max-w-full">
         <thead>
           <tr>
@@ -73,14 +73,14 @@ export default function CampTable({ camps }) {
 const Th = ({ children }) => (
   <th
     scope="col"
-    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+    className="px-5 py-3 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
   >
     {children}
   </th>
 );
 
 const Td = ({ children }) => (
-  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+  <td className="px-5 py-5 border-b border-gray-200 text-sm">
     <div>
       <div className="text-gray-900 whitespace-no-wrap">{children}</div>
     </div>
