@@ -19,9 +19,7 @@
   div#__next {
     height: 100%;
   }
-  html {
-    overflow-y: scroll;
-  }
+ 
   div#__next {
     display: flex;
     flex-direction: column;
@@ -33,6 +31,13 @@
     border-left: 8px solid transparent !important;
     border-right: 8px solid transparent !important;
     border-bottom: 8px solid;
+  }
+
+  .button-admin {
+    @apply flex px-2 py-0.5 bg-blue-500 text-white font-semibold rounded outline-none focus:ring justify-center items-center;
+  }
+  .button-admin:disabled {
+    @apply bg-gray-300
   }
 }
 
