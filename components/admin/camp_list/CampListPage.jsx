@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CampTable from './CampTable';
-import { DB_HOST } from '../SETTINGS';
+const { DB_HOST } = require('../../../OPTIONS')
 
 export default function CampListPage() {
   const [campData, setCampData] = useState();
