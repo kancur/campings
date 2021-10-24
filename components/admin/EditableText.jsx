@@ -4,6 +4,7 @@ import { ArrowTopNotification } from './ArrowTopNotification';
 import { useTransition, animated } from 'react-spring';
 //import useOutsideClickDetector from '../../helpers/hooks/useOutsideClickDetector';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { ButtonAdmin } from './ButtonAdmin';
 
 export function EditableText({
   onSave,
@@ -20,9 +21,6 @@ export function EditableText({
   const [isSaving, setIsSaving] = useState(false);
   const [wasJustSaved, setWasJustSaved] = useState(false);
   const [error, setError] = useState();
-  const inputRef = useRef(null);
-
-  //useOutsideClickDetector(inputRef, () => handleCancelEditing());
 
   const transition = useTransition(isInputDifferentFromPrevious, {
     from: { right: -60, opacity: 0 },
@@ -125,14 +123,14 @@ export function EditableText({
   return (
     <div className="w-full relative">
       {!editing ? (
-        <p className="flex-grow p-1" onClick={handleStartEditing}>
-          {inputText}
-        </p>
+        <div className="flex relative">
+          <p className="flex-grow p-1" onClick={handleStartEditing}>
+            {inputText}
+          </p>
+        </div>
       ) : (
-        <OutsideClickHandler
-          onOutsideClick={() => handleCancelEditing()}
-        >
-          <div ref={inputRef} className="flex relative w-full">
+        <OutsideClickHandler onOutsideClick={() => handleCancelEditing()}>
+          <div className="flex relative w-full">
             <input
               disabled={isSaving || wasJustSaved}
               autoFocus
@@ -145,7 +143,7 @@ export function EditableText({
               type="text"
               value={inputText}
             />
-            <div className="absolute right-1 top-1/2 -translate-y-1/2 flex gap-1">
+            <div className="absolute right-0.5 top-1/2 -translate-y-1/2 flex gap-1">
               {wasJustSaved ? (
                 <span className="text-green-500">SAVED</span>
               ) : (
@@ -154,27 +152,23 @@ export function EditableText({
                     (style, item) =>
                       item && (
                         <animated.div style={style} className="relative w-12">
-                          <button
+                          <ButtonAdmin
                             onClick={handleSave}
                             disabled={isSaving || !isInputDifferentFromPrevious}
-                            className="absolute bg-green-500 px-2 py-0.5 text-white font-semibold w-12 flex justify-center items-center rounded z-0 h-full"
+                            className="absolute bg-green-500 w-12 z-0 h-full"
                           >
                             {isSaving ? (
                               <FaSpinner className="animate-spin" />
                             ) : (
                               'Save'
                             )}
-                          </button>
+                          </ButtonAdmin>
                         </animated.div>
                       )
                   )}
-                  <button
-                    onClick={handleCancelEditing}
-                    disabled={isSaving}
-                    className="bg-red-500 px-2 py-0.5 text-white font-semibold rounded disabled:bg-gray-300 z-10"
-                  >
+                  <ButtonAdmin className="bg-red-500" onClick={handleCancelEditing} disabled={isSaving}>
                     Cancel
-                  </button>
+                  </ButtonAdmin>
                 </>
               )}
             </div>
