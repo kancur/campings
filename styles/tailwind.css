@@ -19,25 +19,33 @@
   div#__next {
     height: 100%;
   }
- 
+
   div#__next {
     display: flex;
     flex-direction: column;
   }
+}
 
-  .arrow-up {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent !important;
-    border-right: 8px solid transparent !important;
-    border-bottom: 8px solid;
+@layer components {
+  .admin-main-wrapper {
+    @apply bg-gray-50 p-4 rounded-lg shadow-md border border-gray-100;
   }
 
   .button-admin {
     @apply flex px-2 py-0.5 bg-blue-500 text-white font-semibold rounded outline-none focus:ring justify-center items-center;
   }
   .button-admin:disabled {
-    @apply bg-gray-300
+    @apply bg-gray-300;
+  }
+}
+
+@layer utilities {
+  .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent !important;
+    border-right: 8px solid transparent !important;
+    border-bottom: 8px solid;
   }
 }
 
