@@ -41,7 +41,10 @@ const VillagePage = ({ village, campings }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch('http://localhost:3000/api/village/list/');
+  const {
+    DB_HOST,
+  } = require('../../OPTIONS');
+  const res = await fetch(`${DB_HOST}/api/village/list/`);
   const data = await res.json();
   const namesArray = data.map(({ slug }) => {
     return {
@@ -57,6 +60,7 @@ export async function getStaticProps({ params }) {
   const {
     VILLAGE_CAMP_MAX_DISTANCE,
     VILLAGE_CAMP_MAX_RESULTS,
+    DB_HOST,
   } = require('../../OPTIONS');
   const village_slug = params.village_slug;
   const encodedName = encodeURI(village_slug);
