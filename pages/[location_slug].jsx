@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import Main from '../components/Main';
+import Main from '../components/base/Main';
 import Search from '../components/search/Search';
 import LocationHeading from '../components/locationPage/LocationHeading';
 
