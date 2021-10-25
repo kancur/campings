@@ -1,6 +1,6 @@
 import React from 'react';
 import { Portal } from 'react-portal';
-import { ButtonAdmin } from './ButtonAdmin';
+import ButtonAdmin from './ButtonAdmin';
 import OutsideClickHandler from 'react-outside-click-handler';
 import FocusLock from 'react-focus-lock';
 
