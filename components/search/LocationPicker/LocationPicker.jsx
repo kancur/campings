@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { searchEverything } from '../../../helpers/search';
 import LocationPickerDropdown from './LocationPickerDropdown';
-import useDebouncedSearch from '../../../helpers/useDebouncedSearch';
+import useDebouncedSearch from '../../../hooks/useDebouncedSearch';
 import LoadingSpinnerSVG from '../../general/LoadingSpinnerSVG';
 const useMainSearch = () =>
   useDebouncedSearch((query) => searchEverything(query));
