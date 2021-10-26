@@ -31,16 +31,11 @@ export const inputClasses = classNames(
 export default function EditOrAddCamp({ campDataFetched }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [campData, setCampData] = useState({});
-  const [slug, setSlug] = useState('');
   const [uploadedFile, setUploadedFile] = useState('');
 
   useEffect(() => {
     mergeCampData({ featuredImage: uploadedFile.preview });
   }, [uploadedFile]);
-
-  useEffect(() => {
-    console.log(campData);
-  }, [campData]);
 
   const mergeCampData = (data) => {
     setCampData((prevData) => ({ ...prevData, ...data }));
@@ -50,7 +45,6 @@ export default function EditOrAddCamp({ campDataFetched }) {
     if (campDataFetched) {
       setCampData(campDataFetched);
       setIsEditMode(true);
-      console.log(campDataFetched);
     }
   }, [campDataFetched]);
 
@@ -66,7 +60,6 @@ export default function EditOrAddCamp({ campDataFetched }) {
   };
 
   const mergeCoords = (coords) => {
-    console.log('merging coords:', coords);
     mergeCampData({ coords });
   };
 
