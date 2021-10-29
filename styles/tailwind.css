@@ -53,7 +53,7 @@
   width: 100%;
 }
 
-.image-container > div {
+.image-container > span {
   position: unset !important;
 }
 
