@@ -6,6 +6,9 @@ import ImageDropzone from './ImageDropzone';
 import { Input } from './Input';
 import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
+import { InputSlug } from './parts/InputSlug';
+import { DB_HOST } from '../../../../OPTIONS';
+import axios from 'axios';
 
 export const inputClasses = classNames(
   'rounded-lg',
@@ -25,21 +28,28 @@ export const inputClasses = classNames(
   'focus:outline-none',
   'focus:ring-2',
   'focus:ring-blue-400',
-  'focus:border-transparent'
+  'focus:border-transparent',
+  'disabled:bg-gray-100'
 );
 
 export default function EditOrAddCamp({ campDataFetched }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [campData, setCampData] = useState({});
-  const [uploadedFile, setUploadedFile] = useState('');
-
-  useEffect(() => {
-    mergeCampData({ featuredImage: uploadedFile.preview });
-  }, [uploadedFile]);
+  const [fileToUpload, setFileToUpload] = useState();
 
   const mergeCampData = (data) => {
     setCampData((prevData) => ({ ...prevData, ...data }));
   };
+
+  useEffect(() => {
+    console.log(campData);
+  }, [campData]);
+
+  useEffect(() => {
+    if (fileToUpload) {
+      mergeCampData({ featuredImage: fileToUpload });
+    }
+  }, [fileToUpload]);
 
   useEffect(() => {
     if (campDataFetched) {
@@ -48,15 +58,68 @@ export default function EditOrAddCamp({ campDataFetched }) {
     }
   }, [campDataFetched]);
 
-  const handleSlugInput = (e) => {
-    mergeCampData({ slug: e.target.value.replace(/\s/g, '') });
+  const uploadImage = async (file, filename) => {
+
+    const formData = new FormData()
+    formData.append('filename', filename)
+    formData.append('featured_image', file)
+
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' },
+      onUploadProgress: (event) => {
+        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+      },
+    };
+
+    const response = await axios.post('/api/file', formData, config);
+
+    console.log('response', response.data);
+  }
+
+  const handleSave = async (e) => {
+    console.log('saving');
+    e.preventDefault();
+
+    if (campData.featuredImage) {
+      await uploadImage(campData.featuredImage, campData.slug)
+      console.log('image uploaded')
+    }
+    
+    const payload = {
+      name: campData.name,
+      slug: campData.slug,
+      coords: campData.coords,
+      short_description: campData.shortDescription,
+    };
+
+    if (campData._id) {
+      payload['_id'] = campData._id;
+    }
+
+    const formData = new FormData();
+    formData.append('slug', campData.slug);
+    formData.append('payload', JSON.stringify(payload));
+    formData.append('featured_image', campData.featuredImage);
+
+    fetch(`${DB_HOST}/api/camping`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json))
+      .catch((error) => console.log(error));
+  };
+
+  const handleSlugInput = (value) => {
+    mergeCampData({ slug: value });
   };
 
   const handleNameInput = (e) => {
     mergeCampData({ name: e.target.value });
-    if (!campDataFetched?.slug) {
-      mergeCampData({ slug: toSlug(e.target.value) });
-    }
+  };
+
+  const handleGetSlugClick = (e) => {
+    mergeCampData({ slug: toSlug(campData.name) });
   };
 
   const mergeCoords = (coords) => {
@@ -73,11 +136,16 @@ export default function EditOrAddCamp({ campDataFetched }) {
           </span>
         </h1>
       ) : (
-        <h1 className="font-semibold text-2xl">Adding new camp</h1>
+        <h1 className="font-semibold text-2xl">Add new campsite</h1>
       )}
 
       <div className="admin-main-wrapper">
-        <form autoComplete="off" className="grid grid-cols-2 gap-4">
+        <form
+          onSubmit={handleSave}
+          id="camp-edit-form"
+          autoComplete="off"
+          className="grid grid-cols-2 gap-4"
+        >
           <div className="flex flex-col gap-2">
             <label className="text-gray-700">
               Camp name
@@ -87,30 +155,23 @@ export default function EditOrAddCamp({ campDataFetched }) {
                 type="text"
                 id="name"
                 name="name"
+                required
                 minLength={3}
                 maxLength={60}
                 className={inputClasses}
                 placeholder="The name of the camp"
                 value={campData?.name || ''}
-                valid={(campData?.name?.length > 3)}
+                valid={campData?.name?.length > 3}
               />
             </label>
 
-            <label className="text-gray-700">
-              Slug
-              <span className="text-red-500 required-dot">*</span>
-              {campDataFetched?.slug && <span className="px-2 text-red-400 text-sm">Editing is disabled - slug is already set</span>}
-              <Input
-                onInput={handleSlugInput}
-                type="text"
-                id="slug"
-                name="slug"
-                maxLength={90}
-                className={inputClasses}
-                placeholder="atc-horna-marikova"
-                value={campData?.slug || ''}
-              />
-            </label>
+            <InputSlug
+              handleGetSlugClick={handleGetSlugClick}
+              fetchedSlug={campDataFetched?.slug}
+              handleSlugInput={handleSlugInput}
+              slug={campData?.slug}
+              isEditMode={isEditMode}
+            />
 
             <label className="text-gray-700">
               Lat, lon
@@ -139,30 +200,39 @@ export default function EditOrAddCamp({ campDataFetched }) {
             </label>
 
             <label className="text-gray-700">
-              Description
+              Website
               <textarea
-                onInput={(e) => mergeCampData({ description: e.target.value })}
+                onInput={(e) => mergeCampData({ website: e.target.value })}
                 rows={1}
                 type="text"
-                id="description"
-                name="description"
+                id="website"
+                name="website"
                 className={inputClasses}
-                placeholder="Description"
-                value={campData.description || ''}
+                placeholder="https://example.com"
+                value={campData.website || ''}
               />
             </label>
             <p>Featured image</p>
             <ImageDropzone
-              uploadedFile={uploadedFile}
-              setUploadedFile={setUploadedFile}
+              fileToUpload={fileToUpload}
+              setFileToUpload={setFileToUpload}
             />
           </div>
         </form>
       </div>
-      <ButtonAdmin className="w-32 h-10 ml-auto bg-green-500 justify-self-end">
-        Save camp
-      </ButtonAdmin>
-      <CampPreview camp={campData} />
+      <div className="flex justify-end gap-2">
+        <ButtonAdmin type="button" className="bg-red-500 w-32 h-10">
+          Delete camp
+        </ButtonAdmin>
+        <ButtonAdmin
+          type="submit"
+          form="camp-edit-form"
+          className="w-32 h-10 bg-green-500 justify-self-end"
+        >
+          Save camp
+        </ButtonAdmin>
+      </div>
+      <CampPreview camp={campData} previewImage={fileToUpload?.preview} />
     </div>
   );
 }
