@@ -1,10 +1,8 @@
 import Image from 'next/image';
-import { DB_HOST } from '../../OPTIONS';
+import { BACKEND_HOST } from '../../OPTIONS';
 
 export function CampListing({ camp, previewImage }) {
-  console.log('preview image:', camp.featured_image)
-
-  const featured = `${DB_HOST}/${camp.featured_image}`
+  const featured = `${BACKEND_HOST}/${camp.featured_image}`
 
   const parentVillage = camp.villages ? camp.villages[0] : null;
   const distance = camp.distance

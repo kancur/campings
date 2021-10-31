@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Input } from '../Input';
 import { inputClasses } from '../EditOrAddCamp';
-import { DB_HOST } from '../../../../../OPTIONS';
+import { BACKEND_HOST } from '../../../../../OPTIONS';
 
 export function InputCoords({ mergeCoords, fetchedCoords }) {
   const [coords, setCoords] = useState('');
@@ -15,7 +15,7 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
       limit: 1,
     };
     const searchParams = new URLSearchParams(params);
-    fetch(`${DB_HOST}/api/village/close/?${searchParams.toString()}`, {
+    fetch(`${BACKEND_HOST}/api/village/close/?${searchParams.toString()}`, {
       signal: controller.signal,
     })
       .then((res) => res.json())

@@ -21,7 +21,7 @@ const LocationPage = ({ data }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch('http://localhost:3000/api/geo/list/');
+  const res = await fetch(`${BACKEND_HOST}/api/geo/list/`);
   const data = await res.json();
   const namesArray = data.map(({ slug }) => {
     return {

@@ -1,7 +1,7 @@
 import { Input } from '../Input';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { inputClasses } from '../EditOrAddCamp';
-import { DB_HOST } from '../../../../../OPTIONS';
+import { BACKEND_HOST } from '../../../../../OPTIONS';
 import { useEffect, useState } from 'react';
 
 export function InputSlug({
@@ -30,7 +30,7 @@ export function InputSlug({
     const value = e.target.value.replace(/\s/g, '');
     handleSlugInput(value);
 
-    fetch(`${DB_HOST}/api/camping/slug-check/?${value}`)
+    fetch(`${BACKEND_HOST}/api/camping/slug-check/?${value}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.unique) {

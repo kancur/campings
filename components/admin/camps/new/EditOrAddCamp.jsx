@@ -7,7 +7,7 @@ import { Input } from './Input';
 import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
 import { InputSlug } from './parts/InputSlug';
-import { DB_HOST } from '../../../../OPTIONS';
+import { BACKEND_HOST } from '../../../../OPTIONS';
 import axios from 'axios';
 
 export const inputClasses = classNames(
@@ -78,7 +78,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
     formData.append('payload', JSON.stringify(payload));
     formData.append('featured_image', campData.featuredImage);
 
-    fetch(`${DB_HOST}/api/camping`, {
+    fetch(`${BACKEND_HOST}/api/camping`, {
       method: 'POST',
       body: formData,
     })

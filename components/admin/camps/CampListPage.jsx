@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import CampTable from './CampTable';
-const { DB_HOST } = require('../../../OPTIONS')
+const { BACKEND_HOST } = require('../../../OPTIONS')
 
 export default function CampListPage() {
   const [campData, setCampData] = useState();
 
   useEffect(async () => {
     try {
-      const res = await fetch(`${DB_HOST}/api/camping/list/`);
+      const res = await fetch(`${BACKEND_HOST}/api/camping/list/`);
       const json = await res.json();
       setCampData(json);
     } catch (error) {
