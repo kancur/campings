@@ -5,31 +5,37 @@ import { DB_HOST } from '../../../../../OPTIONS';
 
 export function InputCoords({ mergeCoords, fetchedCoords }) {
   const [coords, setCoords] = useState('');
-  const [coordsObj, setCoordsObj] = useState({});
+  const [coordsObj, setCoordsObj] = useState();
   const [isValid, setIsValid] = useState(true);
-  const [closestVillage, setClosestVillage] = useState({});
+  const [closestVillage, setClosestVillage] = useState();
 
-  function fetchClosestVillage() {
+  function fetchClosestVillage(controller) {
     const params = {
       ...coordsObj,
       limit: 1,
     };
     const searchParams = new URLSearchParams(params);
-    fetch(`${DB_HOST}/api/village/close/?${searchParams.toString()}`)
+    fetch(`${DB_HOST}/api/village/close/?${searchParams.toString()}`, {
+      signal: controller.signal,
+    })
       .then((res) => res.json())
-      .then((json) => setClosestVillage(json[0]));
+      .then((json) => setClosestVillage(json[0]))
+      .then(() => (controller = null))
+      .catch((error) => console.error(error));
   }
 
   useEffect(() => {
     if (isValid && coordsObj) {
-      fetchClosestVillage()
+      let controller = new AbortController();
+      fetchClosestVillage(controller);
+      return () => controller?.abort();
     }
   }, [coordsObj, isValid]);
 
   useEffect(() => {
     if (fetchedCoords) {
       setCoords(coordsToString(fetchedCoords));
-      setCoordsObj(fetchedCoords)
+      setCoordsObj(fetchedCoords);
     }
   }, [fetchedCoords]);
 
@@ -37,6 +43,7 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
 
   const isLatitude = (lat) =>
     lat !== undefined && lat.length > 0 && isFinite(lat) && Math.abs(lat) <= 90;
+
   const isLongitude = (lon) =>
     lon !== undefined &&
     lon.length > 0 &&
@@ -49,7 +56,8 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
       const raw = e.target.value;
       const removedWhitespace = raw.replace(/\s/g, '');
       const [lat, lon] = removedWhitespace.split(',');
-      setCoordsObj({ lat, lon });
+      const coordsObj = {lat: Number(lat), lon: Number(lon)}
+      setCoordsObj(coordsObj);
       if (!isLatitude(lat)) {
         throw new Error('invalid latitude');
       }
@@ -57,9 +65,11 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
         throw new Error('invalid longitude');
       }
       setIsValid(true);
-      mergeCoords({ lat, lon });
+      e.target.setCustomValidity('')
+      mergeCoords(coordsObj);
     } catch (error) {
       console.log(error.message);
+      e.target.setCustomValidity(error.message)
       setIsValid(false);
     }
   };
@@ -67,6 +77,7 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
   return (
     <div className="flex flex-col gap-1">
       <Input
+        required
         onInput={handleCoordsInput}
         type="text"
         id="coords"
@@ -77,7 +88,9 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
         invalid={!isValid && coords?.length > 0}
         valid={isValid && coords?.length > 0}
       />
-      <p><span className="font-semibold">Closest village:</span> {closestVillage?.name}</p>
+      {closestVillage && (
+        <p className="text-gray-500">Closest village: {closestVillage?.name}</p>
+      )}
     </div>
   );
 }
