@@ -1,25 +1,9 @@
 import classNames from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-
-const activeClasses = `border-pink-400`;
-
-const acceptStyle = {
-  borderColor: '#00e676',
-};
-
-const rejectStyle = {
-  borderColor: '#ff1744',
-};
 
 export default function DropZone({ fileToUpload, setFileToUpload }) {
   const [error, setError] = useState();
-
-  const handleFileDropped = () => {
-    if (fileToUpload.size > 1024) {
-      setError("File size cannot exceed 1MB")
-    }
-  }
 
   const {
     acceptedFiles,
@@ -31,6 +15,7 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
   } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
+      console.log('accepted', acceptedFiles);
       const file = acceptedFiles[0];
       setFileToUpload(
         Object.assign(file, {
@@ -60,10 +45,20 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
     <div>
       File to upload:{' '}
       <span className="font-mono bg-gray-200 p-1">
-        {fileToUpload?.name} ({Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
+        {fileToUpload?.name} (
+        {Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
       </span>
     </div>
   );
+
+  //cleanup to avoid memory leaks
+  useEffect(() => {
+    if (fileToUpload?.preview) {
+      return () => {
+        URL.revokeObjectURL(fileToUpload.preview);
+      };
+    }
+  }, [fileToUpload]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -76,7 +71,6 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
         )}
       </div>
       <p>{error}</p>
-
     </div>
   );
 }
