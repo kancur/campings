@@ -27,8 +27,8 @@ const VillagePage = ({ village, campings }) => {
 };
 
 export async function getStaticPaths() {
-  const { DB_HOST } = require('../../OPTIONS');
-  const res = await fetch(`${DB_HOST}/api/village/list/`);
+  const { BACKEND_HOST } = require('../../OPTIONS');
+  const res = await fetch(`${BACKEND_HOST}/api/village/list/`);
   const data = await res.json();
   const namesArray = data.map(({ slug }) => {
     return {
@@ -44,7 +44,7 @@ export async function getStaticProps({ params }) {
   const {
     VILLAGE_CAMP_MAX_DISTANCE,
     VILLAGE_CAMP_MAX_RESULTS,
-    DB_HOST,
+    BACKEND_HOST,
   } = require('../../OPTIONS');
   const village_slug = params.village_slug;
   const encodedName = encodeURI(village_slug);
@@ -52,11 +52,11 @@ export async function getStaticProps({ params }) {
   // cant do following requests in parallel because the second one needs data from the first one
 
   const villageRes = await fetch(
-    `${process.env.DB_HOST}/api/village/slug/${encodedName}`
+    `${process.env.BACKEND_HOST}/api/village/slug/${encodedName}`
   );
   const villageData = await villageRes.json();
 
-  const closeCampingsURL = new URL(`${process.env.DB_HOST}/api/camping/close`);
+  const closeCampingsURL = new URL(`${process.env.BACKEND_HOST}/api/camping/close`);
   closeCampingsURL.searchParams.append('lat', villageData.coords[1]);
   closeCampingsURL.searchParams.append('lon', villageData.coords[0]);
   closeCampingsURL.searchParams.append('limit', VILLAGE_CAMP_MAX_RESULTS);

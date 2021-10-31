@@ -1,11 +1,11 @@
 import obceSK from '../data/obceSK.js';
 import geomorphological from '../data/geomorphological'
-import { DB_HOST } from '../OPTIONS.js';
+import { BACKEND_HOST } from '../OPTIONS.js';
 const NR_OF_RESULTS = 5
 
 // server side search
 export async function searchEverything(query) {
-  const fetched = await fetch(`${DB_HOST}/api/search/?q=${query}`)
+  const fetched = await fetch(`${BACKEND_HOST}/api/search/?q=${query}`)
   const json = await fetched.json()
   return json
 }

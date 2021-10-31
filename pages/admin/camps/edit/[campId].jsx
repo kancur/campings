@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import AdminLayout from '../../../../components/admin/AdminLayout';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { DB_HOST } from '../../../../OPTIONS';
+import { BACKEND_HOST } from '../../../../OPTIONS';
 
 const EditCampPage = dynamic(
   () => import('../../../../components/admin/camps/new/EditOrAddCamp'),
@@ -19,7 +19,7 @@ function EditCampPageComponent() {
 
   useEffect(() => {
     if (campId) {
-      fetch(`${DB_HOST}/api/camping/${campId}`)
+      fetch(`${BACKEND_HOST}/api/camping/${campId}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText);

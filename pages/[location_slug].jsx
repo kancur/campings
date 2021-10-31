@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Main from '../components/base/Main';
 import Search from '../components/search/Search';
 import LocationHeading from '../components/locationPage/LocationHeading';
+import { BACKEND_HOST } from '../OPTIONS';
 
 const LocationPage = ({ data }) => {
   const router = useRouter();
@@ -36,7 +37,7 @@ export async function getStaticProps({ params }) {
   const location_slug = params.location_slug;
   const encodedName = encodeURI(location_slug);
 
-  const res = await fetch(`http://localhost:3000/api/geo/slug/${encodedName}`);
+  const res = await fetch(`${BACKEND_HOST}/api/geo/slug/${encodedName}`);
   const data = await res.json();
   return {
     props: {
