@@ -11,7 +11,11 @@ export function InputSlug({
   slug,
   isEditMode,
 }) {
-  const [isEditEnabled, setIsEditEnabled] = useState(!!fetchedSlug || true);
+  const [isEditEnabled, setIsEditEnabled] = useState(false);
+
+  useEffect(() => {
+    setIsEditEnabled(!fetchedSlug)
+  },[fetchedSlug])
 
   useEffect(() => {
     console.log('is edit enabled:', isEditEnabled);
