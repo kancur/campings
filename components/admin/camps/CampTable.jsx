@@ -52,8 +52,8 @@ export default function CampTable({ camps }) {
                   />
                 </div>
               </Td>
-              <Td>{camp.villages[0].name}</Td>
-              <Td>{camp.villages[0].parents.county_name}</Td>
+              <Td>{camp.villages && camp.villages[0].name}</Td>
+              <Td>{camp.villages && camp.villages[0].parents.county_name}</Td>
               <Td>
                 <div className="flex gap-2 items-stretch">
                   <Link href={`camps/edit/${camp._id}`}>
