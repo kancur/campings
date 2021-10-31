@@ -1,7 +1,7 @@
+import Dashboard from "./dashboard/Dashboard";
+
 export default function AdminPage() {
   return (
-    <div>
-      Hello there, I'm an admin page
-    </div>
+    <Dashboard />
   )
 }
