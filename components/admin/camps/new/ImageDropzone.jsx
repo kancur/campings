@@ -12,7 +12,14 @@ const rejectStyle = {
   borderColor: '#ff1744',
 };
 
-export default function DropZone({ uploadedFile, setUploadedFile }) {
+export default function DropZone({ fileToUpload, setFileToUpload }) {
+  const [error, setError] = useState();
+
+  const handleFileDropped = () => {
+    if (fileToUpload.size > 1024) {
+      setError("File size cannot exceed 1MB")
+    }
+  }
 
   const {
     acceptedFiles,
@@ -25,7 +32,7 @@ export default function DropZone({ uploadedFile, setUploadedFile }) {
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
-      setUploadedFile(
+      setFileToUpload(
         Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
@@ -51,9 +58,9 @@ export default function DropZone({ uploadedFile, setUploadedFile }) {
 
   const ImageData = () => (
     <div>
-      Uploaded file:{' '}
+      File to upload:{' '}
       <span className="font-mono bg-gray-200 p-1">
-        {uploadedFile?.name} ({Math.round((uploadedFile?.size / 1000_000) * 100) / 100} MB)
+        {fileToUpload?.name} ({Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
       </span>
     </div>
   );
@@ -68,6 +75,8 @@ export default function DropZone({ uploadedFile, setUploadedFile }) {
           <p>Drag 'n' drop an image here, or click to select file</p>
         )}
       </div>
+      <p>{error}</p>
+
     </div>
   );
 }
