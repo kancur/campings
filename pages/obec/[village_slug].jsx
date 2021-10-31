@@ -54,20 +54,12 @@ export async function getStaticProps({ params }) {
   const villageRes = await fetch(
     `${process.env.BACKEND_HOST}/api/village/slug/${encodedName}`
   );
-  const villageData = await villageRes.json();
-
-  const closeCampingsURL = new URL(`${process.env.BACKEND_HOST}/api/camping/close`);
-  closeCampingsURL.searchParams.append('lat', villageData.coords[1]);
-  closeCampingsURL.searchParams.append('lon', villageData.coords[0]);
-  closeCampingsURL.searchParams.append('limit', VILLAGE_CAMP_MAX_RESULTS);
-  closeCampingsURL.searchParams.append('distance', VILLAGE_CAMP_MAX_DISTANCE);
-  const campingsRes = await fetch(closeCampingsURL.toString());
-  const campingsData = await campingsRes.json();
+  const {campings, ...villageData} = await villageRes.json();
 
   return {
     props: {
       village: villageData,
-      campings: campingsData,
+      campings: campings,
     },
   };
 }
