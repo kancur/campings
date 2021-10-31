@@ -58,32 +58,9 @@ export default function EditOrAddCamp({ campDataFetched }) {
     }
   }, [campDataFetched]);
 
-  const uploadImage = async (file, filename) => {
-
-    const formData = new FormData()
-    formData.append('filename', filename)
-    formData.append('featured_image', file)
-
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' },
-      onUploadProgress: (event) => {
-        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-      },
-    };
-
-    const response = await axios.post('/api/file', formData, config);
-
-    console.log('response', response.data);
-  }
-
   const handleSave = async (e) => {
     console.log('saving');
     e.preventDefault();
-
-    if (campData.featuredImage) {
-      await uploadImage(campData.featuredImage, campData.slug)
-      console.log('image uploaded')
-    }
     
     const payload = {
       name: campData.name,
