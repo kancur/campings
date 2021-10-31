@@ -4,7 +4,7 @@ import { ArrowTopNotification } from './ArrowTopNotification';
 import { useTransition, animated } from 'react-spring';
 //import useOutsideClickDetector from '../../helpers/hooks/useOutsideClickDetector';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { ButtonAdmin } from './ButtonAdmin';
+import ButtonAdmin from './ButtonAdmin';
 
 export default function EditableText({
   onSave,
