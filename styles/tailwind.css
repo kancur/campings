@@ -14,6 +14,10 @@
     @apply text-gray-600;
   }
 
+  body {
+    overflow-y: scroll;
+  }
+
   html,
   body,
   div#__next {
@@ -24,6 +28,11 @@
     display: flex;
     flex-direction: column;
   }
+
+  a {
+    @apply text-blue-600
+  }
+
 }
 
 @layer components {
