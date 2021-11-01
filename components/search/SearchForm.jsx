@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import toSlug from '../../helpers/toSlug';
 
 export default function SearchForm(props) {
-  const [submittedData, setSubmittedData] = useState(null);
+  const [submittedData, setSubmittedData] = useState();
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function SearchForm(props) {
     } else if (type?.length > 0) {
       Router.push(`/${submittedData.slug}`);
     } else {
-      Router.push(`/s/${submittedData.name}`);
+      Router.push(`/search/?q=${encodeURIComponent(submittedData?.query)}`)
     }
   };
 
