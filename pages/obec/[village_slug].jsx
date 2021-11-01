@@ -11,12 +11,12 @@ const VillagePage = ({ village, campings }) => {
         <LocationHeading
           pretitle="Skvelé kempy neďaleko obce"
           title={village.name}
-          subtitle={village.parents.county_name}
+          subtitle={'Okres ' + village.parents.county_name}
         />
 
         <div className="p-4 flex flex-col gap-4 max-w-screen-md mx-auto">
           {campings.map((camp) => (
-            <CampListing camp={camp} />
+            <CampListing key={camp._id} camp={camp} />
           ))}
         </div>
 
