@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { searchEverything } from '../../../helpers/search';
+import { searchSuggestions } from '../../../helpers/search';
 import LocationPickerDropdown from './LocationPickerDropdown';
 import useDebouncedSearch from '../../../hooks/useDebouncedSearch';
 import LoadingSpinnerSVG from '../../general/LoadingSpinnerSVG';
 const useMainSearch = () =>
-  useDebouncedSearch((query) => searchEverything(query));
+  useDebouncedSearch((query) => searchSuggestions(query));
 
 export default function LocationPicker(props) {
   const [activeIndex, setActiveIndex] = useState(-1);
