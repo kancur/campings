@@ -3,8 +3,8 @@ import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
 import PlateauIcon from '../../../public/icons/Plateau'
-import { classNames } from '../../../helpers/classNames';
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 export default function LocationPickerDropdown({
   locations,
