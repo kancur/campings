@@ -49,8 +49,13 @@ export default function LocationPicker(props) {
   };
 
   const handleSubmit = (index) => {
+    console.log('handling submit with index:', index)
     setShowSuggestions(false);
     handleSelect(index);
+    if (index === -1){
+      props.setSubmittedData({query: searchQuery})
+      return
+    }
     props.setSubmittedData(currentSuggestions[index]);
   };
 
@@ -69,11 +74,8 @@ export default function LocationPicker(props) {
         }
       }
       if (e.code === 'Enter') {
-        if (showSuggestions) {
-          // dont submit the field if dropdown is shown
-        }
-        setShowSuggestions(false);
         handleSubmit(activeIndex);
+        setShowSuggestions(false);
       }
     }
   };
