@@ -1,12 +1,22 @@
 import { BACKEND_HOST } from '../OPTIONS.js';
 
 // server side search
-export async function searchEverything(query) {
+export async function searchSuggestions(query) {
   try {
     const fetched = await fetch(`${BACKEND_HOST}/api/search/?q=${query}`);
     const json = await fetched.json();
     return json;
   } catch (error) {
-    return ({error: error})
+    return { error: error };
+  }
+}
+
+export async function campSearch(query) {
+  try {
+    const fetched = await fetch(`${BACKEND_HOST}/api/search/camps?q=${query}`);
+    const json = await fetched.json();
+    return json;
+  } catch (error) {
+    return { error: error };
   }
 }
