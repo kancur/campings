@@ -14,7 +14,7 @@ const VillagePage = ({ village, campings }) => {
           subtitle={'Okres ' + village.parents.county_name}
         />
 
-        <div className="p-4 flex flex-col gap-4 max-w-screen-md mx-auto">
+        <div className="camp-listing-wrapper">
           {campings.map((camp) => (
             <CampListing key={camp._id} camp={camp} />
           ))}
