@@ -7,7 +7,7 @@ const useDebouncedSearch = (searchFunction) => {
   const [inputText, setInputText] = useState('');
 
   const debouncedSearchFunction = useConstant(() =>
-    AwesomeDebouncePromise(searchFunction, 100)
+    AwesomeDebouncePromise(searchFunction, 50)
   );
 
   const searchResults = useAsync(
@@ -22,7 +22,7 @@ const useDebouncedSearch = (searchFunction) => {
   );
 
   return [
-    inputText,
+    //inputText,
     setInputText,
     searchResults,
   ];
