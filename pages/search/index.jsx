@@ -1,4 +1,4 @@
-import Search from '../../components/search/Search';
+import SearchWrapper from '../../components/search/SearchWrapper';
 import { useRouter } from 'next/router';
 import LocationHeading from '../../components/locationPage/LocationHeading';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,9 @@ export default function SearchPage() {
             console.error(res.error);
           }
           if (Array.isArray(res)) {
-            setResults(res);
+            if (res.length > 0) {
+              setResults(res);
+            }
           }
         })
         .catch((err) => console.log(err));
@@ -27,11 +29,12 @@ export default function SearchPage() {
 
   return (
     <>
-      <Search />
+      <SearchWrapper />
       <LocationHeading pretitle="Výsledky vyhľadávania pre výraz" title={q} />
       <div className="camp-listing-wrapper">
         {results &&
           results.map((camp) => <CampListing key={camp._id} camp={camp} />)}
+        {!results && <div>Pre tvoje hľadanie sme nenašli žiadny kemp.😟</div>}
       </div>
     </>
   );

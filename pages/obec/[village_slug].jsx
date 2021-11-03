@@ -1,4 +1,4 @@
-import Search from '../../components/search/Search';
+import Search from '../../components/search/SearchWrapper';
 import LocationHeading from '../../components/locationPage/LocationHeading';
 import { CampListing } from '../../components/general/CampListing';
 import Main from '../../components/base/Main';

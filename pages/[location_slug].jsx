@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Main from '../components/base/Main';
-import Search from '../components/search/Search';
+import SearchWrapper from '../components/search/SearchWrapper';
 import LocationHeading from '../components/locationPage/LocationHeading';
 import { BACKEND_HOST } from '../OPTIONS';
 
@@ -10,7 +10,7 @@ const LocationPage = ({ data }) => {
 
   return (
     <>
-      <Search />
+      <SearchWrapper />
       <Main>
         <LocationHeading pretitle="Skvelé kempy v lokalite" title={data.properties.name} />
         Hey, you visited a location with slug {locationName}
