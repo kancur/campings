@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: colors.emerald[500],
+        brand: colors.emerald[600],
       },
       maxWidth: {
-        searchBar: '500px',
+        searchBar: '600px',
       },
       fontFamily: {
         sans: [
