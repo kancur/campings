@@ -2,46 +2,51 @@ import { Dropdown } from '../../general/Dropdown';
 import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
-import PlateauIcon from '../../../public/icons/Plateau'
+import PlateauIcon from '../../../public/icons/Plateau';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 export default function LocationPickerDropdown({
   locations,
   activeIndex,
   handleClick,
+  handleClose
 }) {
-
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   useEffect(() => {
-    setSelectedIndex(activeIndex)
-  },[activeIndex])
+    setSelectedIndex(activeIndex);
+  }, [activeIndex]);
 
   return (
     <Dropdown>
-      <ul id="suggestions" className="flex flex-col divide-y divide-gray-200">
-        {locations.map((loc, index) => (
-          <li
-            key={index}
-            onMouseEnter={() => setSelectedIndex(index)}
-            onMouseLeave={() => setSelectedIndex(-1)}
-            onClick={() => handleClick(index)}
-            className={classNames(
-              'flex items-center py-1 pr-3 cursor-pointer',
-              index === selectedIndex && 'bg-gray-200'
-            )}
-            tabIndex="-1"
-            role="menuitem"
-          >
-            {getIcon(loc.type)}
-            <div className="text-left">
-              <p>{loc.name}</p>
-              <p className="text-xs text-gray-400">{loc.county_name}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <OutsideClickHandler
+        onOutsideClick={handleClose}
+      >
+        <ul id="suggestions" className="flex flex-col divide-y divide-gray-200">
+          {locations.map((loc, index) => (
+            <li
+              key={index}
+              onMouseEnter={() => setSelectedIndex(index)}
+              onMouseLeave={() => setSelectedIndex(-1)}
+              onClick={() => handleClick(index)}
+              className={classNames(
+                'flex items-center py-1 pr-3 cursor-pointer',
+                index === selectedIndex && 'bg-gray-200'
+              )}
+              tabIndex="-1"
+              role="menuitem"
+            >
+              {getIcon(loc.type)}
+              <div className="text-left">
+                <p>{loc.name}</p>
+                <p className="text-xs text-gray-400">{loc.county_name}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </OutsideClickHandler>
     </Dropdown>
   );
 }
@@ -68,8 +73,8 @@ function getIcon(type) {
       );
     case 'plateau':
       return (
-        <PlateauIcon className="h-4 w-4 px-2 text-green-800 box-content fill-current"/>
-      )
+        <PlateauIcon className="h-4 w-4 px-2 text-green-800 box-content fill-current" />
+      );
     default:
       break;
   }

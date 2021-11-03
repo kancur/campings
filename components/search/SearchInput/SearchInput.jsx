@@ -1,17 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { searchSuggestions } from '../../../helpers/search';
-import LocationPickerDropdown from './LocationPickerDropdown';
+import SuggestionsDropdown from './SuggestionsDropdown';
 import useDebouncedSearch from '../../../hooks/useDebouncedSearch';
 import LoadingSpinnerSVG from '../../general/LoadingSpinnerSVG';
+import OutsideClickHandler from 'react-outside-click-handler';
+import { SearchButton } from '../SearchButton';
+
 const useMainSearch = () =>
   useDebouncedSearch((query) => searchSuggestions(query));
 
 export default function LocationPicker(props) {
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [inputData, setInputData] = useState();
+  // merged input data are those that are rendered as value in input
+  // it can be a searchQuery or one of the currentSuggestions.name, if user
+  // traverses the dropdown with keyboard
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentSuggestions, setCurrentSuggestions] = useState([]);
-  const [searchQuery, setSearchQuery, searchResults] = useMainSearch();
+  const [setSearchQuery, searchResults] = useMainSearch();
 
   useEffect(() => {
     if (searchResults.status == 'success') {
@@ -20,45 +25,39 @@ export default function LocationPicker(props) {
   }, [searchResults]);
 
   useEffect(() => {
-    if (inputData === '') {
-      setShowSuggestions(false);
-    }
-  }, [inputData]);
-
-  useEffect(() => {
     handleSelect(activeIndex);
   }, [activeIndex]);
 
   const handleInput = (e) => {
+    props.setInputData((prev) => ({...prev, q: e.target.value, activeIndex: -1}))
     setSearchQuery(e.target.value);
-    setInputData({ name: e.target.value });
+    //props.setInputValue(e.target.value);
     setShowSuggestions(true);
     setActiveIndex(-1);
   };
 
+  const handleCloseDropdown = () => {
+    setShowSuggestions(false);
+  };
+
   const handleSelect = (index) => {
-    if (index === -1) {
-      setInputData({ name: searchQuery });
-    }
     if (index > -1) {
       const newInputData = currentSuggestions[index];
       if (newInputData) {
-        setInputData(newInputData);
+        props.setInputData((prev) => ({...prev, activeIndex: index, suggestionData: newInputData}))
       }
+    } else {
+      props.setInputData((prev) => ({...prev, activeIndex: index}))
     }
   };
 
   const handleSubmit = (index) => {
-    console.log('handling submit with index:', index)
     setShowSuggestions(false);
     handleSelect(index);
-    if (index === -1){
-      props.setSubmittedData({query: searchQuery})
-      return
-    }
-    props.setSubmittedData(currentSuggestions[index]);
+    props.handleSubmit();
   };
 
+  // handling of up, down and enter keys when focused on input
   const handleKeyDown = (e) => {
     if (showSuggestions) {
       if (e.code === 'ArrowUp') {
@@ -80,22 +79,28 @@ export default function LocationPicker(props) {
     }
   };
 
+  const suggestionName = props.inputData?.suggestionData?.name || ''
+  const userQuery = props.inputData?.q || ''
+
   return (
     <div className="flex flex-col">
       <div>
-        <label className="flex flex-col">
-          <span className="font-semibold text-gray-600">Lokalita</span>
+        <label className="flex flex-col gap-2 sm:gap-0">
+          <span className="font-semibold text-gray-600 text-lg sm:text-base">
+            Kam chceš ísť?
+          </span>
           <div className="relative">
             <input
               autoComplete="off"
+              maxLength={30}
               onKeyDown={handleKeyDown}
               onInput={handleInput}
               placeholder="napr. Vysoké Tatry"
               className={
-                'bg-transparent focus:outline-none text-gray-600 border-b border-gray-300 w-full'
+                'bg-transparent focus:outline-none text-gray-600 border-b border-gray-300 mx-1 sm:mx-0 sm:ml-1'
               }
               type="text"
-              value={inputData?.name || ''}
+              value={(activeIndex > -1) ? suggestionName : userQuery}
               aria-haspopup="true"
               aria-controls="suggestions"
             />
@@ -106,10 +111,11 @@ export default function LocationPicker(props) {
       {currentSuggestions &&
         currentSuggestions.length > 0 &&
         showSuggestions && (
-          <LocationPickerDropdown
+          <SuggestionsDropdown
             activeIndex={activeIndex}
             locations={currentSuggestions}
             handleClick={handleSubmit}
+            handleClose={handleCloseDropdown}
           />
         )}
     </div>
