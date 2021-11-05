@@ -15,7 +15,7 @@ export default function Search() {
         }}
         className="p-6"
       >
-        <div className="text-center flex flex-col items-center justify-center py-16">
+        <div className="text-center flex flex-col items-center justify-center py-7 sm:py-16">
           <SearchForm /> 
         </div>
       </div>
