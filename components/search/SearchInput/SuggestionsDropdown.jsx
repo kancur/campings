@@ -1,5 +1,11 @@
 import { Dropdown } from '../../general/Dropdown';
-import { FaMountain, FaHome, FaTree } from 'react-icons/fa';
+import {
+  FaMountain,
+  FaHome,
+  FaTree,
+  FaThumbtack,
+  FaWater,
+} from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
 import PlateauIcon from '../../../public/icons/Plateau';
@@ -11,8 +17,9 @@ export default function LocationPickerDropdown({
   locations,
   activeIndex,
   handleClick,
-  handleClose
+  handleClose,
 }) {
+  // selectedIndex is used for styling purposes
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   useEffect(() => {
@@ -21,9 +28,7 @@ export default function LocationPickerDropdown({
 
   return (
     <Dropdown>
-      <OutsideClickHandler
-        onOutsideClick={handleClose}
-      >
+      <OutsideClickHandler onOutsideClick={handleClose}>
         <ul id="suggestions" className="flex flex-col divide-y divide-gray-200">
           {locations.map((loc, index) => (
             <li
@@ -72,10 +77,11 @@ function getIcon(type) {
         <FlatIcon className="h-4 w-4 px-2 text-yellow-800 box-content fill-current" />
       );
     case 'plateau':
-      return (
-        <PlateauIcon className="h-4 w-4 px-2 text-green-800 box-content fill-current" />
-      );
+      return <PlateauIcon className="suggestion-icon text-green-800" />;
+    case 'waterbody':
+      return <FaWater className="suggestion-icon text-blue-500" />;
     default:
+      return <FaThumbtack className="suggestion-icon text-gray-500" />;
       break;
   }
 }
