@@ -5,13 +5,13 @@ export const mountains = [
 ]
 
 export const towns = [
-  {name: 'Liptovský Mikuláš', slug: 'liptovsky-mikulas'},
-  {name: 'Terchová', slug: 'terchova'},
-  {name: 'Banská Štiavnica', slug: 'banska-stiavnica'},
+  {name: 'Liptovský Mikuláš', slug: 'obec/liptovsky-mikulas'},
+  {name: 'Terchová', slug: 'obec/terchova'},
+  {name: 'Banská Štiavnica', slug: 'obec/banska-stiavnica'},
 ]
 
 export const waterBodies = [
-  {name: 'Oravská priehrada', slug: 'oravska-priehrada'},
-  {name: 'Liptovská Mara', slug: 'liptovska-mara'},
-  {name: 'Počúvadlo', slug: 'pocuvadlo'},
+  {name: 'Oravská priehrada', slug: 'voda/oravska-priehrada'},
+  {name: 'Liptovská Mara', slug: 'voda/liptovska-mara'},
+  {name: 'Počúvadlo', slug: 'voda/pocuvadlianske-jazero'},
 ]
