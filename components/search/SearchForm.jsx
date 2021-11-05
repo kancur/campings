@@ -4,30 +4,34 @@ import { SearchButton } from './SearchButton';
 import { useEffect, useRef, useState } from 'react';
 
 export default function SearchForm(props) {
-  const [inputData, setInputData] = useState();
-  //const [submittedData, setSubmittedData] = useState();
-  const [inputValue, setInputValue] = useState();
-  //const isMounted = useRef(false);
+  const [inputData, setInputData] = useState({});
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    console.log(inputData);
+    setError('')
   }, [inputData]);
 
-  const handleSubmit = () => {
-    console.log('handling submit')
-    console.log(inputData)
-    const isUsingSuggestion = inputData.activeIndex !== -1;
+  const handleSubmit = (data = inputData ) => {
+    console.log('handling submit with data', data)
 
-    if (isUsingSuggestion) {
-      const {type, slug} = inputData.suggestionData;
+    if (data.type === 'suggestion') {
+      const { type, slug } = data.data;
       if (type === 'village') {
         Router.push(`/obec/${slug}`);
+      } else if (type === 'waterbody') {
+        Router.push(`/voda/${slug}`);
       } else if (type?.length > 0) {
         Router.push(`/${slug}`);
       }
-    } else {
-      if (inputData.q) {
-        Router.push(`/search/?q=${encodeURIComponent(inputData.q)}`);
+    }
+
+    if (data.type === 'query') {
+      if (data.query) {
+        if (data.query.length < 3) {
+          setError('Prosím zadaj aspoň 3 znaky 😉')
+          return
+        }
+        Router.push(`/search/?q=${encodeURIComponent(inputData.query)}`);
       }
     }
   };
@@ -44,10 +48,7 @@ export default function SearchForm(props) {
         setInputData={setInputData}
         inputData={inputData}
         handleSubmit={handleSubmit}
-        setInputValue={setInputValue}
-        inputValue={inputValue}
-        //setSubmittedData={setSubmittedData}
-        handleSubmit={handleSubmit}
+        error={error}
       />
       <SearchButton />
     </form>

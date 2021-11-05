@@ -22,7 +22,7 @@ const useDebouncedSearch = (searchFunction) => {
   );
 
   return [
-    //inputText,
+    inputText,
     setInputText,
     searchResults,
   ];
