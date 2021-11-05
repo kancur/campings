@@ -43,7 +43,7 @@ function DestinationList({ destinations }) {
   return (
     <ul>
       {destinations.map((dest) => (
-        <li>
+        <li key={dest.slug}>
           <Link href={dest.slug}>{dest.name}</Link>
         </li>
       ))}
