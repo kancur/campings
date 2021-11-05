@@ -28,8 +28,23 @@ module.exports = {
           'Apple Color Emoji',
           'Segoe UI Emoji',
           'Segoe UI Symbol',
-          'Noto Color Emoji'
+          'Noto Color Emoji',
         ],
+      },
+      keyframes: {
+        loaderBounce: {
+          '0%, 100%': {
+            transform: 'translateY(0%)',
+            'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translateY(25%)',
+            'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+      },
+      animation: {
+        loaderBounce: 'loaderBounce 1s infinite',
       },
     },
   },
