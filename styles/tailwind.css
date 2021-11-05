@@ -25,6 +25,7 @@
   }
 
   div#__next {
+    //overflow-x: hidden;
     display: flex;
     flex-direction: column;
   }
@@ -51,6 +52,11 @@
   .button-admin:disabled {
     @apply bg-gray-300;
   }
+
+  .suggestion-icon {
+    @apply h-4 w-4 px-2 box-content fill-current
+  }
+  
 }
 
 @layer utilities {
@@ -63,7 +69,7 @@
   }
 }
 
-.image-container {
+/* .image-container {
   width: 100%;
 }
 
@@ -76,4 +82,4 @@
   width: 100% !important;
   position: relative !important;
   height: unset !important;
-}
+} */
