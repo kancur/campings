@@ -1,20 +1,25 @@
 import { useRouter } from 'next/router';
 import Main from '../components/base/Main';
-import SearchWrapper from '../components/search/SearchWrapper';
+import Search from '../components/search/SearchWrapper';
 import LocationHeading from '../components/locationPage/LocationHeading';
 import { BACKEND_HOST } from '../OPTIONS';
+import { CampListing } from '../components/general/CampListing';
 
-const LocationPage = ({ data }) => {
-  const router = useRouter();
-  const { locationName } = router.query;
-
+const LocationPage = ({ location }) => {
   return (
     <>
-      <SearchWrapper />
+      <Search />
       <Main>
-        <LocationHeading pretitle="Skvelé kempy v lokalite" title={data.properties.name} />
-        Hey, you visited a location with slug {locationName}
-        <div>Slug: {data.properties.name}</div>
+        <LocationHeading
+          pretitle="Skvelé kempy"
+          title={location?.properties.name}
+        />
+
+        <div className="camp-listing-wrapper">
+          {location.campings.map((camp) => (
+            <CampListing key={camp._id} camp={camp} />
+          ))}
+        </div>
       </Main>
     </>
   );
@@ -41,7 +46,7 @@ export async function getStaticProps({ params }) {
   const data = await res.json();
   return {
     props: {
-      data,
+      location: data,
     }, // will be passed to the page component as props
   };
 }
