@@ -1,4 +1,4 @@
-import { Input } from '../Input';
+import { Input } from '../../../../general/Input';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { inputClasses } from '../EditOrAddCamp';
 import { BACKEND_HOST } from '../../../../../OPTIONS';

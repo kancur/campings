@@ -3,34 +3,12 @@ import { useEffect, useState } from 'react';
 import ButtonAdmin from '../../general/ButtonAdmin';
 import CampPreview from './CampPreview';
 import ImageDropzone from './ImageDropzone';
-import { Input } from './Input';
+import { Input, inputClasses } from '../../../general/Input';
 import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
 import { InputSlug } from './parts/InputSlug';
 import { BACKEND_HOST } from '../../../../OPTIONS';
-import axios from 'axios';
 
-export const inputClasses = classNames(
-  'rounded-lg',
-  'flex-1',
-  'appearance-none',
-  'border',
-  'border-gray-200',
-  'w-full',
-  'py-2',
-  'my-1',
-  'px-4',
-  'bg-white',
-  'text-gray-700',
-  'placeholder-gray-300',
-  'shadow',
-  'text-base',
-  'focus:outline-none',
-  'focus:ring-2',
-  'focus:ring-blue-400',
-  'focus:border-transparent',
-  'disabled:bg-gray-100'
-);
 
 export default function EditOrAddCamp({ campDataFetched }) {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -135,7 +113,6 @@ export default function EditOrAddCamp({ campDataFetched }) {
                 required
                 minLength={3}
                 maxLength={60}
-                className={inputClasses}
                 placeholder="The name of the camp"
                 value={campData?.name || ''}
                 valid={campData?.name?.length > 3}
@@ -170,7 +147,6 @@ export default function EditOrAddCamp({ campDataFetched }) {
                 type="text"
                 id="shortDescription"
                 name="shortDescription"
-                className={inputClasses}
                 placeholder="Nádherný kemp na úpätí Malej Fatry"
                 value={campData.shortDescription || ''}
               />

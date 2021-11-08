@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Input } from '../Input';
+import { Input } from '../../../../general/Input';
 import { inputClasses } from '../EditOrAddCamp';
 import { BACKEND_HOST } from '../../../../../OPTIONS';
 
