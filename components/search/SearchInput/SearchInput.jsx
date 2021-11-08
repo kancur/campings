@@ -18,10 +18,6 @@ export default function LocationPicker(props) {
   const [inputVisibleValue, setInputVisibleValue] = useState('');
 
   useEffect(() => {
-    setInputVisibleValue(searchQuery);
-  }, [searchQuery]);
-
-  useEffect(() => {
     if (searchResults.status == 'success') {
       setCurrentSuggestions(searchResults.result);
     }
@@ -29,6 +25,7 @@ export default function LocationPicker(props) {
 
   const handleInput = (e) => {
     props.setInputData({ type: 'query', query: e.target.value });
+    setInputVisibleValue(e.target.value);
     setSearchQuery(e.target.value);
     setShowSuggestions(true);
     setActiveIndex(-1);
@@ -85,7 +82,7 @@ export default function LocationPicker(props) {
         }
       }
       if (e.code === 'Enter') {
-        handleSubmit();
+        //handleSubmit();
         setShowSuggestions(false);
       }
     }
@@ -100,6 +97,7 @@ export default function LocationPicker(props) {
           </span>
           <div className="relative">
             <input
+              autoFocus
               autoComplete="off"
               maxLength={30}
               minLength={3}
@@ -114,7 +112,9 @@ export default function LocationPicker(props) {
               aria-haspopup="true"
               aria-controls="suggestions"
             />
-            {props.error && <ArrowTopNotification>{props.error}</ArrowTopNotification>}
+            {props.error && (
+              <ArrowTopNotification>{props.error}</ArrowTopNotification>
+            )}
           </div>
         </label>
       </div>
