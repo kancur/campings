@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Input } from '../../../../general/Input';
-import { inputClasses } from '../EditOrAddCamp';
+import { Input, inputClasses } from '../../../../general/Input';
 import { BACKEND_HOST } from '../../../../../OPTIONS';
 
 export function InputCoords({ mergeCoords, fetchedCoords }) {

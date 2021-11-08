@@ -1,6 +1,5 @@
-import { Input } from '../../../../general/Input';
+import { Input, inputClasses } from '../../../../general/Input';
 import { FaAngleDoubleDown } from 'react-icons/fa';
-import { inputClasses } from '../EditOrAddCamp';
 import { BACKEND_HOST } from '../../../../../OPTIONS';
 import { useEffect, useState } from 'react';
 
