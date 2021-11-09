@@ -56,6 +56,10 @@
   .suggestion-icon {
     @apply h-4 w-4 px-2 box-content fill-current
   }
+
+  .button {
+    @apply transition-colors duration-75 py-3 px-4 rounded-xl text-gray-100 font-semibold text-lg focus:ring-2
+  }
   
 }
 
