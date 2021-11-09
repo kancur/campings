@@ -1,90 +1,61 @@
-import React, { useEffect } from 'react';
-import {
-  FaCampground,
-  FaChartLine,
-  FaChevronDown,
-  FaFire,
-  FaSignInAlt,
-  FaStar,
-  FaUserPlus,
-} from 'react-icons/fa';
+import React from 'react';
+import { FaChartLine, FaStar, FaUserPlus, FaSignInAlt, FaChevronDown } from 'react-icons/fa';
+import { MenuItemWrapper } from './MenuItemWrapper';
 import Link from 'next/link';
 import classNames from 'classnames';
 
+const iconclasses = classNames('w-5 h-5');
 
-export default function MenuItems({auth}) {
-  const IconClasses = classNames('w-5 h-5');
-
+export function CommonMenuItems() {
   return (
     <>
-      <MenuItem>
-        <FaChartLine className={`${IconClasses} text-purple-500`} /> Populárne
-      </MenuItem>
-      <MenuItem>
-        <FaStar className={`${IconClasses} w-5 h-5 text-yellow-500 mb-0.5`} />
+      <MenuItemWrapper>
+        <FaChartLine className={`${iconclasses} text-purple-500`} /> Populárne
+      </MenuItemWrapper>
+      <MenuItemWrapper>
+        <FaStar className={`${iconclasses} w-5 h-5 text-yellow-500 mb-0.5`} />
         Moje obľúbené
-      </MenuItem>
-      {!auth.isLoading &&
-        (auth.user ? (
-          <LoggedInMenuItems auth={auth} />
-        ) : (
-          <LoggedOutMenuItems auth={auth} />
-        ))}
+      </MenuItemWrapper>
     </>
   );
 }
 
-const MenuItem = ({ children, ...props }) => {
-  const menuItemClassnames = classNames(
-    'flex',
-    'items-center',
-    'gap-1',
-    'py-2 px-3',
-    'rounded-2xl',
-    'hover:bg-white',
-    'shadow-none',
-    'hover:shadow-sm',
-    'transition-all',
-    'duration-100',
-    'cursor-pointer',
-    'whitespace-nowrap'
-  );
+export function LoggedInMenuItems({ auth }) {
   return (
-    <li {...props} className={menuItemClassnames}>
-      {children}
-    </li>
-  );
-};
-
-
-function LoggedInMenuItems({ auth }) {
-  return (
-    <MenuItem className="flex items-center gap-1">
-      {auth.user?.email}
-      <FaChevronDown />
-    </MenuItem>
+    <>
+      <MenuItemWrapper className="flex items-center gap-1">
+        {auth.user?.email}
+        <FaChevronDown className={iconclasses} />
+      </MenuItemWrapper>
+      {/*       <MenuItemWrapper>
+              <button type="button" className="flex items-center gap-1">
+                <FaSignOutAlt className={iconclasses} />
+                Odhlásiť
+              </button>
+            </MenuItemWrapper> */}
+    </>
   );
 }
 
-function LoggedOutMenuItems({ auth }) {
+export function LoggedOutMenuItems({ auth }) {
   return (
     <>
-      <MenuItem>
+      <MenuItemWrapper>
         <Link href="/prihlasenie">
-          <a className="flex items-center gap-1">
-            <FaSignInAlt />
+          <a className="flex items-center gap-1 text-gray-600">
+            <FaSignInAlt className={iconclasses} />
             Prihlásiť sa
           </a>
         </Link>
-      </MenuItem>
-      <MenuItem>
+      </MenuItemWrapper>
+      <MenuItemWrapper>
         <Link href="/registracia">
-          <a className="flex items-center gap-1">
-            <FaUserPlus />
+          <a className="flex items-center gap-1 text-gray-600">
+            <FaUserPlus className={iconclasses} />
             Registrovať sa
           </a>
         </Link>
-      </MenuItem>
+      </MenuItemWrapper>
     </>
   );
 }

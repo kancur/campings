@@ -1,13 +1,46 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { BurgerMenu } from './Menu/BurgerMenu';
 import { useMeasure } from 'react-use';
-import HeaderMenu from './Menu/HeaderMenu';
-import { useSpring, animated, useTransition } from 'react-spring';
+import HeaderNav from './Menu/HeaderNav';
+import { useSpring, animated } from 'react-spring';
+import { useMediaQuery } from 'react-responsive'
+import MobileMenu from './Menu/MobileMenu';
+
+// not using usetransition instead of usespring because I cannot get height of unmounted component
 
 export default function Header(props) {
+  // use to open/close the menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // handles display:none of the menu, so its not focusable when not visible
+  const [isMenuDisplayNone, setMenuDisplayNone] = useState(true);
+  // measures the height of the mobile menu
+  const [ref, { height }] = useMeasure();
+  const isNotMobile = useMediaQuery({ query: '(min-width: 640px)' })
+  
+  useEffect(() => {
+    if (isNotMobile) {
+      setIsMobileMenuOpen(false)
+    }
+  }, [isNotMobile])
+
+  // hiding the menu after closing animation ends so its not focusable
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      setMenuDisplayNone(false);
+    }
+  }, [isMobileMenuOpen])
+
+
+  const handleAnimationRest = () => {
+    if (!isMobileMenuOpen) {
+      setMenuDisplayNone(true);
+    }
+  }
+
+  const mobileMenuStyles = useSpring({
+    height: isMobileMenuOpen ? `${height}px` : '0px', onRest: () => handleAnimationRest()
+  });
 
   return (
     <>
@@ -27,39 +60,16 @@ export default function Header(props) {
             </Link>
           </div>
           <div className="flex justify-end">
-            <HeaderMenu setIsMobileMenuOpen={setIsMobileMenuOpen} />
+            <HeaderNav setIsMobileMenuOpen={setIsMobileMenuOpen} />
           </div>
         </div>
         {props.children}
       </header>
-      <MobileMenuMountTransition show={isMobileMenuOpen} />
-      {/* <div ref={ref}>{isMobileMenuOpen && <BurgerMenu />}</div> */}
+      <animated.div style={mobileMenuStyles}>
+        <div ref={ref} className={`${isMenuDisplayNone ? 'hidden' : ''}`}>
+          <MobileMenu />
+        </div>
+      </animated.div>
     </>
-  );
-}
-
-function MobileMenuMountTransition({ show }) {
-  const [ref, { height }] = useMeasure();
-
-
-  useEffect(() => {
-    console.log(height);
-  }, [height])
-  
-  const transitions = useTransition(show, {
-    from: { height: '0px' },
-    enter: { height: `${height}px` },
-    leave: { height: '0px' },
-    reverse: show,
-  });
-  return transitions(
-    (styles, item) =>
-      item && (
-        <animated.div style={styles}>
-          <div ref={ref} >
-          <BurgerMenu />
-          </div>
-        </animated.div>
-      )
   );
 }
