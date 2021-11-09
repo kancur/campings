@@ -58,6 +58,7 @@ export async function getStaticProps({ params }) {
       village: villageData,
       campings: campings,
     },
+    revalidate: 180,
   };
 }
 
