@@ -11,7 +11,7 @@ const LocationPage = ({ location }) => {
       <Search />
       <Main>
         <LocationHeading
-          pretitle="Skvelé kempy"
+          pretitle="Skvelé kempy v lokalite"
           title={location?.properties.name}
         />
 
