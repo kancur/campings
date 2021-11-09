@@ -1,4 +1,5 @@
 const colors = require('tailwindcss/colors');
+const headerHeight = '80px'
 
 module.exports = {
   mode: 'jit',
@@ -11,6 +12,13 @@ module.exports = {
       },
       maxWidth: {
         searchBar: '600px',
+        logo: '200px',
+      },
+      minHeight: {
+        header: headerHeight,
+      },
+      inset: {
+        header: headerHeight,
       },
       fontFamily: {
         sans: [
