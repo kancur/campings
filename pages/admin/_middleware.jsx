@@ -3,7 +3,6 @@ import { BACKEND_HOST } from '../../OPTIONS';
 
 // checking if user is admin
 export async function middleware(req) {
-  console.log('middleware running')
   const cookies = req.cookies;
   if (!cookies.jwt) return NextResponse.redirect('/prihlasenie');
 
@@ -14,7 +13,6 @@ export async function middleware(req) {
       },
     });
     const user = await response.json();
-    console.log('is admin?', user)
     if (user.is_admin === true) {
       return NextResponse.next();
     }
