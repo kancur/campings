@@ -11,8 +11,9 @@ export default function LoaderJumpingTents({ className, ...props }) {
   ) {
     icons.push(<TentIcon key={delay} delay={delay} />);
   }
+
   return (
-    <span {...props} className={`mx-auto w-60 h-24 p-4 text-gray-400 fill-current flex ${className}`}>
+    <span {...props} className={`mx-auto p-4 fill-current flex ${className}`}>
       {icons}
     </span>
   );
