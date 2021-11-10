@@ -3,11 +3,19 @@ import { useCookies } from 'react-cookie';
 import { BACKEND_HOST } from '../../OPTIONS';
 import { useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
+import LoaderFullscreen from '../../components/general/LoaderFullscreen';
+import { useRouter } from 'next/router';
 const axios = require('axios').default;
 
-export default function SignupPage() {
+const EMAIL_DOESNT_EXIST = 'Zadaný email neexistuje';
+const INCORRECT_PASSWORD = 'Nesprávne heslo';
+
+export default function LoginPage() {
+  const router = useRouter();
   const [cookies, setCookie] = useCookies(['jwt']);
   const [formData, setFormData] = useState({});
+  const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState({ email: null, password: null });
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -16,12 +24,12 @@ export default function SignupPage() {
   };
 
   const onSubmit = (e) => {
+    setError({ email: null, password: null });
     e.preventDefault();
-
+    setIsFetching(true);
     axios
       .post(`${BACKEND_HOST}/api/auth/login`, formData)
       .then(function (response) {
-        console.log(response.data);
         if (response.data.jwt) {
           // since this will not be an http-only cookie, it can be fetched by any script from document.cookie
           // unsafe and suspectible to attacks, but doesnt really matter for this website
@@ -30,31 +38,48 @@ export default function SignupPage() {
           setCookie('jwt', response.data.jwt, {
             path: '/',
           });
+          router.push('/');
+          setIsFetching(false);
         }
       })
       .catch(function (error) {
-        console.log(error);
+        setIsFetching(false);
+        const errorBody = error?.response?.data?.error;
+        if (!errorBody) console.log('error:', error);
+
+        if (errorBody.toLowerCase() == 'incorrect email') {
+          setError((prev) => ({ ...prev, email: EMAIL_DOESNT_EXIST }));
+        }
+
+        if (errorBody.toLowerCase() == 'incorrect password') {
+          setError((prev) => ({ ...prev, password: INCORRECT_PASSWORD }));
+        }
       });
   };
 
   return (
-    <FormWrapper title="Prihlásenie">
-      <form
-        onSubmit={onSubmit}
-        onInput={handleInputChange}
-        className="flex flex-col gap-2"
-      >
-        <label>
-          Email:
-          <Input name="email" type="email" />
-        </label>
-        <label>
-          Heslo:
-          <Input name="password" type="password" />
-        </label>
-        <Button type="submit">Prihlásiť</Button>
-      </form>
-    </FormWrapper>
+    <>
+      {isFetching && <LoaderFullscreen>Prihlasujem</LoaderFullscreen>}
+      <FormWrapper title="Prihlásenie">
+        <form
+          onSubmit={onSubmit}
+          onInput={handleInputChange}
+          className="flex flex-col gap-2"
+        >
+          <label>
+            Email:
+            <Input name="email" type="email" />
+            {error.email && <p className="text-red-500">{error.email}</p>}
+          </label>
+          <label>
+            Heslo:
+            <Input name="password" type="password" />
+            {error.password && <p className="text-red-500">{error.password}</p>}
+          </label>
+          <Button type="submit">Prihlásiť</Button>
+        </form>
+      </FormWrapper>
+    </>
   );
 }
 
