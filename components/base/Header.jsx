@@ -4,10 +4,8 @@ import { useEffect, useState } from 'react';
 import { useMeasure } from 'react-use';
 import HeaderNav from './Menu/HeaderNav';
 import { useSpring, animated } from 'react-spring';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 import MobileMenu from './Menu/MobileMenu';
-
-// not using usetransition instead of usespring because I cannot get height of unmounted component
 
 export default function Header(props) {
   // use to open/close the menu
@@ -16,30 +14,36 @@ export default function Header(props) {
   const [isMenuDisplayNone, setMenuDisplayNone] = useState(true);
   // measures the height of the mobile menu
   const [ref, { height }] = useMeasure();
-  const isNotMobile = useMediaQuery({ query: '(min-width: 640px)' })
-  
+  const isNotMobile = useMediaQuery({ query: '(min-width: 640px)' });
+
   useEffect(() => {
     if (isNotMobile) {
-      setIsMobileMenuOpen(false)
+      setIsMobileMenuOpen(false);
     }
-  }, [isNotMobile])
+  }, [isNotMobile]);
 
   // hiding the menu after closing animation ends so its not focusable
   useEffect(() => {
     if (isMobileMenuOpen) {
       setMenuDisplayNone(false);
     }
-  }, [isMobileMenuOpen])
-
+  }, [isMobileMenuOpen]);
 
   const handleAnimationRest = () => {
     if (!isMobileMenuOpen) {
       setMenuDisplayNone(true);
     }
-  }
+  };
 
+  const handleMenuLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // not using usetransition instead of usespring because I cannot get height of unmounted component
   const mobileMenuStyles = useSpring({
-    height: isMobileMenuOpen ? `${height}px` : '0px', onRest: () => handleAnimationRest()
+    to: {height: isMobileMenuOpen ? `${height}px` : '0px'},
+    onRest: () => handleAnimationRest(),
+    delay: 100,
   });
 
   return (
@@ -67,7 +71,7 @@ export default function Header(props) {
       </header>
       <animated.div style={mobileMenuStyles}>
         <div ref={ref} className={`${isMenuDisplayNone ? 'hidden' : ''}`}>
-          <MobileMenu />
+          <MobileMenu close={handleMenuLinkClick} />
         </div>
       </animated.div>
     </>
