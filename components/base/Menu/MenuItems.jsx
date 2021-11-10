@@ -1,6 +1,12 @@
 import React from 'react';
-import { FaChartLine, FaStar, FaUserPlus, FaSignInAlt, FaChevronDown } from 'react-icons/fa';
-import { MenuItemWrapper } from './MenuItemWrapper';
+import {
+  FaChartLine,
+  FaStar,
+  FaUserPlus,
+  FaSignInAlt,
+  FaChevronDown,
+} from 'react-icons/fa';
+import { MenuLinkWrapper } from './MenuItemWrapper';
 import Link from 'next/link';
 import classNames from 'classnames';
 
@@ -9,13 +15,13 @@ const iconclasses = classNames('w-5 h-5');
 export function CommonMenuItems() {
   return (
     <>
-      <MenuItemWrapper>
+      <MenuLinkWrapper>
         <FaChartLine className={`${iconclasses} text-purple-500`} /> Populárne
-      </MenuItemWrapper>
-      <MenuItemWrapper>
+      </MenuLinkWrapper>
+      <MenuLinkWrapper>
         <FaStar className={`${iconclasses} w-5 h-5 text-yellow-500 mb-0.5`} />
         Moje obľúbené
-      </MenuItemWrapper>
+      </MenuLinkWrapper>
     </>
   );
 }
@@ -23,10 +29,10 @@ export function CommonMenuItems() {
 export function LoggedInMenuItems({ auth }) {
   return (
     <>
-      <MenuItemWrapper className="flex items-center gap-1">
+      <MenuLinkWrapper className="flex items-center gap-1">
         {auth.user?.email}
         <FaChevronDown className={iconclasses} />
-      </MenuItemWrapper>
+      </MenuLinkWrapper>
       {/*       <MenuItemWrapper>
               <button type="button" className="flex items-center gap-1">
                 <FaSignOutAlt className={iconclasses} />
@@ -40,22 +46,14 @@ export function LoggedInMenuItems({ auth }) {
 export function LoggedOutMenuItems({ auth }) {
   return (
     <>
-      <MenuItemWrapper>
-        <Link href="/prihlasenie">
-          <a className="flex items-center gap-1 text-gray-600">
-            <FaSignInAlt className={iconclasses} />
-            Prihlásiť sa
-          </a>
-        </Link>
-      </MenuItemWrapper>
-      <MenuItemWrapper>
-        <Link href="/registracia">
-          <a className="flex items-center gap-1 text-gray-600">
-            <FaUserPlus className={iconclasses} />
-            Registrovať sa
-          </a>
-        </Link>
-      </MenuItemWrapper>
+      <MenuLinkWrapper href="/prihlasenie">
+        <FaSignInAlt className={iconclasses} />
+        Prihlásiť sa
+      </MenuLinkWrapper>
+      <MenuLinkWrapper href="/registracia">
+        <FaUserPlus className={iconclasses} />
+        Registrovať sa
+      </MenuLinkWrapper>
     </>
   );
 }
