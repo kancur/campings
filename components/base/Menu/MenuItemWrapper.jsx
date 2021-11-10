@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import Link from 'next/link';
 
-export function MenuItemWrapper({ children, ...props }) {
+export function MenuLinkWrapper({ children, href = '/', ...props }) {
   const menuItemClassnames = classNames(
     'flex',
     'items-center',
@@ -14,8 +15,10 @@ export function MenuItemWrapper({ children, ...props }) {
     'font-semibold'
   );
   return (
-    <li tabIndex={0} {...props} className={menuItemClassnames}>
-      {children}
+    <li tabIndex={0} {...props} >
+      <Link href={href}>
+        <a className={menuItemClassnames}>{children}</a>
+      </Link>
     </li>
   );
 }
