@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../../../context/authContext';
 import {
   CommonMenuItems,
@@ -8,7 +8,7 @@ import {
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 
-function MobileMenu({ close }) {
+export default function MobileMenu({ close }) {
   const auth = useAuth();
 
   const handleMenuItemClick = () => {
@@ -31,15 +31,14 @@ function MobileMenu({ close }) {
   );
 }
 
-export default MobileMenu;
 
 function UserInformationMobile({ auth }) {
   const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
   const router = useRouter();
 
-  const handleRemoveCookie = () => {
-    removeCookie('jwt');
-    router.reload(window.location.pathname);
+  const handleLogOut = () => {
+    auth.logOut()
+    router.push('/dovidenia');
   };
 
   return (
@@ -50,7 +49,7 @@ function UserInformationMobile({ auth }) {
           <span className="font-mono">{auth.user.email}</span>
         </div>
         <button
-          onClick={handleRemoveCookie}
+          onClick={handleLogOut}
           className="px-2 py-1 text-white font-semibold bg-red-500 hover:bg-red-400 rounded-md shadow-sm mx-auto block"
         >
           Odhlásiť

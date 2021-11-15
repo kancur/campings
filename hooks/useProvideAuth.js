@@ -5,7 +5,7 @@ import { BACKEND_HOST } from '../OPTIONS';
 export default function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [cookies, setCookie] = useCookies(['jwt']);
+  const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
 
   const getCurrentUser = async () => {
     try {
@@ -19,6 +19,21 @@ export default function useProvideAuth() {
       setIsLoading(false);
     }
   };
+
+  const logOut = () => {
+    removeCookie('jwt');
+    setUser(null);
+    setIsLoading(false);
+  }
+
+  useEffect(async () => {
+    setIsLoading(true);
+    const user = await getCurrentUser();
+    if (user) {
+      setUser(user);
+    }    
+    setIsLoading(false);
+  }, [cookies.jwt]); 
 
   useEffect(async () => {
     if (cookies?.jwt) {
@@ -34,5 +49,6 @@ export default function useProvideAuth() {
   return {
     user,
     isLoading,
+    logOut,
   };
 }
