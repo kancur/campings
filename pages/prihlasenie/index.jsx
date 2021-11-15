@@ -4,7 +4,7 @@ import { BACKEND_HOST } from '../../OPTIONS';
 import { useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import LoaderFullscreen from '../../components/general/LoaderFullscreen';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 const axios = require('axios').default;
 
 const EMAIL_DOESNT_EXIST = 'Zadaný email neexistuje';
@@ -45,7 +45,7 @@ export default function LoginPage() {
       .catch(function (error) {
         setIsFetching(false);
         const errorBody = error?.response?.data?.error;
-        if (!errorBody) console.log('error:', error);
+        if (!errorBody) return console.log('error:', error);
 
         if (errorBody.toLowerCase() == 'incorrect email') {
           setError((prev) => ({ ...prev, email: EMAIL_DOESNT_EXIST }));
