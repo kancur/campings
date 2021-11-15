@@ -39,9 +39,9 @@ export async function getStaticPaths() {
   });
 
   // only prerender first 10 paths, other will be server rendered on demand
-  //const first10paths = paths.slice(0, 10)
+  const first10paths = paths.slice(0, 10);
 
-  return { paths: paths, fallback: false };
+  return { paths: first10paths, fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
@@ -51,7 +51,7 @@ export async function getStaticProps({ params }) {
   const villageRes = await fetch(
     `${process.env.BACKEND_HOST}/api/village/slug/${encodedName}`
   );
-  const {campings, ...villageData} = await villageRes.json();
+  const { campings, ...villageData } = await villageRes.json();
 
   return {
     props: {
