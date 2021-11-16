@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { BACKEND_HOST } from '../../OPTIONS';
 
 export function CampListing({ camp, previewImage }) {
-  const featured = `${BACKEND_HOST}/${camp.featured_image}`;
+  const featured = `${FRONTEND_API_ROUTE}/${camp.featured_image}`;
 
   const parentVillage = camp.villages ? camp.villages[0] : null;
   const distance = camp.distance
