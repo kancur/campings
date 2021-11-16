@@ -36,7 +36,7 @@ export async function getStaticPaths() {
     };
   });
   
-  const pathsToBePrerendered = paths.slice(0, 10);
+  const pathsToBePrerendered = paths.slice(0, 3);
 
   return { paths: pathsToBePrerendered, fallback: "blocking" };
 }
