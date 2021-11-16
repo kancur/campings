@@ -2,10 +2,22 @@ import React from 'react';
 import { useAuth } from '../../../context/authContext';
 import classNames from 'classnames';
 import { FaBars } from 'react-icons/fa';
-import { CommonMenuItems, LoggedInMenuItems, LoggedOutMenuItems } from './MenuItems';
+import {
+  CommonMenuItems,
+  LoggedInMenuItems,
+  LoggedOutMenuItems,
+} from './MenuItems';
+import { useRouter } from 'next/router';
+
 
 export default function HeaderNav({ setIsMobileMenuOpen }) {
+  const router = useRouter();
   const auth = useAuth();
+
+  const handleLogOut = () => {
+    auth.logOut()
+    router.push('/dovidenia');
+  };
 
   const navClasses = classNames(
     { 'opacity-0': auth.isLoading },
@@ -22,13 +34,11 @@ export default function HeaderNav({ setIsMobileMenuOpen }) {
           <nav className="hidden sm:flex text-gray-600">
             <ul className="flex">
               <CommonMenuItems />
-              {
-                auth.user &&
-                <LoggedInMenuItems auth={auth} />
-              } {
-                !auth.user &&
+              {auth.user ? (
+                <LoggedInMenuItems logout={handleLogOut} auth={auth} />
+              ) : (
                 <LoggedOutMenuItems auth={auth} />
-              }
+              )}
             </ul>
           </nav>
           <FaBars
