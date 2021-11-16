@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CampTable from './CampTable';
-const { BACKEND_HOST } = require('../../../OPTIONS')
+const { FRONTEND_API_ROUTE } = require('../../../OPTIONS')
 
 export default function CampListPage() {
   const [campData, setCampData] = useState();
