@@ -28,14 +28,17 @@ export async function getStaticPaths() {
   const { BACKEND_HOST } = require('../../OPTIONS');
   const res = await fetch(`${BACKEND_HOST}/api/waterbody/list/`);
   const data = await res.json();
-  const parametersArray = data.map(({ slug }) => {
+  const paths = data.map(({ slug }) => {
     return {
       params: {
         waterbody_slug: slug,
       },
     };
   });
-  return { paths: parametersArray, fallback: false };
+
+  const pathsToBePrerendered = paths.slice(0, 3);
+
+  return { paths: pathsToBePrerendered, fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
