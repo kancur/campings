@@ -29,7 +29,7 @@ export function InputSlug({
     const value = e.target.value.replace(/\s/g, '');
     handleSlugInput(value);
 
-    fetch(`${FRONTEND_API_ROUTE}/api/camping/slug-check/?${value}`)
+    fetch(`${FRONTEND_API_ROUTE}/camping/slug-check/?${value}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.unique) {

@@ -14,7 +14,7 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
       limit: 1,
     };
     const searchParams = new URLSearchParams(params);
-    fetch(`${FRONTEND_API_ROUTE}/api/village/close/?${searchParams.toString()}`, {
+    fetch(`${FRONTEND_API_ROUTE}/village/close/?${searchParams.toString()}`, {
       signal: controller.signal,
     })
       .then((res) => res.json())

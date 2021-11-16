@@ -7,7 +7,7 @@ export default function CampListPage() {
 
   useEffect(async () => {
     try {
-      const res = await fetch(`${FRONTEND_API_ROUTE}/api/camping/list/`);
+      const res = await fetch(`${FRONTEND_API_ROUTE}/camping/list/`);
       const json = await res.json();
       setCampData(json);
     } catch (error) {

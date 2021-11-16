@@ -28,7 +28,7 @@ export default function LoginPage() {
     e.preventDefault();
     setIsFetching(true);
     axios
-      .post(`${FRONTEND_API_ROUTE}/api/auth/login`, formData)
+      .post(`${FRONTEND_API_ROUTE}/auth/login`, formData)
       .then(function (response) {
         if (response.data.jwt) {
           // since this will not be an http-only cookie, it can be fetched by any script from document.cookie

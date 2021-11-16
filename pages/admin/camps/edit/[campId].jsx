@@ -19,7 +19,7 @@ function EditCampPageComponent() {
 
   useEffect(() => {
     if (campId) {
-      fetch(`${FRONTEND_API_ROUTE}/api/camping/${campId}`)
+      fetch(`${FRONTEND_API_ROUTE}/camping/${campId}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText);

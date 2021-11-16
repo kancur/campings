@@ -56,7 +56,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
     formData.append('payload', JSON.stringify(payload));
     formData.append('featured_image', campData.featuredImage);
 
-    fetch(`${FRONTEND_API_ROUTE}/api/camping`, {
+    fetch(`${FRONTEND_API_ROUTE}/camping`, {
       method: 'POST',
       body: formData,
     })

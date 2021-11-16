@@ -38,7 +38,7 @@ export default function SignupPage() {
 
     if (isEmailValid && formData.password?.length > 6) {
       axios
-        .post(`${FRONTEND_API_ROUTE}/api/auth/signup`, formData)
+        .post(`${FRONTEND_API_ROUTE}/auth/signup`, formData)
         .then(function (response) {
           console.log(response.data);
           if (response.data.jwt) {
