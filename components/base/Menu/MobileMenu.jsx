@@ -8,7 +8,7 @@ import {
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 
-export default function MobileMenu({ close }) {
+export default function MobileMenu({ close, logout }) {
   const auth = useAuth();
 
   const handleMenuItemClick = () => {
@@ -33,14 +33,6 @@ export default function MobileMenu({ close }) {
 
 
 function UserInformationMobile({ auth }) {
-  const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
-  const router = useRouter();
-
-  const handleLogOut = () => {
-    auth.logOut()
-    router.push('/dovidenia');
-  };
-
   return (
     <div className="px-4">
       <div className="border-t-2 border-gray-200 py-4 text-sm text-gray-600 space-y-2">
@@ -49,7 +41,7 @@ function UserInformationMobile({ auth }) {
           <span className="font-mono">{auth.user.email}</span>
         </div>
         <button
-          onClick={handleLogOut}
+          onClick={() => auth.logout()}
           className="px-2 py-1 text-white font-semibold bg-red-500 hover:bg-red-400 rounded-md shadow-sm mx-auto block"
         >
           Odhlásiť
