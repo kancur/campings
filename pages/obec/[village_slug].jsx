@@ -39,9 +39,9 @@ export async function getStaticPaths() {
   });
 
   // only prerender first 10 paths, other will be server rendered on demand
-  const first10paths = paths.slice(0, 10);
+  const pathsToBePrerendered = paths.slice(0, 10);
 
-  return { paths: first10paths, fallback: 'blocking' };
+  return { paths: pathsToBePrerendered, fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
