@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BACKEND_HOST } from '../OPTIONS';
+import { useRouter } from 'next/router';
 
 export default function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
+  const router = useRouter();
 
   const getCurrentUser = async () => {
     try {
@@ -20,35 +22,37 @@ export default function useProvideAuth() {
     }
   };
 
-  const logOut = () => {
+  const logout = () => {
     removeCookie('jwt');
     setUser(null);
     setIsLoading(false);
-  }
+    router.push('/dovidenia');
+  };
 
   useEffect(async () => {
-    setIsLoading(true);
-    const user = await getCurrentUser();
-    if (user) {
-      setUser(user);
-    }    
+    if (cookies?.jwt) {
+      setIsLoading(true);
+      const user = await getCurrentUser();
+      if (user) {
+        setUser(user);
+      }
+    }
     setIsLoading(false);
-  }, [cookies.jwt]); 
+  }, [cookies.jwt]);
 
-  useEffect(async () => {
+/*   useEffect(async () => {
     if (cookies?.jwt) {
       const user = await getCurrentUser();
       if (user) {
         setUser(user);
       }
-      setIsLoading(false);
-    } else {
-      setIsLoading(false);
     }
-  }, []);
+    setIsLoading(false);
+  }, []); */
+
   return {
     user,
     isLoading,
-    logOut,
+    logout,
   };
 }
