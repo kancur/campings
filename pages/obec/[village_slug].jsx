@@ -26,7 +26,7 @@ const VillagePage = ({ village, campings }) => {
   );
 };
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const { BACKEND_HOST } = require('../../OPTIONS');
   const res = await fetch(`${BACKEND_HOST}/api/village/list/`);
   const data = await res.json();
@@ -39,19 +39,29 @@ export async function getStaticPaths() {
   });
 
   // only prerender first 10 paths, other will be server rendered on demand
-  const first10paths = paths.slice(0, 10);
+  //const first10paths = paths.slice(0, 10);
 
-  return { paths: first10paths, fallback: 'blocking' };
-}
+  return { paths: paths, fallback: 'blocking' };
+} */
 
 export async function getStaticProps({ params }) {
   const village_slug = params.village_slug;
   const encodedName = encodeURI(village_slug);
 
-  const villageRes = await fetch(
+  const villageResponse = await fetch(
     `${process.env.BACKEND_HOST}/api/village/slug/${encodedName}`
   );
-  const { campings, ...villageData } = await villageRes.json();
+  
+  const villageJson = await villageResponse.json();
+
+  if (!villageJson) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { campings, ...villageData } = villageJson;
+
 
   return {
     props: {
