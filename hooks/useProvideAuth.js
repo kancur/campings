@@ -31,16 +31,17 @@ export default function useProvideAuth() {
 
   useEffect(async () => {
     if (cookies?.jwt) {
+      console.log('cookies changed, current jwt:', cookies?.jwt);
       setIsLoading(true);
       const user = await getCurrentUser();
       if (user) {
         setUser(user);
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [cookies.jwt]);
 
-/*   useEffect(async () => {
+  /*   useEffect(async () => {
     if (cookies?.jwt) {
       const user = await getCurrentUser();
       if (user) {
