@@ -1,4 +1,4 @@
-import { Dropdown } from '../../general/Dropdown';
+import { Dropdown } from '../../general/SearchSuggestionsDropdown';
 import {
   FaMountain,
   FaHome,
