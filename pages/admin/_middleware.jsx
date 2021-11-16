@@ -7,7 +7,7 @@ export async function middleware(req) {
   if (!cookies.jwt) return NextResponse.redirect('/prihlasenie');
 
   try {
-    const response = await fetch(`${BACKEND_HOST}/api/auth/current-user`, {
+    const response = await fetch(`${process.env.BACKEND_HOST}/api/auth/current-user`, {
       headers: {
         Cookie: `jwt=${cookies.jwt}`,
       },

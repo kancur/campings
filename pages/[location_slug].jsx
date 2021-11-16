@@ -26,7 +26,7 @@ const LocationPage = ({ location }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch(`${BACKEND_HOST}/api/geo/list/`);
+  const res = await fetch(`${process.env.BACKEND_HOST}/api/geo/list/`);
   const data = await res.json();
   const paths = data.map(({ slug }) => {
     return {
@@ -45,7 +45,7 @@ export async function getStaticProps({ params }) {
   const location_slug = params.location_slug;
   const encodedName = encodeURI(location_slug);
 
-  const res = await fetch(`${BACKEND_HOST}/api/geo/slug/${encodedName}`);
+  const res = await fetch(`${process.env.BACKEND_HOST}/api/geo/slug/${encodedName}`);
   const data = await res.json();
   return {
     props: {

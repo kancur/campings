@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { BACKEND_HOST } from '../OPTIONS';
+import { FRONTEND_API_ROUTE } from '../OPTIONS';
 import { useRouter } from 'next/router';
 
 export default function useProvideAuth() {
@@ -11,7 +11,7 @@ export default function useProvideAuth() {
 
   const getCurrentUser = async () => {
     try {
-      const response = await fetch(`${BACKEND_HOST}/api/auth/current-user`, {
+      const response = await fetch(`${FRONTEND_API_ROUTE}/api/auth/current-user`, {
         credentials: 'include',
       });
       const data = await response.json();
