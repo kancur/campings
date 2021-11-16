@@ -37,8 +37,8 @@ export default function useProvideAuth() {
       if (user) {
         setUser(user);
       }
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [cookies.jwt]);
 
   /*   useEffect(async () => {
