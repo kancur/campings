@@ -1,6 +1,6 @@
 import { Input } from '../../components/general/Input';
 import { useCookies } from 'react-cookie';
-import { BACKEND_HOST } from '../../OPTIONS';
+import { BACKEND_HOST, FRONTEND_API_ROUTE } from '../../OPTIONS';
 import { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import classNames from 'classnames';
@@ -38,7 +38,7 @@ export default function SignupPage() {
 
     if (isEmailValid && formData.password?.length > 6) {
       axios
-        .post(`${BACKEND_HOST}/api/auth/signup`, formData)
+        .post(`${FRONTEND_API_ROUTE}/api/auth/signup`, formData)
         .then(function (response) {
           console.log(response.data);
           if (response.data.jwt) {

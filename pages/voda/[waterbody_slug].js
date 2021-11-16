@@ -25,8 +25,7 @@ const WaterbodyPage = ({ waterbody }) => {
 };
 
 export async function getStaticPaths() {
-  const { BACKEND_HOST } = require('../../OPTIONS');
-  const res = await fetch(`${BACKEND_HOST}/api/waterbody/list/`);
+  const res = await fetch(`${process.env.BACKEND_HOST}/api/waterbody/list/`);
   const data = await res.json();
   const paths = data.map(({ slug }) => {
     return {
