@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { BACKEND_HOST } from '../../OPTIONS';
+import { FRONTEND_API_ROUTE } from '../../OPTIONS';
 
 export function CampListing({ camp, previewImage }) {
   const featured = `${FRONTEND_API_ROUTE}/${camp.featured_image}`;
