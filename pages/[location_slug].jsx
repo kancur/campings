@@ -28,14 +28,17 @@ const LocationPage = ({ location }) => {
 export async function getStaticPaths() {
   const res = await fetch(`${BACKEND_HOST}/api/geo/list/`);
   const data = await res.json();
-  const namesArray = data.map(({ slug }) => {
+  const paths = data.map(({ slug }) => {
     return {
       params: {
         location_slug: slug,
       },
     };
   });
-  return { paths: namesArray, fallback: false };
+  
+  const pathsToBePrerendered = paths.slice(0, 10);
+
+  return { paths: pathsToBePrerendered, fallback: "blocking" };
 }
 
 export async function getStaticProps({ params }) {
