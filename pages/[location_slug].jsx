@@ -1,8 +1,6 @@
-import { useRouter } from 'next/router';
 import Main from '../components/base/Main';
 import Search from '../components/search/SearchWrapper';
 import LocationHeading from '../components/locationPage/LocationHeading';
-import { BACKEND_HOST } from '../OPTIONS';
 import { CampListing } from '../components/general/CampListing';
 
 const LocationPage = ({ location }) => {
