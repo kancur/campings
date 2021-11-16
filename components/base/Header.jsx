@@ -22,6 +22,7 @@ export default function Header(props) {
     }
   }, [isNotMobile]);
 
+
   // hiding the menu after closing animation ends so its not focusable
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -29,14 +30,17 @@ export default function Header(props) {
     }
   }, [isMobileMenuOpen]);
 
+
   const handleAnimationRest = () => {
     if (!isMobileMenuOpen) {
       setMenuDisplayNone(true);
     }
   };
 
+
   const handleMenuLinkClick = () => {
     setIsMobileMenuOpen(false);
+    setMenuDisplayNone(true);
   };
 
   // not using usetransition instead of usespring because I cannot get height of unmounted component
