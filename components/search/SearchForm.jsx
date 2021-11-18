@@ -8,28 +8,34 @@ export default function SearchForm(props) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    setError('')
+    setError('');
   }, [inputData]);
 
-  const handleSubmit = (data = inputData ) => {
-    console.log('handling submit with data', data)
+  const handleSubmit = (data = inputData) => {
+    if (data.type !== 'suggestion') return;
+    const { type, slug } = data.data;
+    if (type?.length === 0) return;
 
-    if (data.type === 'suggestion') {
-      const { type, slug } = data.data;
-      if (type === 'village') {
+    switch (type) {
+      case 'village':
         Router.push(`/obec/${slug}`);
-      } else if (type === 'waterbody') {
+        break;
+      case 'waterbody':
         Router.push(`/voda/${slug}`);
-      } else if (type?.length > 0) {
+        break;
+      case 'camp':
+        Router.push(`/kemp/${slug}`);
+        break;
+      default:
         Router.push(`/${slug}`);
-      }
+        break;
     }
 
     if (data.type === 'query') {
       if (data.query) {
         if (data.query.length < 3) {
-          setError('Prosím zadaj aspoň 3 znaky 😉')
-          return
+          setError('Prosím zadaj aspoň 3 znaky 😉');
+          return;
         }
         Router.push(`/search/?q=${encodeURIComponent(inputData.query)}`);
       }
