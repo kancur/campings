@@ -1,7 +1,7 @@
-export default function Main({ children }) {
+export default function Main({ children, ...props }) {
   return (
-    <main>
-      <div>{children}</div>
+    <main {...props}>
+      {children}
     </main>
   );
 }
