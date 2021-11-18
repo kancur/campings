@@ -7,7 +7,7 @@ import { Input, inputClasses } from '../../../general/Input';
 import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
 import { InputSlug } from './parts/InputSlug';
-import { BACKEND_HOST } from '../../../../OPTIONS';
+import { FRONTEND_API_ROUTE } from '../../../../OPTIONS';
 
 
 export default function EditOrAddCamp({ campDataFetched }) {

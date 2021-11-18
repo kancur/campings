@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Input, inputClasses } from '../../../../general/Input';
-import { BACKEND_HOST } from '../../../../../OPTIONS';
+import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
 
 export function InputCoords({ mergeCoords, fetchedCoords }) {
   const [coords, setCoords] = useState('');
