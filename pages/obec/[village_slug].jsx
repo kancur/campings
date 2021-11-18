@@ -20,7 +20,6 @@ const VillagePage = ({ village, campings }) => {
           ))}
         </div>
 
-        <div></div>
       </Main>
     </>
   );
