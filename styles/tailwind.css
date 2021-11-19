@@ -31,13 +31,11 @@
   }
 
   a {
-    @apply text-blue-700
+    @apply text-blue-500 hover:text-blue-600;
   }
-
 }
 
 @layer components {
-
   .camp-listing-wrapper {
     @apply p-4 flex flex-col gap-4 max-w-screen-md mx-auto;
   }
@@ -54,13 +52,12 @@
   }
 
   .suggestion-icon {
-    @apply h-4 w-4 px-2 box-content fill-current
+    @apply h-4 w-4 px-2 box-content fill-current;
   }
 
   .button {
-    @apply transition-colors duration-75 py-3 px-4 rounded-xl text-gray-100 font-semibold text-lg focus:ring-2
+    @apply transition-colors duration-75 py-3 px-4 rounded-xl text-gray-100 font-semibold text-lg focus:ring-2;
   }
-  
 }
 
 @layer utilities {
@@ -70,6 +67,10 @@
     border-left: 8px solid transparent !important;
     border-right: 8px solid transparent !important;
     border-bottom: 8px solid;
+  }
+
+  .no-highlight {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
