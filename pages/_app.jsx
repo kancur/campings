@@ -2,6 +2,8 @@ import '../styles/tailwind.css';
 import Layout from '../components/base/Layout';
 import { CookiesProvider } from 'react-cookie';
 import { AuthProvider } from '../context/authContext';
+import { useEffect } from 'react';
+import { PreviousPathProvider } from '../context/pathHistoryContext';
 
 function WrappedWithCoorectLayout({ Component, pageProps }) {
   const wrappedComponent = Component.Layout ? (
@@ -18,11 +20,13 @@ function WrappedWithCoorectLayout({ Component, pageProps }) {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <CookiesProvider>
-      <AuthProvider>
-        {WrappedWithCoorectLayout({ Component, pageProps })}
-      </AuthProvider>
-    </CookiesProvider>
+    <PreviousPathProvider>
+      <CookiesProvider>
+        <AuthProvider>
+          {WrappedWithCoorectLayout({ Component, pageProps })}
+        </AuthProvider>
+      </CookiesProvider>
+    </PreviousPathProvider>
   );
 }
 
