@@ -11,6 +11,7 @@ export default function useProvideAuth() {
 
   const getCurrentUser = async () => {
     try {
+      console.log('calling current user at ',FRONTEND_API_ROUTE)
       const response = await fetch(`${FRONTEND_API_ROUTE}/auth/current-user`, {
         credentials: 'include',
       });
@@ -31,7 +32,6 @@ export default function useProvideAuth() {
 
   useEffect(async () => {
     if (cookies?.jwt) {
-      console.log('cookies changed, current jwt:', cookies?.jwt);
       setIsLoading(true);
       const user = await getCurrentUser();
       if (user) {
