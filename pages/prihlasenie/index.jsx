@@ -1,10 +1,12 @@
 import { Input } from '../../components/general/Input';
 import { useCookies } from 'react-cookie';
 import { BACKEND_HOST, FRONTEND_API_ROUTE } from '../../OPTIONS';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import LoaderFullscreen from '../../components/general/LoaderFullscreen';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
+import Router from 'next/router';
+import { usePreviousPath } from '../../context/pathHistoryContext';
 const axios = require('axios').default;
 
 const EMAIL_DOESNT_EXIST = 'Zadaný email neexistuje';
@@ -16,6 +18,7 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState({ email: null, password: null });
+  const prevPath = usePreviousPath();
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -38,8 +41,16 @@ export default function LoginPage() {
           setCookie('jwt', response.data.jwt, {
             path: '/',
           });
-          router.push('/');
           setIsFetching(false);
+
+          // handle redirect based on previous path
+          if (prevPath === '/dovidenia') {
+            Router.push('/');
+          } else if (prevPath === undefined) {
+            Router.push('/');
+          } else {
+            Router.push(prevPath);
+          }
         }
       })
       .catch(function (error) {
