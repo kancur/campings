@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
   FaChartLine,
-  FaStar,
   FaUserPlus,
   FaSignInAlt,
   FaChevronDown,
+  FaHeart,
 } from 'react-icons/fa';
-import { MenuLinkWrapper } from './MenuItemWrapper';
+import { MenuItemWrapper } from './MenuItemWrapper';
 import classNames from 'classnames';
 import { DesktopMenuDropdown } from './DesktopMenuDropdown';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -16,13 +16,13 @@ const iconclasses = classNames('w-5 h-5');
 export function CommonMenuItems() {
   return (
     <>
-      <MenuLinkWrapper>
+      {/* <MenuLinkWrapper>
         <FaChartLine className={`${iconclasses} text-purple-500`} /> Populárne
-      </MenuLinkWrapper>
-      <MenuLinkWrapper>
-        <FaStar className={`${iconclasses} w-5 h-5 text-yellow-500 mb-0.5`} />
-        Moje obľúbené
-      </MenuLinkWrapper>
+      </MenuLinkWrapper> */}
+      <MenuItemWrapper href="/chcem-navstivit">
+        <FaHeart className={`${iconclasses} w-4 h-4 text-red-500`} />
+        Chcem navštíviť
+      </MenuItemWrapper>
     </>
   );
 }
@@ -36,10 +36,10 @@ export function LoggedInMenuItems({ auth }) {
     <>
       <div className="relative">
         <OutsideClickHandler onOutsideClick={() => setIsDropOpen(false)} >
-        <MenuLinkWrapper onClick={() => setIsDropOpen((prev) => !prev)} className="flex items-center gap-1">
+        <MenuItemWrapper onClick={() => setIsDropOpen((prev) => !prev)} className="flex items-center gap-1">
           Môj účet
           <FaChevronDown className="w-4 h-4" />
-        </MenuLinkWrapper>
+        </MenuItemWrapper>
         <DesktopMenuDropdown auth={auth} isDropOpen={isDropOpen} />
         </OutsideClickHandler>
       </div>
@@ -50,14 +50,14 @@ export function LoggedInMenuItems({ auth }) {
 export function LoggedOutMenuItems({ auth }) {
   return (
     <>
-      <MenuLinkWrapper href="/prihlasenie">
+      <MenuItemWrapper href="/prihlasenie">
         <FaSignInAlt className={iconclasses} />
         Prihlásiť sa
-      </MenuLinkWrapper>
-      <MenuLinkWrapper href="/registracia">
+      </MenuItemWrapper>
+      <MenuItemWrapper href="/registracia">
         <FaUserPlus className={iconclasses} />
         Registrovať sa
-      </MenuLinkWrapper>
+      </MenuItemWrapper>
     </>
   );
 }
