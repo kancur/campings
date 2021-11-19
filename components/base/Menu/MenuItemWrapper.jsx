@@ -2,17 +2,19 @@ import React from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 
-export function MenuLinkWrapper({ children, href = '/', ...props }) {
+export function MenuItemWrapper({ children, href = '/', ...props }) {
   const menuItemClassnames = classNames(
     'flex',
     'items-center',
     'gap-1',
     'py-2 px-3',
-    'hover:bg-blue-100',
-    'rounded-lg',
+    'hover:bg-gray-200',
+    'hover:text-gray-900',
+    'text-gray-600',
+    'rounded-2xl',
     'cursor-pointer',
     'whitespace-nowrap',
-    'font-semibold'
+    'no-highlight'
   );
   return (
     <li tabIndex={0} {...props} >
