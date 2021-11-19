@@ -62,8 +62,8 @@ const Camppage = ({ camp }) => {
               , okres {closestVillage.parents.county_name}
             </p>
 
-            <div className="sm:text-lg flex gap-1 items-center text-sm">
-              {!auth.isLoading && <AddWantToVisit />}
+            <div className="flex gap-1 items-center">
+              {!auth.isLoading && <AddWantToVisit id={camp._id} />}
             </div>
           </div>
 
