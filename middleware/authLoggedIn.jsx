@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { BACKEND_HOST } from '../../OPTIONS';
 
 // checking if user is logged in
 export async function authLoggedIn(req) {
