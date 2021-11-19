@@ -4,12 +4,22 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from '../../context/authContext';
 import Router, { useRouter } from 'next/router';
+import { useFavoriteCamps } from '../../context/favoriteCampsContext';
 
-function AddWantToVisit() {
+function AddWantToVisit({ id }) {
   const [isAdded, setIsAdded] = useState(false);
   const [styles, api] = useSpring(() => ({ scale: 1 }));
-  const router = useRouter();
   const auth = useAuth();
+  const favorite = useFavoriteCamps();
+
+  useEffect(() => {
+    if (favorite.camps) {
+      const isInFavorites = favorite.camps.some(
+        (favoriteCamp) => favoriteCamp._id === id
+      );
+      setIsAdded(isInFavorites);
+    }
+  }, [favorite.camps]);
 
   useEffect(() => {
     api.start({
@@ -43,11 +53,18 @@ function AddWantToVisit() {
     'transition-all',
     'duration-100',
     'cursor-pointer',
-    'no-highlight'
+    'no-highlight',
+    'text-sm',
+    'text-gray-700'
   );
 
   const handleClick = () => {
     if (auth.user) {
+      if (!isAdded) {
+        favorite.add(id);
+      } else {
+        favorite.delete(id);
+      }
       setIsAdded((prev) => !prev);
     } else {
       Router.push('/prihlasenie');
