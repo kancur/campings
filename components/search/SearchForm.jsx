@@ -11,24 +11,24 @@ export default function SearchForm(props) {
     setError('');
   }, [inputData]);
 
-  const handleSubmit = (data = inputData) => {
-    if (data.type !== 'suggestion') return;
-    const { type, slug } = data.data;
-    if (type?.length === 0) return;
-
-    switch (type) {
-      case 'village':
-        Router.push(`/obec/${slug}`);
-        break;
-      case 'waterbody':
-        Router.push(`/voda/${slug}`);
-        break;
-      case 'camp':
-        Router.push(`/kemp/${slug}`);
-        break;
-      default:
-        Router.push(`/${slug}`);
-        break;
+  const handleSubmit = (data = inputData) => {    
+    if (data.type === 'suggestion') {
+      const { type, slug } = data.data;
+      //if (type.length === 0) return;
+      switch (type) {
+        case 'village':
+          Router.push(`/obec/${slug}`);
+          break;
+        case 'waterbody':
+          Router.push(`/voda/${slug}`);
+          break;
+        case 'camp':
+          Router.push(`/kemp/${slug}`);
+          break;
+        default:
+          Router.push(`/${slug}`);
+          break;
+      }
     }
 
     if (data.type === 'query') {
