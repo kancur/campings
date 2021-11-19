@@ -1,8 +1,7 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiCrosshair } from 'react-icons/fi';
-
-const SIZE_MULTIPLIER = 0.1;
+import { useMeasure } from "react-use";
 
 const testCoords = [
   {
@@ -35,14 +34,18 @@ const testCoords = [
   },
 ];
 
-
 function deg2rad(degrees) {
   return degrees * (Math.PI / 180);
 }
 
-function MapWithPinPoints({ coords }) {
-  const height = 1328 * SIZE_MULTIPLIER;
-  const width = 2796 * SIZE_MULTIPLIER;
+function MapWithPinPoints({ coords, className, ...props }) {
+  const [ref, { width }] = useMeasure();
+  const [height, setHeight] = useState(0);
+  
+  useEffect(() => {
+    const height = (width / 2.10542168675);
+    setHeight(height);
+  }, [width])
 
   const constraints = {
     west: 16.833247270788636,
@@ -79,11 +82,12 @@ function MapWithPinPoints({ coords }) {
 
   const mapStyles = {
     height: `${height}px`,
-    width: `${width}px`,
+    width: '100%',
+    //width: `${dimensions.width}px`,
   };
 
   return (
-    <div className="relative" style={mapStyles}>
+    <div {...props} ref={ref} className={"relative filter drop-shadow-md " + (className || "")} style={mapStyles}>
       <Image src="/slovakia-map.png" layout="fill" />
       {coords.map((coordinates, index) => {
         const [image_x, image_y] = getXY(coordinates);
