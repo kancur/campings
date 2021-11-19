@@ -4,10 +4,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import MapWithPinPoints from '../../components/general/MapWithPinPoint';
 import { STATIC_HOST } from '../../OPTIONS';
+import AddWantToVisit from '../../components/camp/AddWantToVisit';
+import { useAuth } from '../../context/authContext';
 
 const Camppage = ({ camp }) => {
   const closestVillageDistance = camp.villages[0].distance;
   const closestVillage = camp.closest_village;
+  const auth = useAuth();
 
   const distanceSpelledOut = (meters) => {
     if (meters < 1000) {
@@ -35,28 +38,40 @@ const Camppage = ({ camp }) => {
   return (
     <>
       <Main className="flex flex-col items-center">
-        <div className="relative h-40 w-full">
-          {camp.featured_image && (
+        {camp.featured_image && (
+          <div className="relative h-40 w-full">
             <Image
+              priority
               src={`${STATIC_HOST}/${camp.featured_image}`}
               layout="fill"
               objectFit="cover"
             />
-          )}
-        </div>
+          </div>
+        )}
+
         <div className="max-w-7xl w-full border-gray-100 space-y-4 p-3 sm:p-4">
           <div className="space-y-1 sm:space-y-2">
-            <h1 className="text-2xl sm:text-4xl font-semibold text-blue-500">
+            <h1 className="text-2xl sm:text-4xl font-semibold text-pink-500">
               {camp.name}
             </h1>
-            <p className="sm:text-lg">
-              {closestVillage.name}, okres {closestVillage.parents.county_name}
+
+            <p className="sm:text-lg text-gray-500">
+              <Link href={`/obec/${closestVillage.slug}`}>
+                <a>{closestVillage.name}</a>
+              </Link>
+              , okres {closestVillage.parents.county_name}
             </p>
+
+            <div className="sm:text-lg flex gap-1 items-center text-sm">
+              {!auth.isLoading && <AddWantToVisit />}
+            </div>
           </div>
-          <div className="flex justify-center">
+
+          <div className="flex justify-center mx-auto max-w-xs">
             <MapWithPinPoints coords={[camp.coords]} />
           </div>
-          <p className="text-center text-lg">
+
+          <p className="sm:text-lg">
             Kemp vzdialený {distanceSpelledOut(closestVillageDistance)} od obce{' '}
             <Link href={`/obec/${closestVillage.slug}`}>
               <a>{closestVillage.name}</a>
