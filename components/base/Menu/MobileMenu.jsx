@@ -19,7 +19,7 @@ export default function MobileMenu({ close, logout }) {
     <div>
         <nav className="p-2 bg-gray-50">
           <ul
-            className="font-semibold text-gray-600 flex flex-col gap-1"
+            className="flex flex-col gap-1"
             onClick={handleMenuItemClick}
           >
             <CommonMenuItems />
@@ -30,7 +30,6 @@ export default function MobileMenu({ close, logout }) {
     </div>
   );
 }
-
 
 function UserInformationMobile({ auth }) {
   return (
