@@ -4,14 +4,24 @@ import { BACKEND_HOST, FRONTEND_API_ROUTE } from '../../OPTIONS';
 import { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import classNames from 'classnames';
+import LoaderFullscreen from '../../components/general/LoaderFullscreen';
+import { usePreviousPath } from '../../context/pathHistoryContext';
+import Link from 'next/link';
 var validator = require('validator');
 const axios = require('axios').default;
 
 export default function SignupPage() {
   const [cookies, setCookie] = useCookies(['jwt']);
+  const [isFetching, setIsFetching] = useState(false);
   const [formData, setFormData] = useState({});
   const [isPasswordMatching, setIsPasswordMatching] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [error, setError] = useState({
+    email: null,
+    password: null,
+    passwordConfirmatiom: null,
+  });
+  const prevPath = usePreviousPath();
 
   useEffect(() => {
     const pwd = formData.password;
@@ -31,16 +41,33 @@ export default function SignupPage() {
   };
 
   const onSubmit = (e) => {
+    setError({ email: null, password: null, passwordConfirmatiom: null });
     e.preventDefault();
-
     const isEmailValid = validator.isEmail(formData.email);
-    setIsEmailValid(isEmailValid);
 
-    if (isEmailValid && formData.password?.length > 6) {
+    if (!isEmailValid) {
+      return setError({ ...error, email: 'Neplatný email' });
+    }
+
+    if (formData.password?.length <= 6) {
+      return setError((prev) => ({
+        ...prev,
+        password: 'Heslo musí mať aspoň 7 znakov',
+      }));
+    }
+
+    if (formData.password !== formData['password-check']) {
+      return setError((prev) => ({
+        ...prev,
+        passwordConfirmatiom: 'Heslá sa nezhodujú',
+      }));
+    }
+
+    if (!error.email && !error.password && !error.passwordConfirmatiom) {
+      setIsFetching(true);
       axios
         .post(`${FRONTEND_API_ROUTE}/auth/signup`, formData)
         .then(function (response) {
-          console.log(response.data);
           if (response.data.jwt) {
             // since this will not be an http-only cookie, it can be fetched by any script from document.cookie
             // unsafe and suspectible to attacks, but doesnt really matter for this website
@@ -50,47 +77,81 @@ export default function SignupPage() {
               path: '/',
             });
           }
+          setIsFetching(false);
+          if (prevPath === '/dovidenia') {
+            Router.push('/');
+          } else if (prevPath === undefined) {
+            Router.push('/');
+          } else if (prevPath === 'registracia') {
+            Router.push('/');
+          } else {
+            Router.push(prevPath);
+          }
         })
         .catch(function (error) {
-          console.log(error);
+          setIsFetching(false);
+          if (error.response?.data?.error?.code === 11000) {
+            setError((prev) => ({ ...prev, email: 'Email už existuje' }));
+          }
+          console.log('error', error.message);
         });
     }
   };
 
+  const ErrorLabel = ({ children }) => (
+    <p className="text-red-500 flex gap-2">{children}</p>
+  );
+
   const passwordCheckClassnames = classNames({
-    'ring-2 ring-red-500 focus:ring-red-500': !isPasswordMatching,
+    'ring-2 ring-red-500 focus:ring-red-500': error.passwordConfirmatiom,
   });
 
   const emailCheckClassnames = classNames({
-    'ring-2 ring-red-500 focus:ring-red-500': !isEmailValid,
+    'ring-2 ring-red-500 focus:ring-red-500': error.email,
   });
 
   return (
-    <FormWrapper title="Registrácia">
-      <form
-        onSubmit={onSubmit}
-        onInput={handleInputChange}
-        className="flex flex-col gap-2 text-gray-600"
-      >
-        <label>
-          Email:
-          <Input name="email" type="email" className={emailCheckClassnames} />
-        </label>
-        <label>
-          Heslo:
-          <Input name="password" type="password" />
-        </label>
-        <label>
-          Zopakuj heslo:
-          <Input
-            name="password-check"
-            type="password"
-            className={passwordCheckClassnames}
-          />
-        </label>
-        <Button type="submit">Registrovať</Button>
-      </form>
-    </FormWrapper>
+    <>
+      {isFetching && <LoaderFullscreen>Prebieha registrácia</LoaderFullscreen>}
+
+      <FormWrapper title="Registrácia">
+        <form
+          onSubmit={onSubmit}
+          onInput={handleInputChange}
+          className="flex flex-col gap-2 text-gray-600"
+        >
+          <label>
+            Email:
+            <Input name="email" type="email" className={emailCheckClassnames} />
+            {error.email && (
+              <ErrorLabel>
+                {error.email}
+                {error.email === 'Email už existuje' && (
+                  <Link href="/prihlasenie">(Prihlásiť sa)</Link>
+                )}
+              </ErrorLabel>
+            )}
+          </label>
+          <label>
+            Heslo:
+            <Input name="password" type="password" />
+            {error.password && <ErrorLabel>{error.password}</ErrorLabel>}
+          </label>
+          <label>
+            Zopakuj heslo:
+            <Input
+              name="password-check"
+              type="password"
+              className={passwordCheckClassnames}
+            />
+            {error.passwordConfirmatiom && (
+              <ErrorLabel>{error.passwordConfirmatiom}</ErrorLabel>
+            )}
+          </label>
+          <Button type="submit">Registrovať</Button>
+        </form>
+      </FormWrapper>
+    </>
   );
 }
 
