@@ -27,20 +27,21 @@ export function CommonMenuItems() {
   );
 }
 
-
-
 export function LoggedInMenuItems({ auth }) {
   const [isDropOpen, setIsDropOpen] = useState(false);
-  
+
   return (
     <>
       <div className="relative">
-        <OutsideClickHandler onOutsideClick={() => setIsDropOpen(false)} >
-        <MenuItemWrapper onClick={() => setIsDropOpen((prev) => !prev)} className="flex items-center gap-1">
-          Môj účet
-          <FaChevronDown className="w-4 h-4" />
-        </MenuItemWrapper>
-        <DesktopMenuDropdown auth={auth} isDropOpen={isDropOpen} />
+        <OutsideClickHandler onOutsideClick={() => setIsDropOpen(false)}>
+          <MenuItemWrapper
+            onClick={() => setIsDropOpen((prev) => !prev)}
+            className="flex items-center gap-1"
+          >
+            Môj účet
+            <FaChevronDown className="w-4 h-4" />
+          </MenuItemWrapper>
+          <DesktopMenuDropdown auth={auth} isDropOpen={isDropOpen} />
         </OutsideClickHandler>
       </div>
     </>
