@@ -49,6 +49,8 @@ export default function LoginPage() {
             Router.push('/');
           } else if (prevPath === undefined) {
             Router.push('/');
+          } else if (prevPath === '/prihlasenie') {
+            Router.push('/');
           } else {
             Router.push(prevPath);
           }
@@ -88,7 +90,9 @@ export default function LoginPage() {
             <Input name="password" type="password" />
             {error.password && <p className="text-red-500">{error.password}</p>}
           </label>
-          <p className="text-center">Nemáš účet? <Link href="/registracia">Zaregistruj sa</Link></p>
+          <p className="text-center">
+            Nemáš účet? <Link href="/registracia">Zaregistruj sa</Link>
+          </p>
           <Button type="submit">Prihlásiť</Button>
         </form>
       </FormWrapper>
