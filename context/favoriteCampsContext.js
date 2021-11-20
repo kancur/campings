@@ -11,8 +11,6 @@ export function FavoriteCampsProvider({ children }) {
   const auth = useAuth();
 
   const addToFavorites = (id) => {
-    //const currentIndex = favoriteCamps.indexOf(id)
-    //if (currentIndex === -1) {}
     axios
       .post(`${FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
       .then((data) => {
@@ -22,24 +20,21 @@ export function FavoriteCampsProvider({ children }) {
   };
 
   const deleteFromFavorites = (id) => {
-    //const currentIndex = favoriteCamps.indexOf(id)
-    //if (currentIndex > -1) {}
     axios
       .delete(`${FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
       .then((data) => {
+        console.log('deleted, new data:',data.data)
         setFavoriteCamps(data.data);
       })
       .catch((err) => console.log(err));
   };
-
-
 
   // load users favorites on startup and on user change
   useEffect(() => {
     console.log('getting favorites from API');
     if (auth.user) {
       axios
-        .get(`${FRONTEND_API_ROUTE}/user/camp-favorites/?with_data=true`)
+        .get(`${FRONTEND_API_ROUTE}/user/camp-favorites/`)
         .then(({data}) => {
           setFavoriteCamps(data);
           console.log(data);
