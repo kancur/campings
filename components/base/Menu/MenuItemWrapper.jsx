@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 
-export function MenuItemWrapper({ children, href = '/', ...props }) {
+export function MenuItemWrapper({ children, href, ...props }) {
   const menuItemClassnames = classNames(
     'flex',
     'items-center',
@@ -17,10 +17,14 @@ export function MenuItemWrapper({ children, href = '/', ...props }) {
     'no-highlight'
   );
   return (
-    <li tabIndex={0} {...props} >
-      <Link href={href}>
+    <li tabIndex={0} {...props}>
+      {href ? (
+        <Link href={href}>
+          <a className={menuItemClassnames}>{children}</a>
+        </Link>
+      ) : (
         <a className={menuItemClassnames}>{children}</a>
-      </Link>
+      )}
     </li>
   );
 }
