@@ -13,11 +13,13 @@ function AddWantToVisit({ id }) {
   const favorite = useFavoriteCamps();
 
   useEffect(() => {
-    if (favorite.camps) {
+    if (favorite.camps.length > 0) {
       const isInFavorites = favorite.camps.some(
-        (favoriteCamp) => favoriteCamp._id === id
+        (favoriteCamp) => favoriteCamp.camp._id === id
       );
-      setIsAdded(isInFavorites);
+      if (isAdded !== isInFavorites) {
+        setIsAdded(isInFavorites);
+      }
     }
   }, [favorite.camps]);
 
