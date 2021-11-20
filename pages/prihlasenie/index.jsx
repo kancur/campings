@@ -7,6 +7,7 @@ import LoaderFullscreen from '../../components/general/LoaderFullscreen';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
 import { usePreviousPath } from '../../context/pathHistoryContext';
+import Link from 'next/link';
 const axios = require('axios').default;
 
 const EMAIL_DOESNT_EXIST = 'Zadaný email neexistuje';
@@ -75,7 +76,7 @@ export default function LoginPage() {
         <form
           onSubmit={onSubmit}
           onInput={handleInputChange}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 text-gray-600"
         >
           <label>
             Email:
@@ -87,6 +88,7 @@ export default function LoginPage() {
             <Input name="password" type="password" />
             {error.password && <p className="text-red-500">{error.password}</p>}
           </label>
+          <p className="text-center">Nemáš účet? <Link href="/registracia">Zaregistruj sa</Link></p>
           <Button type="submit">Prihlásiť</Button>
         </form>
       </FormWrapper>
