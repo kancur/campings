@@ -70,7 +70,7 @@ export default function SignupPage() {
       <form
         onSubmit={onSubmit}
         onInput={handleInputChange}
-        className="flex flex-col gap-2"
+        className="flex flex-col gap-2 text-gray-600"
       >
         <label>
           Email:
