@@ -15,7 +15,6 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
   } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      console.log('accepted', acceptedFiles);
       const file = acceptedFiles[0];
       setFileToUpload(
         Object.assign(file, {
@@ -24,6 +23,13 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
       );
     },
   });
+
+  const removeAll = (e) => {
+    e.stopPropagation();
+    acceptedFiles.length = 0;
+    acceptedFiles.splice(0, acceptedFiles.length);
+    setFileToUpload(null);
+  };
 
   const baseClasses = classNames(
     'bg-gray-50',
@@ -47,6 +53,9 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
       <span className="font-mono bg-gray-200 p-1">
         {fileToUpload?.name} (
         {Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
+      </span>{' '}
+      <span onClick={removeAll} className="text-red-500 underline">
+        Remove
       </span>
     </div>
   );
