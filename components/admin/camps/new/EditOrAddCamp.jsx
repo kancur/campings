@@ -14,6 +14,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [campData, setCampData] = useState({});
   const [fileToUpload, setFileToUpload] = useState();
+  const [saveState, setSaveState] = useState('idle');
 
   const mergeCampData = (data) => {
     setCampData((prevData) => ({ ...prevData, ...data }));
@@ -37,6 +38,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
   }, [campDataFetched]);
 
   const handleSave = async (e) => {
+    setSaveState('saving');
     console.log('saving');
     e.preventDefault();
     
@@ -61,6 +63,15 @@ export default function EditOrAddCamp({ campDataFetched }) {
       body: formData,
     })
       .then((res) => res.json())
+      .then((json) => {
+        if (json.status === 'saved'){
+          setSaveState('saved');
+          setTimeout(() => {
+            setSaveState('idle');
+          }, 2000);
+        }
+        return json;
+      })
       .then((json) => console.log(json))
       .catch((error) => console.log(error));
   };
@@ -182,7 +193,9 @@ export default function EditOrAddCamp({ campDataFetched }) {
           form="camp-edit-form"
           className="w-32 h-10 bg-green-500 justify-self-end"
         >
-          Save camp
+          {saveState === 'idle' && 'Save camp'}
+          {saveState === 'saving' && 'Saving ...'}
+          {saveState === 'saved' && 'SAVED'}
         </ButtonAdmin>
       </div>
       <CampPreview camp={campData} previewImage={fileToUpload?.preview} />
