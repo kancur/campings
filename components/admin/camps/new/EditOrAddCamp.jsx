@@ -39,7 +39,6 @@ export default function EditOrAddCamp({ campDataFetched }) {
 
   const handleSave = async (e) => {
     setSaveState('saving');
-    console.log('saving');
     e.preventDefault();
     
     const payload = {
