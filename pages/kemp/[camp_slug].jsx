@@ -49,7 +49,7 @@ const Camppage = ({ camp }) => {
           </div>
         )}
 
-        <div className="max-w-7xl w-full border-gray-100 space-y-4 p-3 sm:p-4">
+        <div className="max-w-3xl w-full border-gray-100 space-y-4 p-3 sm:p-4">
           <div className="space-y-1 sm:space-y-2">
             <h1 className="text-2xl sm:text-4xl font-semibold text-pink-500">
               {camp.name}
