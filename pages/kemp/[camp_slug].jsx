@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useEffect } from 'react';
 import Main from '../../components/base/Main';
 import Link from 'next/link';
@@ -85,7 +86,7 @@ const Camppage = ({ camp }) => {
 };
 
 export async function getStaticPaths() {
-  const { BACKEND_HOST, STATIC_HOST } = require('../../OPTIONS');
+  //const { BACKEND_HOST, STATIC_HOST } = require('../../OPTIONS');
   const res = await fetch(`${process.env.BACKEND_HOST}/api/camping/list/`);
   const data = await res.json();
   const paths = data.map(({ slug }) => {
@@ -96,7 +97,7 @@ export async function getStaticPaths() {
     };
   });
 
-  // only prerender first 10 paths, other will be server rendered on demand
+  // only prerender first x paths, other will be server rendered on demand
   const pathsToBePrerendered = paths.slice(0, 3);
 
   return { paths: pathsToBePrerendered, fallback: 'blocking' };
@@ -110,6 +111,12 @@ export async function getStaticProps({ params }) {
     `${process.env.BACKEND_HOST}/api/camping/slug/${encodedSlug}`
   );
 
+  if (res.status !== 200) {
+    return {
+      notFound: true,
+    };
+  }
+  
   const campData = await res.json();
 
   if (!campData) {
