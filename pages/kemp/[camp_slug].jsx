@@ -116,7 +116,7 @@ export async function getStaticProps({ params }) {
       notFound: true,
     };
   }
-  
+
   const campData = await res.json();
 
   if (!campData) {
