@@ -26,7 +26,7 @@ function index() {
 
   return (
     <div>
-      <h1 className="text-xl text-center p-4 text-white bg-green-500 font-semibold">
+      <h1 className="text-xl text-center p-4 text-white bg-emerald-500 font-semibold">
         Kempy ktoré plánujem navštíviť
       </h1>
       {favorite.camps.length === 0 && (

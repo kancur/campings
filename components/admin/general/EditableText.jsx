@@ -137,7 +137,7 @@ export default function EditableText({
               onKeyDown={handleKeyDown}
               onBlur={handleInputLostFocus}
               className={`ring-2  p-1 rounded focus:outline-none w-full ${
-                wasJustSaved ? 'ring-green-400' : 'ring-gray-300'
+                wasJustSaved ? 'ring-emerald-400' : 'ring-gray-300'
               }`}
               onChange={handleInput}
               type="text"
@@ -145,7 +145,7 @@ export default function EditableText({
             />
             <div className="absolute right-0.5 top-1/2 -translate-y-1/2 flex gap-1">
               {wasJustSaved ? (
-                <span className="text-green-500">SAVED</span>
+                <span className="text-emerald-500">SAVED</span>
               ) : (
                 <>
                   {transition(
@@ -155,7 +155,7 @@ export default function EditableText({
                           <ButtonAdmin
                             onClick={handleSave}
                             disabled={isSaving || !isInputDifferentFromPrevious}
-                            className="absolute bg-green-500 w-12 z-0 h-full"
+                            className="absolute bg-emerald-500 w-12 z-0 h-full"
                           >
                             {isSaving ? (
                               <FaSpinner className="animate-spin" />

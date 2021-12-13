@@ -158,7 +158,7 @@ export default function SignupPage() {
 const Button = ({ children, ...props }) => (
   <button
     {...props}
-    className="bg-green-600 hover:bg-green-500 transition-colors duration-75 py-3 px-4 rounded-xl text-gray-100 font-semibold text-lg focus:ring-2"
+    className="bg-emerald-600 hover:bg-emerald-500 transition-colors duration-75 py-3 px-4 rounded-xl text-gray-100 font-semibold text-lg focus:ring-2"
   >
     {children}
   </button>

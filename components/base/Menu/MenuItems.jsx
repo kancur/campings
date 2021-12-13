@@ -17,7 +17,7 @@ export function CommonMenuItems() {
   return (
     <>
       {/* <MenuLinkWrapper>
-        <FaChartLine className={`${iconclasses} text-purple-500`} /> Populárne
+        <FaChartLine className={`${iconclasses} text-violet-500`} /> Populárne
       </MenuLinkWrapper> */}
       <MenuItemWrapper href="/chcem-navstivit">
         <FaHeart className={`${iconclasses} w-4 h-4 text-red-500`} />

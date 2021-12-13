@@ -43,7 +43,7 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
     'cursor-pointer',
     'transition-colors duration-200 ease-in-out',
     { 'border-blue-400': isDragActive },
-    { 'border-green-400': isDragAccept },
+    { 'border-emerald-400': isDragAccept },
     { 'border-red-400': isDragReject }
   );
 

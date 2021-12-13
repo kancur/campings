@@ -14,7 +14,7 @@ export default function PopularDestinations() {
 function DestinationWrapper({ title, destinations }) {
   return (
     <div className="space-y-1">
-      <h3 className="text-2xl font-semibold text-green-600">{title}</h3>
+      <h3 className="text-2xl font-semibold text-emerald-600">{title}</h3>
       <DestinationList destinations={destinations} />
     </div>
   );

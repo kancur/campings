@@ -81,7 +81,7 @@ export function InputSlug({
               onClick={(e) => {
                 setIsEditEnabled(true);
               }}
-              className="text-sm px-2 py-1 rounded text-white bg-green-500"
+              className="text-sm px-2 py-1 rounded text-white bg-emerald-500"
             >
               Enable Editing
             </button>

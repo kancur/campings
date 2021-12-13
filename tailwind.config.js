@@ -2,9 +2,7 @@ const colors = require('tailwindcss/colors');
 const headerHeight = '80px'
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -54,10 +52,10 @@ module.exports = {
       animation: {
         loaderBounce: 'loaderBounce 1s infinite',
       },
+      scale: {
+        '101': '1.01',
+      }
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 };

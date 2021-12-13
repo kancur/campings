@@ -29,8 +29,8 @@ export function Input({ invalid, valid, className, ...props }) {
       'duration-200': true,
       'ring-2 ring-red-400': invalid,
       'focus:ring-2 focus:ring-red-400': invalid,
-      'ring-2 ring-green-300': valid,
-      'focus:ring-2 focus:ring-green-300': valid,
+      'ring-2 ring-emerald-300': valid,
+      'focus:ring-2 focus:ring-emerald-300': valid,
     }) +
     ' ' +
     inputClasses;

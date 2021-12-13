@@ -69,25 +69,25 @@ export default function LocationPickerDropdown({
 function getIcon(type) {
   switch (type) {
     case 'village':
-      return <FaHome className="h-4 w-4 px-2 text-yellow-500 box-content" />;
+      return <FaHome className="h-4 w-4 px-2 text-amber-500 box-content" />;
     case 'mountain_range':
       return <FaMountain className="h-4 w-4 px-2 text-gray-600 box-content" />;
     case 'basin':
-      return <FaTree className="h-4 w-4 px-2 text-green-600 box-content" />;
+      return <FaTree className="h-4 w-4 px-2 text-emerald-600 box-content" />;
     case 'valley':
       return (
         <ValleyIcon className="h-4 w-4 px-2 text-indigo-500 box-content fill-current" />
       );
     case 'flat':
       return (
-        <FlatIcon className="h-4 w-4 px-2 text-yellow-800 box-content fill-current" />
+        <FlatIcon className="h-4 w-4 px-2 text-amber-800 box-content fill-current" />
       );
     case 'plain':
       return (
-        <FlatIcon className="h-4 w-4 px-2 text-yellow-800 box-content fill-current" />
+        <FlatIcon className="h-4 w-4 px-2 text-amber-800 box-content fill-current" />
       );
     case 'plateau':
-      return <PlateauIcon className="suggestion-icon text-green-800" />;
+      return <PlateauIcon className="suggestion-icon text-emerald-800" />;
     case 'waterbody':
       return <FaWater className="suggestion-icon text-blue-500" />;
     case 'camp':
