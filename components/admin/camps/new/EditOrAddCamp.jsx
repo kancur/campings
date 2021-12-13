@@ -109,7 +109,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
           onSubmit={handleSave}
           id="camp-edit-form"
           autoComplete="off"
-          className="grid grid-cols-2 gap-4"
+          className="flex flex-col md:grid md:grid-cols-2 gap-4"
         >
           <div className="flex flex-col gap-2">
             <label className="text-gray-700">
@@ -190,7 +190,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
         <ButtonAdmin
           type="submit"
           form="camp-edit-form"
-          className="w-32 h-10 bg-green-500 justify-self-end"
+          className="w-32 h-10 bg-emerald-500 justify-self-end"
         >
           {saveState === 'idle' && 'Save camp'}
           {saveState === 'saving' && 'Saving ...'}
