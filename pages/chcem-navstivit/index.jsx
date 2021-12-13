@@ -3,6 +3,7 @@ import React from 'react';
 import { useFavoriteCamps } from '../../context/favoriteCampsContext';
 import Link from 'next/link';
 import { FaTrash } from 'react-icons/fa';
+import PopularDestinations from '../../components/base/Popular/PopularDestinations';
 
 function index() {
   const favorite = useFavoriteCamps();
@@ -21,15 +22,24 @@ function index() {
 
   const handleDelete = (id) => {
     favorite.delete(id);
-  }
+  };
 
   return (
     <div>
       <h1 className="text-xl text-center p-4 text-white bg-green-500 font-semibold">
         Kempy ktoré plánujem navštíviť
       </h1>
-      <ul className="p-2 divide-y divide-gray-300 max-w-md mx-auto">
-        {favorite.camps.map(({camp}) => {
+      {favorite.camps.length === 0 && (
+        <div className='p-4 flex flex-col items-center gap-4'>
+          <p className="text-lg p-4 text-center text-pink-500">
+            Zatiaľ nemáš pridané žiadne obľúbené kempy.
+          </p>
+          <h2 className="text-2xl">Nájdi kemp v niektorých z obľúbených lokalít:</h2>
+          <PopularDestinations />
+        </div>
+      )}
+      <ul className="p-2 divide-y divide-gray-300 max-w-3xl mx-auto">
+        {favorite.camps.map(({ camp }) => {
           return (
             <li key={camp._id} className={listItemStyle}>
               <div className="flex">
@@ -41,7 +51,10 @@ function index() {
                   </Link>
                 </div>
                 <div className="flex items-center p-2">
-                  <FaTrash onClick={() => handleDelete(camp._id)} className="w-5 h-5 text-red-500"/>
+                  <FaTrash
+                    onClick={() => handleDelete(camp._id)}
+                    className="w-5 h-5 text-red-500"
+                  />
                 </div>
               </div>
             </li>
