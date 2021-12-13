@@ -13,7 +13,7 @@ export function CampListing({ camp, previewImage }) {
   return (
     <Link href={`../kemp/${camp.slug}`}>
       <a>
-      <div className="shadow-md border border-gray-100 p-3 bg-white grid gap-4 grid-cols-3 rounded-md max-w-screen-md flex-1">
+      <div className="hover:shadow-lg hover:scale-101 duration-75 transition-all shadow-md border border-gray-100 p-3 bg-white grid gap-4 grid-cols-3 rounded-md max-w-screen-md flex-1">
         <div className="col-span-1 relative">
           <div className="w-48 h-48">
             <Image
