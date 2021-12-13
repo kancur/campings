@@ -1,30 +1,34 @@
 import Link from 'next/link';
+import { useState } from 'react';
 import ButtonAdmin from '../general/ButtonAdmin';
 import EditableText from '../general/EditableText';
 import DeleteButtonWithConfirm from './DeleteButtonWithConfirm';
+import { FRONTEND_API_ROUTE } from '../../../OPTIONS';
 
-export default function CampTable({ camps }) {
+export default function CampTable(props) {
+  const [camps, setCamps] = useState(props.camps);
+
   const handleSave = (_id, field, value) => {
-    console.log(
-      'handling saving of id',
-      _id,
-      '| field:',
-      field,
-      '| value:',
-      value
-    );
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve('failed somehow'), 1000);
     });
   };
 
   async function getConfirm() {
-    const result = await GetConfirmation();
+    return await GetConfirmation();
   }
 
-  async function handleCampDelete(camp) {
-    console.log('handling camp delete -->', camp.name);
-    getConfirm();
+  async function handleCampDelete(id) {
+    console.log('delete', id);
+    fetch(`${FRONTEND_API_ROUTE}/camping/${id}`, {
+      method: 'DELETE',
+    }).then((res) =>
+      res.json().then((data) => {
+        if (data.status === 'deleted') {
+          setCamps(camps.filter((camp) => camp._id !== id));
+        }
+      })
+    );
   }
 
   return (
@@ -56,11 +60,11 @@ export default function CampTable({ camps }) {
                 <div className="flex gap-2 items-stretch">
                   <Link href={`camps/edit/${camp._id}`}>
                     <a>
-                    <ButtonAdmin className="bg-yellow-500">Edit</ButtonAdmin>
+                      <ButtonAdmin className="bg-amber-500">Edit</ButtonAdmin>
                     </a>
                   </Link>
                   <DeleteButtonWithConfirm
-                    onConfirm={() => console.log('youhuuuu, confirmed')}
+                    onConfirm={() => handleCampDelete(camp._id)}
                     confirmationMsg={`Are you sure you want to delete camp "${camp.name}"? This action cannot be undone.`}
                   />
                 </div>
@@ -83,7 +87,7 @@ const Th = ({ children }) => (
 );
 
 const Td = ({ children }) => (
-  <td className="px-5 py-4 border-b border-gray-200">
+  <td className="px-1 py-1 md:px-5 md:py-4 border-b border-gray-200">
     <div>
       <div className="text-gray-900 whitespace-no-wrap">{children}</div>
     </div>
