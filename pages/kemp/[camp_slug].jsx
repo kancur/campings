@@ -9,8 +9,8 @@ import AddWantToVisit from '../../components/camp/AddWantToVisit';
 import { useAuth } from '../../context/authContext';
 
 const Camppage = ({ camp }) => {
-  const closestVillageDistance = camp.villages[0].distance;
-  const closestVillage = camp.closest_village;
+  const haveVillageInfo = camp?.villages && camp?.villages.length > 0;
+  const closestVillage = haveVillageInfo ? camp?.villages[0] : null;
   const auth = useAuth();
 
   const distanceSpelledOut = (meters) => {
@@ -56,12 +56,14 @@ const Camppage = ({ camp }) => {
               {camp.name}
             </h1>
 
-            <p className="sm:text-lg text-gray-500">
-              <Link href={`/obec/${closestVillage.slug}`}>
-                <a>{closestVillage.name}</a>
-              </Link>
-              , okres {closestVillage.parents.county_name}
-            </p>
+            {haveVillageInfo && (
+              <p className="sm:text-lg text-gray-500">
+                <Link href={`/obec/${closestVillage.slug}`}>
+                  <a>{closestVillage.name}</a>
+                </Link>
+                , okres {closestVillage.parents.county_name}
+              </p>
+            )}
 
             <div className="flex gap-1 items-center">
               {!auth.isLoading && <AddWantToVisit id={camp._id} />}
@@ -72,13 +74,16 @@ const Camppage = ({ camp }) => {
             <MapWithPinPoints coords={[camp.coords]} />
           </div>
 
-          <p className="sm:text-lg">
-            Kemp vzdialený {distanceSpelledOut(closestVillageDistance)} od obce{' '}
-            <Link href={`/obec/${closestVillage.slug}`}>
-              <a>{closestVillage.name}</a>
-            </Link>{' '}
-            v okrese {closestVillage.parents.county_name}.
-          </p>
+          {haveVillageInfo && (
+            <p className="sm:text-lg">
+              Kemp vzdialený {distanceSpelledOut(closestVillage.distance)} od
+              obce{' '}
+              <Link href={`/obec/${closestVillage.slug}`}>
+                <a>{closestVillage.name}</a>
+              </Link>{' '}
+              v okrese {closestVillage.parents.county_name}.
+            </p>
+          )}
         </div>
       </Main>
     </>
