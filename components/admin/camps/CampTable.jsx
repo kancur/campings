@@ -19,7 +19,6 @@ export default function CampTable(props) {
   }
 
   async function handleCampDelete(id) {
-    console.log('delete', id);
     fetch(`${FRONTEND_API_ROUTE}/camping/${id}`, {
       method: 'DELETE',
     }).then((res) =>

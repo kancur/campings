@@ -31,13 +31,11 @@ export function FavoriteCampsProvider({ children }) {
 
   // load users favorites on startup and on user change
   useEffect(() => {
-    console.log('getting favorites from API');
     if (auth.user) {
       axios
         .get(`${FRONTEND_API_ROUTE}/user/camp-favorites/`)
         .then(({data}) => {
           setFavoriteCamps(data);
-          console.log(data);
         })
         .catch((err) => console.log(err));
     } else {

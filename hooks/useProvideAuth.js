@@ -11,7 +11,6 @@ export default function useProvideAuth() {
 
   const getCurrentUser = async () => {
     try {
-      console.log('calling current user at ',FRONTEND_API_ROUTE)
       const response = await fetch(`${FRONTEND_API_ROUTE}/auth/current-user`, {
         credentials: 'include',
       });

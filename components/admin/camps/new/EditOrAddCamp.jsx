@@ -71,7 +71,6 @@ export default function EditOrAddCamp({ campDataFetched }) {
         }
         return json;
       })
-      .then((json) => console.log(json))
       .catch((error) => console.log(error));
   };
 

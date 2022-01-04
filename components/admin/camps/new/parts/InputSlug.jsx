@@ -16,9 +16,6 @@ export function InputSlug({
     setIsEditEnabled(!fetchedSlug)
   },[fetchedSlug])
 
-  useEffect(() => {
-    console.log('is edit enabled:', isEditEnabled);
-  }, [isEditEnabled]);
 
   const handleRevert = () => {
     setIsEditEnabled(false);
