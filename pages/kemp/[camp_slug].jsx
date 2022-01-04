@@ -10,7 +10,8 @@ import { useAuth } from '../../context/authContext';
 
 const Camppage = ({ camp }) => {
   const haveVillageInfo = camp?.villages && camp?.villages.length > 0;
-  const closestVillage = haveVillageInfo ? camp?.villages[0] : null;
+  const closestVillageDistance = camp.villages[0].distance;
+  const closestVillage = haveVillageInfo ? camp?.closest_village : null;
   const auth = useAuth();
 
   const distanceSpelledOut = (meters) => {
@@ -76,7 +77,7 @@ const Camppage = ({ camp }) => {
 
           {haveVillageInfo && (
             <p className="sm:text-lg">
-              Kemp vzdialený {distanceSpelledOut(closestVillage.distance)} od
+              Kemp vzdialený {distanceSpelledOut(closestVillageDistance)} od
               obce{' '}
               <Link href={`/obec/${closestVillage.slug}`}>
                 <a>{closestVillage.name}</a>
