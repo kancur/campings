@@ -13,8 +13,13 @@ A searchable directory of campings in Slovakia.
 <a href="https://nextjs.org/" title="Next.js"><img src="https://github.com/get-icon/geticon/raw/master/icons/nextjs-icon.svg" alt="Next.js" width="21px" height="21px"></a> NextJS 
 
 ## Features
-### Custom Admin Interface
+### :one: Custom Admin Interface
 ![najkempyadmin](https://user-images.githubusercontent.com/49352605/148376797-eb7d7f45-a2f3-40c4-88a3-94e5097705a0.png)
+
+### :two: Realtime Autocomplete
+### :three: Camp favoriting
+### 4️⃣ Geographic Based Search
+### 5️⃣ Camp Position Preview
 
 
 ## Get in Touch With me
