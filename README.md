@@ -17,8 +17,14 @@ A searchable directory of campings in Slovakia.
 ![najkempyadmin](https://user-images.githubusercontent.com/49352605/148376797-eb7d7f45-a2f3-40c4-88a3-94e5097705a0.png)
 
 ### :two: Realtime Autocomplete
+![najkempyautocomplete](https://user-images.githubusercontent.com/49352605/148378693-814fdfe3-c27c-43aa-a0e5-2914d4eb035d.png)
+
 ### :three: Camp favoriting
+![najkempy-favoriting](https://user-images.githubusercontent.com/49352605/148378846-b78eaf82-b0d4-4b58-87c3-f19c2ce0154b.png)
+
 ### 4️⃣ Geographic Based Search
+![najkempy-geobased-search](https://user-images.githubusercontent.com/49352605/148379162-9b8f8aab-b3be-4681-b4c6-d75c586f09c1.png)
+
 ### 5️⃣ Camp Position Preview
 
 
