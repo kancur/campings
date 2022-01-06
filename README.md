@@ -1,5 +1,5 @@
 # Najkempy.sk
-A searchable directory of campings in Slovakia.
+A searchable directory of campings in Slovakia made in Next.js
 
 ## Live Version
 **:link: [Click here to visit Najkempy.sk](https://najkempy.sk/)**
