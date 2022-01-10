@@ -1,29 +1,33 @@
-# Next.js + Tailwind CSS Example
+# Najkempy.sk
+A searchable directory of campings in Slovakia made in Next.js
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## Live Version
+**:link: [Click here to visit Najkempy.sk](https://najkempy.sk/)**
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+## Tech Stack
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" title="JavaScript"><img src="https://github.com/get-icon/geticon/raw/master/icons/javascript.svg" alt="JavaScript" width="21px" height="21px"></a> Javascript  
+<a href="https://www.w3.org/TR/CSS/" title="CSS3"><img src="https://github.com/get-icon/geticon/raw/master/icons/css-3.svg" alt="CSS3" width="21px" height="21px"></a> CSS  
+<a href="https://www.w3.org/TR/html5/" title="HTML5"><img src="https://github.com/get-icon/geticon/raw/master/icons/html-5.svg" alt="HTML5" width="21px" height="21px"></a> HTML  
+<a href="https://tailwindcss.com/" title="Tailwind CSS"><img src="https://github.com/get-icon/geticon/raw/master/icons/tailwindcss-icon.svg" alt="Tailwind CSS" width="21px" height="21px"></a> TailwindCSS  
+<a href="https://reactjs.org/" title="React"><img src="https://github.com/get-icon/geticon/raw/master/icons/react.svg" alt="React" width="21px" height="21px"></a> React  
+<a href="https://nextjs.org/" title="Next.js"><img src="https://github.com/get-icon/geticon/raw/master/icons/nextjs-icon.svg" alt="Next.js" width="21px" height="21px"></a> NextJS  
 
-## Preview
+## Features
+### :one: Custom Admin Interface
+<kbd>![najkempyadmin](https://user-images.githubusercontent.com/49352605/148376797-eb7d7f45-a2f3-40c4-88a3-94e5097705a0.png)</kbd>
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+### :two: Realtime Autocomplete
+<kbd>![najkempyautocomplete](https://user-images.githubusercontent.com/49352605/148378693-814fdfe3-c27c-43aa-a0e5-2914d4eb035d.png)</kbd>
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+### :three: Camp favoriting
+<kbd>![najkempy-favoriting](https://user-images.githubusercontent.com/49352605/148378846-b78eaf82-b0d4-4b58-87c3-f19c2ce0154b.png)</kbd>
 
-## Deploy your own
-  
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+### 4️⃣ Geographic Based Search
+<kbd>![najkempy-geobased-search](https://user-images.githubusercontent.com/49352605/148379162-9b8f8aab-b3be-4681-b4c6-d75c586f09c1.png)</kbd>
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+### 5️⃣ Camp Position Preview
+<kbd>![najkempy-preview](https://user-images.githubusercontent.com/49352605/148379515-b215b242-bdca-4279-a23c-274ea0970e66.png)</kbd>
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## Get in Touch With me
+🔗 Check out my [portfolio](https://petersmid.com)  
+💬 [Contact me](https://petersmid.com/#contact)
