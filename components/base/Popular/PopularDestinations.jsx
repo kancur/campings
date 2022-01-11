@@ -1,12 +1,20 @@
-import { mountains, towns, waterBodies } from '../../../data/popularDestinations';
+import {
+  mountains,
+  towns,
+  waterBodies,
+} from '../../../data/popularDestinations';
 import Link from 'next/link';
+import SectionHeading from './SectionHeading';
 
 export default function PopularDestinations() {
   return (
-    <div className="grid sm:grid-cols-3 gap-2 text-center sm:text-left max-w-xl">
-      <DestinationWrapper title="Hory" destinations={mountains} />
-      <DestinationWrapper title="Obce" destinations={towns} />
-      <DestinationWrapper title="Vodné plochy" destinations={waterBodies} />
+    <div>
+      <SectionHeading text="Obľúbené destinácie" />
+      <div className="grid sm:grid-cols-3 gap-2 text-center sm:text-left max-w-xl">
+        <DestinationWrapper title="Hory" destinations={mountains} />
+        <DestinationWrapper title="Obce" destinations={towns} />
+        <DestinationWrapper title="Vodné plochy" destinations={waterBodies} />
+      </div>
     </div>
   );
 }
