@@ -12,10 +12,9 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SearchWrapper searchDatabase={props.data} />
-      <section className="p-5">
-        <div className="space-y-4 max-w-xl mx-auto">
+      <section className="px-3 sm:px-8">
+        <div className="mx-auto">
           <PopularDestinations />
-          <PopularCampings />
         </div>
       </section>
     </div>

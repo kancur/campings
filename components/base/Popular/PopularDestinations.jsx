@@ -3,17 +3,21 @@ import {
   towns,
   waterBodies,
 } from '../../../data/popularDestinations';
+
+const merged = [...mountains, ...towns, ...waterBodies];
 import Link from 'next/link';
 import SectionHeading from './SectionHeading';
+import Image from 'next/image';
+import PopularDestinationCard from './PopularDestinationCard';
 
 export default function PopularDestinations() {
   return (
-    <div>
+    <div className=''>
       <SectionHeading text="Obľúbené destinácie" />
-      <div className="grid sm:grid-cols-3 gap-2 text-center sm:text-left max-w-xl">
-        <DestinationWrapper title="Hory" destinations={mountains} />
-        <DestinationWrapper title="Obce" destinations={towns} />
-        <DestinationWrapper title="Vodné plochy" destinations={waterBodies} />
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center sm:text-left">
+        {merged.map((dest) => (
+          <PopularDestinationCard destination={dest} />
+        ))}
       </div>
     </div>
   );
