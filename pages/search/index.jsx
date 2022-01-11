@@ -13,13 +13,13 @@ export default function SearchPage() {
   const [error, setError] = useState();
 
   const router = useRouter();
-  const { q } = router.query;
+  const { q: query } = router.query;
 
   useEffect(() => {
     setIsLoading(true);
     setResults([]);
-    if (q && q.length >= 3) {
-      campSearch(q)
+    if (query && query.length >= 3) {
+      campSearch(query)
         .then((res) => {
           if (res?.error) {
             setIsLoading(false);
@@ -34,12 +34,12 @@ export default function SearchPage() {
         })
         .catch((err) => console.log(err));
     }
-  }, [q]);
+  }, [query]);
 
   return (
     <>
       <SearchWrapper />
-      <LocationHeading pretitle="Výsledky vyhľadávania pre výraz" title={q} />
+      <LocationHeading pretitle="Výsledky vyhľadávania pre výraz" title={query} />
       <div className="camp-listing-wrapper h-full w-full">
         {isLoading && <LoaderJumpingTents className="my-auto" />}
 
