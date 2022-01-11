@@ -16,7 +16,7 @@ export default function PopularDestinations() {
       <SectionHeading text="Obľúbené destinácie" />
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center sm:text-left">
         {merged.map((dest) => (
-          <PopularDestinationCard destination={dest} />
+          <PopularDestinationCard key={dest.slug} destination={dest} />
         ))}
       </div>
     </div>
