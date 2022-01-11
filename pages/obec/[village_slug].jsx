@@ -67,7 +67,7 @@ export async function getStaticProps({ params }) {
       village: villageData,
       campings: campings,
     },
-    revalidate: 60 * 60 * 12,
+    revalidate: 60 * 60 * 12, // in seconds
   };
 }
 

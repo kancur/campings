@@ -51,6 +51,7 @@ export async function getStaticProps({ params }) {
     props: {
       waterbody: data
     },
+    revalidate: 60 * 60 * 12, // in seconds
   };
 }
 
