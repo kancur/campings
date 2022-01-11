@@ -2,6 +2,7 @@ import Head from 'next/head';
 import SearchWrapper from '../components/search/SearchWrapper';
 import { mountains, towns, waterBodies } from '../data/popularDestinations';
 import PopularDestinations from '../components/base/Popular/PopularDestinations';
+import PopularCampings from '../components/base/Popular/PopularCampings';
 
 export default function Home(props) {
   return (
@@ -13,13 +14,10 @@ export default function Home(props) {
       <SearchWrapper searchDatabase={props.data} />
       <section className="p-5">
         <div className="space-y-4 max-w-xl mx-auto">
-          <h2 className="text-3xl font-semibold text-center">
-            Obľúbené destinácie
-          </h2>
           <PopularDestinations />
+          <PopularCampings />
         </div>
       </section>
     </div>
   );
 }
-
