@@ -88,6 +88,8 @@ export default function LocationPicker(props) {
     }
   };
 
+  console.log('should focus', props.shouldFocus);
+
   return (
     <div className="flex flex-col">
       <div>
@@ -97,7 +99,7 @@ export default function LocationPicker(props) {
           </span>
           <div className="relative">
             <input
-              autoFocus
+              autoFocus={props.shouldFocus}
               autoComplete="off"
               maxLength={30}
               minLength={3}

@@ -11,7 +11,7 @@ export default function Home(props) {
         <title>Najkempy.sk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SearchWrapper searchDatabase={props.data} />
+      <SearchWrapper searchDatabase={props.data} shouldFocus={true} />
       <section className="px-3 sm:px-8">
         <div className="mx-auto">
           <PopularDestinations />

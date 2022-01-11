@@ -51,6 +51,7 @@ export default function SearchForm(props) {
       }}
     >
       <SearchInput
+        shouldFocus={props.shouldFocus}
         setInputData={setInputData}
         inputData={inputData}
         handleSubmit={handleSubmit}
