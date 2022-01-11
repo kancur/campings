@@ -4,7 +4,7 @@ import React from 'react';
 
 function PopularDestinationCard({ destination }) {
   return (
-    <div className="rounded-xl shadow-md hover:scale-101 hover:shadow-lg transition-all ease-in-out duration-300">
+    <div className="group rounded-xl shadow-md hover:scale-101 hover:shadow-lg transition-all ease-in-out duration-300">
       <Link href={destination.slug}>
         <a>
           <div className="relative">
@@ -16,7 +16,7 @@ function PopularDestinationCard({ destination }) {
                 className="rounded-xl"
               />
               <div className="z-20 absolute bottom-4 bg-gray-900/40 w-full p-2">
-                <h2 className="pl-2 text-3xl font-semibold text-gray-50  drop-shadow-sm ">
+                <h2 className="pl-2 text-3xl font-semibold text-gray-50  drop-shadow-sm group-hover:translate-x-1 duration-300 transition-all ">
                   {destination.name}
                 </h2>
               </div>
