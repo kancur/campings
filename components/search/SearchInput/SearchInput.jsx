@@ -88,8 +88,6 @@ export default function LocationPicker(props) {
     }
   };
 
-  console.log('should focus', props.shouldFocus);
-
   return (
     <div className="flex flex-col">
       <div>
