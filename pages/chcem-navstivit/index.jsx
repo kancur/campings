@@ -11,13 +11,6 @@ function index() {
   const favorite = useFavoriteCamps();
 
   const listItemStyle = classNames(
-    /*     'bg-gray-50',
-    'shadow-md',
-    'px-3',
-    'py-2',
-    'rounded-lg',
-    'border',
-    'border-gray-100', */
     'text-gray-700',
     'py-2'
   );
