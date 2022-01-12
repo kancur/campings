@@ -1,51 +1,16 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { FiCrosshair } from 'react-icons/fi';
-import { useMeasure } from "react-use";
-
-const testCoords = [
-  {
-    lat: 49.092540418409406,
-    lon: 19.58358797023151,
-  },
-  {
-    lat: 48.064507660398505,
-    lon: 17.17280150297176,
-  },
-  {
-    lat: 49.613779270388235,
-    lon: 19.44844326884067,
-  },
-  {
-    lat: 49.08740106561592,
-    lon: 22.565793659101345,
-  },
-  {
-    lat: 48.3805929863123,
-    lon: 16.833258596479702,
-  },
-  {
-    lat: 48.572355485744495,
-    lon: 19.131136112801542,
-  },
-  {
-    lat: 47.7342806652939,
-    lon: 18.290097174996074,
-  },
-];
-
-function deg2rad(degrees) {
-  return degrees * (Math.PI / 180);
-}
+import { useMeasure } from 'react-use';
 
 function MapWithPinPoints({ coords, className, ...props }) {
   const [ref, { width }] = useMeasure();
   const [height, setHeight] = useState(0);
-  
+
   useEffect(() => {
-    const height = (width / 2.10542168675);
+    const height = width / 2.10542168675;
     setHeight(height);
-  }, [width])
+  }, [width]);
 
   const constraints = {
     west: 16.833247270788636,
@@ -79,7 +44,6 @@ function MapWithPinPoints({ coords, className, ...props }) {
   const image_y = (height/2)-(width*mercN/(2*Math.PI));
  */
 
-
   const mapStyles = {
     height: `${height}px`,
     width: '100%',
@@ -87,7 +51,12 @@ function MapWithPinPoints({ coords, className, ...props }) {
   };
 
   return (
-    <div {...props} ref={ref} className={"relative filter drop-shadow-md " + (className || "")} style={mapStyles}>
+    <div
+      {...props}
+      ref={ref}
+      className={'relative filter drop-shadow-md ' + (className || '')}
+      style={mapStyles}
+    >
       <Image src="/slovakia-map.png" layout="fill" />
       {coords.map((coordinates, index) => {
         const [image_x, image_y] = getXY(coordinates);
@@ -100,7 +69,7 @@ function MapWithPinPoints({ coords, className, ...props }) {
           <div key={index} className="absolute" style={pinpointStyles}>
             <div className="absolute -top-3 -left-3">
               <FiCrosshair className="w-6 h-6 text-red-500 animate-pulse" />
-              </div>
+            </div>
           </div>
         );
       })}
