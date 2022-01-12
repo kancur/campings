@@ -11,8 +11,6 @@ export function PreviousPathProvider({ children }) {
     setPathHistory((prev) => [...prev, router.asPath]);
   }, [router.asPath]);
 
-  //const getPrevPath = () => pathHistory[pathHistory.length - 2];
-
   return (
     <previousPathContext.Provider value={pathHistory[pathHistory.length - 2]}>
       {children}
