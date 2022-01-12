@@ -1,7 +1,7 @@
 import SearchInput from './SearchInput/SearchInput';
 import Router from 'next/router';
 import { SearchButton } from './SearchButton';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function SearchForm(props) {
   const [inputData, setInputData] = useState({});
@@ -11,7 +11,7 @@ export default function SearchForm(props) {
     setError('');
   }, [inputData]);
 
-  const handleSubmit = (data = inputData) => {    
+  const handleSubmit = (data = inputData) => {
     if (data.type === 'suggestion') {
       const { type, slug } = data.data;
       //if (type.length === 0) return;
