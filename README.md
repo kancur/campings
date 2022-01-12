@@ -22,7 +22,7 @@ A searchable directory of campings in Slovakia made in Next.js
 ### :three: Camp favoriting
 <kbd>![najkempy-favoriting](https://user-images.githubusercontent.com/49352605/148378846-b78eaf82-b0d4-4b58-87c3-f19c2ce0154b.png)</kbd>
 
-### 4️⃣ Geographic Based Search
+### 4️⃣ Geo-Based Search
 <kbd>![najkempy-geobased-search](https://user-images.githubusercontent.com/49352605/148379162-9b8f8aab-b3be-4681-b4c6-d75c586f09c1.png)</kbd>
 
 ### 5️⃣ Camp Position Preview
