@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { FRONTEND_API_ROUTE } from '../OPTIONS';
 import { useAuth } from './authContext';
@@ -16,17 +15,16 @@ export function FavoriteCampsProvider({ children }) {
       .then((data) => {
         setFavoriteCamps(data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   const deleteFromFavorites = (id) => {
     axios
       .delete(`${FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
       .then((data) => {
-        console.log('deleted, new data:',data.data)
         setFavoriteCamps(data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   // load users favorites on startup and on user change
@@ -34,10 +32,10 @@ export function FavoriteCampsProvider({ children }) {
     if (auth.user) {
       axios
         .get(`${FRONTEND_API_ROUTE}/user/camp-favorites/`)
-        .then(({data}) => {
+        .then(({ data }) => {
           setFavoriteCamps(data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     } else {
       setFavoriteCamps([]);
     }
