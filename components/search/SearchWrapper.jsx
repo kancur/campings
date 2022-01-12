@@ -3,7 +3,7 @@ import SearchForm from './SearchForm';
 
 // https://depositphotos.com/stock-photos/spruce-forest.html?filter=all&qview=50904623
 
-export default function SearchWrapper({shouldFocus}) {
+export default function SearchWrapper({ shouldFocus }) {
   return (
     <>
       <div
@@ -16,7 +16,7 @@ export default function SearchWrapper({shouldFocus}) {
         className="p-6"
       >
         <div className="text-center flex flex-col items-center justify-center py-7 sm:py-16">
-          <SearchForm shouldFocus={shouldFocus} /> 
+          <SearchForm shouldFocus={shouldFocus} />
         </div>
       </div>
     </>
