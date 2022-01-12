@@ -24,7 +24,7 @@ function EditCampPageComponent() {
           if (!res.ok) {
             throw new Error(res.statusText);
           }
-          return res
+          return res;
         })
         .then((data) => data.json())
         .then((jsonData) => jsonData && setCampData(jsonData))
