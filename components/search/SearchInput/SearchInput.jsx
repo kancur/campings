@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { searchSuggestions } from '../../../helpers/search';
 import SuggestionsDropdown from './SuggestionsDropdown';
 import useDebouncedSearch from '../../../hooks/useDebouncedSearch';
-import LoadingSpinnerSVG from '../../general/LoadingSpinnerSVG';
-import OutsideClickHandler from 'react-outside-click-handler';
-import { SearchButton } from '../SearchButton';
 import { ArrowTopNotification } from '../../general/ArrowTopNotification';
 
 const useMainSearch = () =>
@@ -53,12 +50,6 @@ export default function LocationPicker(props) {
       setInputVisibleValue(searchQuery);
       props.setInputData({ type: 'query', query: searchQuery });
     }
-  };
-
-  const handleSubmit = () => {
-    setShowSuggestions(false);
-    //handleActiveIndexChange(index);
-    props.handleSubmit();
   };
 
   const handleDropdownClick = (index) => {
