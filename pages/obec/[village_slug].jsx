@@ -19,7 +19,6 @@ const VillagePage = ({ village, campings }) => {
             <CampListing key={camp._id} camp={camp} />
           ))}
         </div>
-
       </Main>
     </>
   );
@@ -50,7 +49,7 @@ export async function getStaticProps({ params }) {
   const villageResponse = await fetch(
     `${process.env.BACKEND_HOST}/api/village/slug/${encodedName}`
   );
-  
+
   const villageJson = await villageResponse.json();
 
   if (!villageJson) {
@@ -60,7 +59,6 @@ export async function getStaticProps({ params }) {
   }
 
   const { campings, ...villageData } = villageJson;
-
 
   return {
     props: {
