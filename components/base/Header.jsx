@@ -22,7 +22,6 @@ export default function Header(props) {
     }
   }, [isNotMobile]);
 
-
   // hiding the menu after closing animation ends so its not focusable
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -30,13 +29,11 @@ export default function Header(props) {
     }
   }, [isMobileMenuOpen]);
 
-
   const handleAnimationRest = () => {
     if (!isMobileMenuOpen) {
       setMenuDisplayNone(true);
     }
   };
-
 
   const handleMenuLinkClick = () => {
     setIsMobileMenuOpen(false);
@@ -45,7 +42,7 @@ export default function Header(props) {
 
   // not using usetransition instead of usespring because I cannot get height of unmounted component
   const mobileMenuStyles = useSpring({
-    to: {height: isMobileMenuOpen ? `${height}px` : '0px'},
+    to: { height: isMobileMenuOpen ? `${height}px` : '0px' },
     onRest: () => handleAnimationRest(),
     delay: 100,
   });
@@ -57,7 +54,6 @@ export default function Header(props) {
           <div className="flex">
             <Link href="/">
               <a className="max-w-logo min-w-full block self-center">
-                {/* <h1 className="text-4xl	text-brand font-bold px-4 py-1">Najkempy.sk</h1> */}
                 <Image
                   src="/media/najkempy-logo2.png"
                   className="min-w-full"
