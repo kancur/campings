@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth } from '../../../context/authContext';
 import {
   CommonMenuItems,
-  LoggedInMenuItems,
   LoggedOutMenuItems,
 } from './MenuItems';
-import { useCookies } from 'react-cookie';
-import { useRouter } from 'next/router';
 
-export default function MobileMenu({ close, logout }) {
+export default function MobileMenu({ close }) {
   const auth = useAuth();
 
   const handleMenuItemClick = () => {
@@ -17,16 +14,13 @@ export default function MobileMenu({ close, logout }) {
 
   return (
     <div>
-        <nav className="p-2 bg-gray-50">
-          <ul
-            className="flex flex-col gap-1"
-            onClick={handleMenuItemClick}
-          >
-            <CommonMenuItems />
-            {!auth.user && <LoggedOutMenuItems auth={auth} />}
-          </ul>
-        </nav>
-        {auth.user && <UserInformationMobile auth={auth} />}
+      <nav className="p-2 bg-gray-50">
+        <ul className="flex flex-col gap-1" onClick={handleMenuItemClick}>
+          <CommonMenuItems />
+          {!auth.user && <LoggedOutMenuItems auth={auth} />}
+        </ul>
+      </nav>
+      {auth.user && <UserInformationMobile auth={auth} />}
     </div>
   );
 }
