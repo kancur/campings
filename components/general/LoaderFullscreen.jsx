@@ -12,4 +12,4 @@ const LoaderFullscreen = ({ children }) => (
   </Portal>
 );
 
-export default LoaderFullscreen
+export default LoaderFullscreen;
