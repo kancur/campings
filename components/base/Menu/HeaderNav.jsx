@@ -9,13 +9,12 @@ import {
 } from './MenuItems';
 import { useRouter } from 'next/router';
 
-
 export default function HeaderNav({ setIsMobileMenuOpen }) {
   const router = useRouter();
   const auth = useAuth();
 
   const handleLogOut = () => {
-    auth.logOut()
+    auth.logOut();
     router.push('/dovidenia');
   };
 
