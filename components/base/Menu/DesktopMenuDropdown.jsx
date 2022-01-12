@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTransition, animated } from 'react-spring';
 import Link from 'next/link';
-import classNames from 'classnames'
+import classNames from 'classnames';
+
 export function DesktopMenuDropdown({ auth, isDropOpen }) {
   const transitions = useTransition(isDropOpen, {
     from: { opacity: 0 },
@@ -11,9 +12,7 @@ export function DesktopMenuDropdown({ auth, isDropOpen }) {
     delay: 100,
   });
 
-  const listItemStyle = classNames(
-    'p-2'
-  )
+  const listItemStyle = classNames('p-2');
 
   return transitions(
     (styles, item) =>
@@ -28,7 +27,11 @@ export function DesktopMenuDropdown({ auth, isDropOpen }) {
               <p className="text-center text-sm">{auth.user?.email}</p>
             </div>
             <ul>
-            {auth.user?.is_admin && <li className={listItemStyle}><Link href="/admin">Administrácia</Link></li>}
+              {auth.user?.is_admin && (
+                <li className={listItemStyle}>
+                  <Link href="/admin">Administrácia</Link>
+                </li>
+              )}
             </ul>
             <button
               onClick={auth.logout}
