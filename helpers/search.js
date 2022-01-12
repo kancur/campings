@@ -13,7 +13,9 @@ export async function searchSuggestions(query) {
 
 export async function campSearch(query) {
   try {
-    const fetched = await fetch(`${FRONTEND_API_ROUTE}/search/camps?q=${query}`);
+    const fetched = await fetch(
+      `${FRONTEND_API_ROUTE}/search/camps?q=${query}`
+    );
     const json = await fetched.json();
     return json;
   } catch (error) {
