@@ -4,7 +4,6 @@ import LocationHeading from '../../components/locationPage/LocationHeading';
 import { useEffect, useState } from 'react';
 import { campSearch } from '../../helpers/search';
 import { CampListing } from '../../components/general/CampListing';
-import { ImSpinner, ImSpinner2 } from 'react-icons/im';
 import LoaderJumpingTents from '../../components/general/LoaderJumpingTents';
 
 export default function SearchPage() {
@@ -23,6 +22,7 @@ export default function SearchPage() {
         .then((res) => {
           if (res?.error) {
             setIsLoading(false);
+            setError(res.error);
             console.error(res.error);
           }
           if (Array.isArray(res)) {
