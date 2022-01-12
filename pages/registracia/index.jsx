@@ -1,6 +1,6 @@
 import { Input } from '../../components/general/Input';
 import { useCookies } from 'react-cookie';
-import { BACKEND_HOST, FRONTEND_API_ROUTE } from '../../OPTIONS';
+import { FRONTEND_API_ROUTE } from '../../OPTIONS';
 import { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import classNames from 'classnames';
@@ -15,24 +15,12 @@ export default function SignupPage() {
   const [isFetching, setIsFetching] = useState(false);
   const [formData, setFormData] = useState({});
   const [isPasswordMatching, setIsPasswordMatching] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(true);
   const [error, setError] = useState({
     email: null,
     password: null,
     passwordConfirmatiom: null,
   });
   const prevPath = usePreviousPath();
-
-  useEffect(() => {
-    const pwd = formData.password;
-    const pwdCheck = formData['password-check'];
-
-    if (pwd && pwdCheck) {
-      setIsPasswordMatching(pwd === pwdCheck);
-    } else {
-      setIsPasswordMatching(true);
-    }
-  }, [formData]);
 
   const handleInputChange = (e) => {
     const name = e.target.name;
