@@ -33,17 +33,19 @@ export async function getStaticPaths() {
       },
     };
   });
-  
+
   const pathsToBePrerendered = paths.slice(0, 3);
 
-  return { paths: pathsToBePrerendered, fallback: "blocking" };
+  return { paths: pathsToBePrerendered, fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
   const location_slug = params.location_slug;
   const encodedName = encodeURI(location_slug);
 
-  const res = await fetch(`${process.env.BACKEND_HOST}/api/geo/slug/${encodedName}`);
+  const res = await fetch(
+    `${process.env.BACKEND_HOST}/api/geo/slug/${encodedName}`
+  );
   const data = await res.json();
   return {
     props: {
