@@ -91,7 +91,6 @@ export default function LocationPicker(props) {
               autoFocus={props.shouldFocus}
               autoComplete="off"
               maxLength={30}
-              minLength={3}
               onKeyDown={handleKeyDown}
               onInput={handleInput}
               placeholder="napr. Vysoké Tatry"
