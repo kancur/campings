@@ -1,9 +1,9 @@
 /**
- * 
+ *
  * @param {string} name string to convert to a slug
  * @returns {string} Slug generated from input string
  */
-export default function toSlug(name) {
+export default function toSlug(name: string) {
   if (name) {
     const lowercased = name.toLowerCase();
     const trimmed = lowercased.trim();

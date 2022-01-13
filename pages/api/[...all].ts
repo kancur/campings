@@ -1,6 +1,7 @@
 import httpProxyMiddleware from 'next-http-proxy-middleware';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default (req, res) =>
+export default (req: NextApiRequest, res: NextApiResponse) =>
   httpProxyMiddleware(req, res, {
     // the /api/ url is automatically captured and forwarded with the api call route
     // no need to add /api to the url manually

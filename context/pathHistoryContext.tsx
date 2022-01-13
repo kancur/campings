@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+// @ts-ignore
 const previousPathContext = createContext();
 
 export function PreviousPathProvider({ children }) {

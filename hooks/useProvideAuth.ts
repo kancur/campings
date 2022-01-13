@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { FRONTEND_API_ROUTE } from '../OPTIONS';
 import { useRouter } from 'next/router';
+import { User } from '../interfaces/baseInterfaces'
 
 export default function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
   const router = useRouter();
 
-  const getCurrentUser = async () => {
+  const getCurrentUser = async () : Promise<User> => {
     try {
       const response = await fetch(`${FRONTEND_API_ROUTE}/auth/current-user`, {
         credentials: 'include',
@@ -29,15 +30,17 @@ export default function useProvideAuth() {
     router.push('/dovidenia');
   };
 
-  useEffect(async () => {
-    if (cookies?.jwt) {
-      setIsLoading(true);
-      const user = await getCurrentUser();
-      if (user) {
-        setUser(user);
+  useEffect(() => {
+    (async () => {
+      if (cookies?.jwt) {
+        setIsLoading(true);
+        const user: User = await getCurrentUser();
+        if (user) {
+          setUser(user);
+        }
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    })();
   }, [cookies.jwt]);
 
   /*   useEffect(async () => {

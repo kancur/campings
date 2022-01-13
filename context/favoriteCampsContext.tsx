@@ -3,9 +3,10 @@ import axios from 'axios';
 import { FRONTEND_API_ROUTE } from '../OPTIONS';
 import { useAuth } from './authContext';
 
+// @ts-ignore
 const favoriteCampsContext = createContext();
 
-export function FavoriteCampsProvider({ children }) {
+export function FavoriteCampsProvider({ children }: { children: React.ReactNode }) {
   const [favoriteCamps, setFavoriteCamps] = useState([]);
   const auth = useAuth();
 

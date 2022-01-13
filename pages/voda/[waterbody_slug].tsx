@@ -2,6 +2,7 @@ import Search from '../../components/search/SearchWrapper';
 import LocationHeading from '../../components/locationPage/LocationHeading';
 import { CampListing } from '../../components/general/CampListing';
 import Main from '../../components/base/Main';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
 const WaterbodyPage = ({ waterbody }) => {
   return (
@@ -18,13 +19,12 @@ const WaterbodyPage = ({ waterbody }) => {
             <CampListing key={camp._id} camp={camp} />
           ))}
         </div>
-
       </Main>
     </>
   );
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`${process.env.BACKEND_HOST}/api/waterbody/list/`);
   const data = await res.json();
   const paths = data.map(({ slug }) => {
@@ -38,21 +38,37 @@ export async function getStaticPaths() {
   const pathsToBePrerendered = paths.slice(0, 3);
 
   return { paths: pathsToBePrerendered, fallback: 'blocking' };
+};
+
+type ContextParams = {
+  waterbody_slug: string;
 }
 
-export async function getStaticProps({ params }) {
-  const encodedSlug = encodeURI(params.waterbody_slug);
-
-  const response = await fetch(
-    `${process.env.BACKEND_HOST}/api/waterbody/slug/${encodedSlug}`
-  );
-  const data = await response.json();
-  return {
-    props: {
-      waterbody: data
-    },
-    revalidate: 60 * 60 * 12, // in seconds
-  };
+type Props = {
+  waterbody: object;
 }
+
+export const getStaticProps: GetStaticProps<Props, ContextParams> = async (context) => {
+  const slug = context.params.waterbody_slug;
+  const encodedSlug = encodeURI(slug);
+
+  try {
+    const response = await fetch(
+      `${process.env.BACKEND_HOST}/api/waterbody/slug/${encodedSlug}`
+    );
+    const data = await response.json();
+
+    return {
+      props: {
+        waterbody: data,
+      },
+      revalidate: 60 * 60 * 12, // in seconds
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+};
 
 export default WaterbodyPage;

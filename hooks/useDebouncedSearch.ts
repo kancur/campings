@@ -6,7 +6,7 @@ import useConstant from 'use-constant';
 // debounce time in miliseconds
 const DEBOUNCE_TIME = 50;
 
-const useDebouncedSearch = (searchFunction) => {
+const useDebouncedSearch = (searchFunction: (inputText: string) => void) => {
   const [inputText, setInputText] = useState('');
 
   const debouncedSearchFunction = useConstant(() =>
