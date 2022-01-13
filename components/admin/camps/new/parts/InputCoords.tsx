@@ -1,19 +1,33 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, inputClasses } from '../../../../general/Input';
 import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
+import convertObjValuesToStrings from '../../../../../helpers/objValuesToString';
 
-export function InputCoords({ mergeCoords, fetchedCoords }) {
+interface Coords {
+  lat: number;
+  lon: number;
+}
+
+interface ClosestVillage {
+  name: string;
+  coords: Coords;
+}
+
+export function InputCoords({ upsertCampData, fetchedCoords }) {
   const [coords, setCoords] = useState('');
-  const [coordsObj, setCoordsObj] = useState();
+  const [coordsObj, setCoordsObj] = useState<Coords | undefined>(undefined);
   const [isValid, setIsValid] = useState(true);
-  const [closestVillage, setClosestVillage] = useState();
+  const [closestVillage, setClosestVillage] = useState<ClosestVillage | undefined>(undefined);
 
   function fetchClosestVillage(controller) {
     const params = {
       ...coordsObj,
       limit: 1,
     };
-    const searchParams = new URLSearchParams(params);
+
+    const paramsAsStrings = convertObjValuesToStrings(params);
+
+    const searchParams = new URLSearchParams(paramsAsStrings);
     fetch(`${FRONTEND_API_ROUTE}/village/close/?${searchParams.toString()}`, {
       signal: controller.signal,
     })
@@ -44,18 +58,16 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
     lat !== undefined && lat.length > 0 && isFinite(lat) && Math.abs(lat) <= 90;
 
   const isLongitude = (lon) =>
-    lon !== undefined &&
-    lon.length > 0 &&
-    isFinite(lon) &&
-    Math.abs(lon) <= 180;
+    lon !== undefined && lon.length > 0 && isFinite(lon) && Math.abs(lon) <= 180;
 
-  const handleCoordsInput = (e) => {
+  const handleCoordsInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoords(e.target.value);
     try {
       const raw = e.target.value;
       const removedWhitespace = raw.replace(/\s/g, '');
       const [lat, lon] = removedWhitespace.split(',');
-      const coordsObj = {lat: Number(lat), lon: Number(lon)}
+      const coordsObj = { lat: Number(lat), lon: Number(lon) };
+
       setCoordsObj(coordsObj);
       if (!isLatitude(lat)) {
         throw new Error('invalid latitude');
@@ -63,12 +75,13 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
       if (!isLongitude(lon)) {
         throw new Error('invalid longitude');
       }
+
       setIsValid(true);
-      e.target.setCustomValidity('')
-      mergeCoords(coordsObj);
+      e.target.setCustomValidity('');
+      upsertCampData({ coords: coordsObj });
     } catch (error) {
       console.log(error.message);
-      e.target.setCustomValidity(error.message)
+      e.target.setCustomValidity(error.message);
       setIsValid(false);
     }
   };
@@ -87,9 +100,7 @@ export function InputCoords({ mergeCoords, fetchedCoords }) {
         invalid={!isValid && coords?.length > 0}
         valid={isValid && coords?.length > 0}
       />
-      {closestVillage && (
-        <p className="text-gray-500">Closest village: {closestVillage?.name}</p>
-      )}
+      {closestVillage && <p className="text-gray-500">Closest village: {closestVillage?.name}</p>}
     </div>
   );
 }

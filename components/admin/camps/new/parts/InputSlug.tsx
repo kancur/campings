@@ -1,28 +1,21 @@
 import { Input, inputClasses } from '../../../../general/Input';
 import { FaAngleDoubleDown } from 'react-icons/fa';
-import { BACKEND_HOST } from '../../../../../OPTIONS';
 import { useEffect, useState } from 'react';
+import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
 
-export function InputSlug({
-  handleGetSlugClick,
-  fetchedSlug,
-  handleSlugInput,
-  slug,
-  isEditMode,
-}) {
+export function InputSlug({ handleGetSlugClick, fetchedSlug, handleSlugInput, slug, isEditMode }) {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
 
   useEffect(() => {
-    setIsEditEnabled(!fetchedSlug)
-  },[fetchedSlug])
-
+    setIsEditEnabled(!fetchedSlug);
+  }, [fetchedSlug]);
 
   const handleRevert = () => {
     setIsEditEnabled(false);
     handleSlugInput(fetchedSlug);
   };
 
-  const handleInput = (e) => {
+  const handleInput = (e : React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s/g, '');
     handleSlugInput(value);
 
@@ -70,9 +63,7 @@ export function InputSlug({
 
         {!isEditEnabled && fetchedSlug && (
           <>
-            <span className="flex gap-3 text-red-400 text-sm">
-              Slug is already set
-            </span>
+            <span className="flex gap-3 text-red-400 text-sm">Slug is already set</span>
             <button
               type="button"
               onClick={(e) => {

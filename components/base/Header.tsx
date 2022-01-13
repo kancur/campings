@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { useMeasure } from 'react-use';
 import HeaderNav from './Menu/HeaderNav';
 import { useSpring, animated } from 'react-spring';
@@ -40,7 +40,7 @@ export default function Header(props) {
     setMenuDisplayNone(true);
   };
 
-  // not using usetransition instead of usespring because I cannot get height of unmounted component
+  // not using useTransition instead of usespring because I cannot get height of unmounted component
   const mobileMenuStyles = useSpring({
     to: { height: isMobileMenuOpen ? `${height}px` : '0px' },
     onRest: () => handleAnimationRest(),

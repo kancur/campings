@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useSpring, animated } from 'react-spring';
 import { useAuth } from '../../context/authContext';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useFavoriteCamps } from '../../context/favoriteCampsContext';
+import { FavoriteCamp } from '../../interfaces/baseInterfaces';
 
-function AddWantToVisit({ id }) {
+function AddWantToVisit({ id }: { id: string }) {
   const [isAdded, setIsAdded] = useState(false);
   const [styles, api] = useSpring(() => ({ scale: 1 }));
   const auth = useAuth();
@@ -15,7 +16,7 @@ function AddWantToVisit({ id }) {
   useEffect(() => {
     if (favorite.camps.length > 0) {
       const isInFavorites = favorite.camps.some(
-        (favoriteCamp) => favoriteCamp.camp._id === id
+        (favoriteCamp: FavoriteCamp) => favoriteCamp.camp._id === id
       );
       if (isAdded !== isInFavorites) {
         setIsAdded(isInFavorites);
@@ -78,11 +79,7 @@ function AddWantToVisit({ id }) {
       <div className="relative w-5 h-5">
         <animated.div style={styles}>
           <div className="w-5 h-5">
-            {isAdded ? (
-              <FaHeart className={iconStyles} />
-            ) : (
-              <FaRegHeart className={iconStyles} />
-            )}
+            {isAdded ? <FaHeart className={iconStyles} /> : <FaRegHeart className={iconStyles} />}
           </div>
         </animated.div>
       </div>

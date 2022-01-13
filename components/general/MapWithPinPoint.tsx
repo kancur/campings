@@ -2,8 +2,31 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { FiCrosshair } from 'react-icons/fi';
 import { useMeasure } from 'react-use';
+import { Coords } from '../../interfaces/baseInterfaces';
 
-function MapWithPinPoints({ coords, className, ...props }) {
+/**
+ * Slovakia Bounding Box Constraints
+ */
+const SLOVAKIA_BBOX = {
+  west: 16.833247270788636,
+  east: 22.56553492155819,
+  north: 49.613779270388235,
+  south: 47.7314465886913,
+};
+
+type MapWithPinPointProps = {
+  /**
+   * Array of coordinates (can display multiple pins on the map)
+   */
+  coords: Coords[];
+  className?: string;
+  props: any;
+};
+
+/**
+ * Returns a map of slovakia with pins on the map.
+ */
+function MapWithPinPoints({ coords, className, ...props }: MapWithPinPointProps) {
   const [ref, { width }] = useMeasure();
   const [height, setHeight] = useState(0);
 
@@ -12,23 +35,20 @@ function MapWithPinPoints({ coords, className, ...props }) {
     setHeight(height);
   }, [width]);
 
-  const constraints = {
-    west: 16.833247270788636,
-    east: 22.56553492155819,
-    north: 49.613779270388235,
-    south: 47.7314465886913,
-  };
-  const lonWidth = constraints.east - constraints.west;
-  const latHeight = constraints.north - constraints.south;
+  const lonWidth = SLOVAKIA_BBOX.east - SLOVAKIA_BBOX.west;
+  const latHeight = SLOVAKIA_BBOX.north - SLOVAKIA_BBOX.south;
 
-  function getXY(coords) {
-    const image_x = (width * (coords.lon - constraints.west)) / lonWidth;
+  /**
+   * Get X and Y image coordinates from longitude and latitude
+   */
+  function getXY(coords: Coords): [number, number] {
+    const image_x = (width * (coords.lon - SLOVAKIA_BBOX.west)) / lonWidth;
 
     //const latRad = deg2rad(coords.lat);
     //const mercN = Math.log(Math.tan(Math.PI / 4 + latRad / 2));
     //console.log('mercn -->', mercN)
     //const image_y = (height / 2) - ( height*mercN/(2*Math.PI));
-    const image_y = height * (1 - (coords.lat - constraints.south) / latHeight);
+    const image_y = height * (1 - (coords.lat - SLOVAKIA_BBOX.south) / latHeight);
 
     return [image_x, image_y];
   }
@@ -47,7 +67,6 @@ function MapWithPinPoints({ coords, className, ...props }) {
   const mapStyles = {
     height: `${height}px`,
     width: '100%',
-    //width: `${dimensions.width}px`,
   };
 
   return (
@@ -58,6 +77,7 @@ function MapWithPinPoints({ coords, className, ...props }) {
       style={mapStyles}
     >
       <Image src="/slovakia-map.png" layout="fill" />
+
       {coords.map((coordinates, index) => {
         const [image_x, image_y] = getXY(coordinates);
         const pinpointStyles = {
@@ -65,6 +85,7 @@ function MapWithPinPoints({ coords, className, ...props }) {
           top: `${image_y}px`,
           color: 'red',
         };
+
         return (
           <div key={index} className="absolute" style={pinpointStyles}>
             <div className="absolute -top-3 -left-3">

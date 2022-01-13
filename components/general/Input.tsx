@@ -22,7 +22,26 @@ export const inputClasses = classNames(
   'disabled:bg-gray-100'
 );
 
-export function Input({ invalid, valid, className, ...props }) {
+export function Input({
+  invalid,
+  valid,
+  className,
+  ...props
+}: {
+  invalid?: boolean;
+  valid?: boolean;
+  className?: string;
+  required?: boolean;
+  disabled?: boolean;
+  onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  id?: string;
+  name?: string;
+  placeholder?: string;
+  value?: string;
+  minLength?: number;
+  maxLength?: number;
+}) {
   const classes =
     classNames({
       'transition-all': true,

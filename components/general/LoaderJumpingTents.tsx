@@ -1,14 +1,16 @@
 import React from 'react';
+
 const ANIMATION_DELAY = 120; //miliseconds
 const NUMBER_OF_ICONS = 5;
 
-export default function LoaderJumpingTents({ className, ...props }) {
+type LoaderJumpingTentsProps = {
+  className: string;
+  props?: any;
+};
+
+export default function LoaderJumpingTents({ className, ...props }: LoaderJumpingTentsProps) {
   const icons = [];
-  for (
-    let delay = 0;
-    delay < ANIMATION_DELAY * NUMBER_OF_ICONS;
-    delay += ANIMATION_DELAY
-  ) {
+  for (let delay = 0; delay < ANIMATION_DELAY * NUMBER_OF_ICONS; delay += ANIMATION_DELAY) {
     icons.push(<TentIcon key={delay} delay={delay} />);
   }
 
@@ -19,7 +21,14 @@ export default function LoaderJumpingTents({ className, ...props }) {
   );
 }
 
-const TentIcon = ({ delay }) => (
+type TentIconProps = {
+  /**
+   * Animation delay in miliseconds
+   */
+  delay: number;
+};
+
+const TentIcon = ({ delay }: TentIconProps) => (
   <svg
     viewBox="0 0 455 455"
     xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,22 @@ import Image from 'next/image';
 import { STATIC_HOST } from '../../OPTIONS';
 import Link from 'next/link';
 
-export function CampListing({ camp, previewImage }) {
+interface Camp {
+  featured_image: string;
+  villages: { parents?: { county_name: string | null }; name: string }[];
+  distance: number;
+  slug: string;
+  name: string;
+  shortDescription: string;
+}
+
+export function CampListing({
+  camp,
+  previewImage,
+}: {
+  camp: Camp;
+  previewImage?: string;
+}) {
   const featured = `${STATIC_HOST}/${camp.featured_image}`;
 
   const parentVillage = camp.villages ? camp.villages[0] : null;

@@ -1,6 +1,20 @@
-import React, { Children } from 'react';
+import React from 'react';
 
-function FormWrapper({ title, children }) {
+type FormWrapperProps = {
+  /**
+   * Title of the form
+   */
+  title: string;
+  /**
+   * Children of the wrapper (most likely the form itself)
+   */
+  children: any;
+};
+
+/**
+ * A wrapper for login / signup forms
+ */
+function FormWrapper({ title, children }: FormWrapperProps) {
   return (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-200 to-blue-300">
       <div className="p-6 max-w-md w-full shadow-md rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 m-4">

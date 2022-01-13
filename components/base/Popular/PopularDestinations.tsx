@@ -1,8 +1,5 @@
-import {
-  mountains,
-  towns,
-  waterBodies,
-} from '../../../data/popularDestinations';
+import React from 'react';
+import { mountains, towns, waterBodies } from '../../../data/popularDestinations';
 
 const merged = [...mountains, ...towns, ...waterBodies];
 import SectionHeading from './SectionHeading';

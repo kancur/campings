@@ -1,6 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 
-function LoadingSpinnerSVG(props) {
+
+/**
+ * Loading Spinner SVG
+ */
+function LoadingSpinnerSVG(props : any) {
   return (
     <svg
       className="animate-spin h-5 w-5 text-gray-400 absolute right-1 top-0"
@@ -9,14 +13,7 @@ function LoadingSpinnerSVG(props) {
       viewBox="0 0 24 24"
       {...props}
     >
-      <circle
-        className="opacity-25"
-        cx={12}
-        cy={12}
-        r={10}
-        stroke="currentColor"
-        strokeWidth={4}
-      />
+      <circle className="opacity-25" cx={12} cy={12} r={10} stroke="currentColor" strokeWidth={4} />
       <path
         className="opacity-75"
         fill="currentColor"

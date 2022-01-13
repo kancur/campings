@@ -5,9 +5,8 @@ import {
   LoggedOutMenuItems,
 } from './MenuItems';
 
-export default function MobileMenu({ close }) {
+export default function MobileMenu({ close } : { close: () => void }) {
   const auth = useAuth();
-
   const handleMenuItemClick = () => {
     close();
   };
@@ -24,6 +23,7 @@ export default function MobileMenu({ close }) {
     </div>
   );
 }
+
 
 function UserInformationMobile({ auth }) {
   return (

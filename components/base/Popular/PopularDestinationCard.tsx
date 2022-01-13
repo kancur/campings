@@ -2,7 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-function PopularDestinationCard({ destination }) {
+type DestinationProps = {
+  name: string;
+  slug: string;
+  featured: string;
+}
+
+function PopularDestinationCard({ destination }: {destination: DestinationProps}) {
   return (
     <div className="group rounded-xl shadow-md hover:scale-101 hover:shadow-lg transition-all ease-in-out duration-300">
       <Link href={destination.slug}>
