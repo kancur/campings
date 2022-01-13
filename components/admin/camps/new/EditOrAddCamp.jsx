@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import ButtonAdmin from '../../general/ButtonAdmin';
 import CampPreview from './CampPreview';
@@ -16,7 +15,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
   const [fileToUpload, setFileToUpload] = useState();
   const [saveState, setSaveState] = useState('idle');
 
-  const mergeCampData = (data) => {
+  const upsertCampData = (data) => {
     setCampData((prevData) => ({ ...prevData, ...data }));
   };
 
@@ -26,7 +25,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
 
   useEffect(() => {
     if (fileToUpload) {
-      mergeCampData({ featuredImage: fileToUpload });
+      upsertCampData({ featuredImage: fileToUpload });
     }
   }, [fileToUpload]);
 
@@ -75,19 +74,19 @@ export default function EditOrAddCamp({ campDataFetched }) {
   };
 
   const handleSlugInput = (value) => {
-    mergeCampData({ slug: value });
+    upsertCampData({ slug: value });
   };
 
   const handleNameInput = (e) => {
-    mergeCampData({ name: e.target.value });
+    upsertCampData({ name: e.target.value });
   };
 
   const handleGetSlugClick = (e) => {
-    mergeCampData({ slug: toSlug(campData.name) });
+    upsertCampData({ slug: toSlug(campData.name) });
   };
 
   const mergeCoords = (coords) => {
-    mergeCampData({ coords });
+    upsertCampData({ coords });
   };
 
   return (
@@ -140,7 +139,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
               Lat, lon
               <span className="text-red-500 required-dot">*</span>
               <InputCoords
-                mergeCoords={mergeCoords}
+                upsertCampData={upsertCampData}
                 fetchedCoords={campDataFetched?.coords}
               />
             </label>
@@ -151,7 +150,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
               Short description
               <Input
                 onInput={(e) =>
-                  mergeCampData({ shortDescription: e.target.value })
+                  upsertCampData({ shortDescription: e.target.value })
                 }
                 type="text"
                 id="shortDescription"
@@ -164,7 +163,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
             <label className="text-gray-700">
               Website
               <textarea
-                onInput={(e) => mergeCampData({ website: e.target.value })}
+                onInput={(e) => upsertCampData({ website: e.target.value })}
                 rows={1}
                 type="text"
                 id="website"
