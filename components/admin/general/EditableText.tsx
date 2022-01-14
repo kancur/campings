@@ -1,25 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { KeyboardEventHandler, useEffect, useRef, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useTransition, animated } from 'react-spring';
 import OutsideClickHandler from 'react-outside-click-handler';
 import ButtonAdmin from './ButtonAdmin';
 import { ArrowTopNotification } from '../../general/ArrowTopNotification';
 
+type EditableTextProps = {
+  onSave: (value: string) => void;
+  text: string;
+  isFocused?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  props?: any;
+};
+
+/**
+ * An inline editable text element
+ */
 export default function EditableText({
   onSave,
   isFocused,
   minLength,
   maxLength,
+  text,
   ...props
-}) {
-  const [previouslySavedValue, setPreviouslySavedValue] = useState(props.text);
-  const [isInputDifferentFromPrevious, setIsInputDifferentFromPrevious] =
-    useState(false);
-  const [inputText, setInputText] = useState(props.text);
+}: EditableTextProps) {
+  const [previouslySavedValue, setPreviouslySavedValue] = useState(text);
+  const [isInputDifferentFromPrevious, setIsInputDifferentFromPrevious] = useState(false);
+  const [inputText, setInputText] = useState(text);
   const [editing, setEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [wasJustSaved, setWasJustSaved] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState<null | Error>(null);
 
   const transition = useTransition(isInputDifferentFromPrevious, {
     from: { right: -60, opacity: 0 },
@@ -35,7 +47,7 @@ export default function EditableText({
     }, 1200);
   }, [wasJustSaved]);
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
     const isSameText = e.target.value === previouslySavedValue;
     setIsInputDifferentFromPrevious(!isSameText);
@@ -50,7 +62,7 @@ export default function EditableText({
     setInputText(previouslySavedValue) */
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSave(e);
     } else if (e.key === 'Escape') {
@@ -68,10 +80,12 @@ export default function EditableText({
   };
 
   const validate = (value) => {
+    // empty value in text field is valid if minlength is not set or zero
     if (!value && (!minLength || minLength == 0)) {
       return true;
     }
 
+    // if minlength is set and value is shorter than minlength, it is invalid
     if (minLength) {
       if (value.length >= minLength) {
         return true;
@@ -80,26 +94,24 @@ export default function EditableText({
       }
     }
 
+    // if maxlength is set and value is longer than maxlength, it is invalid
     if (maxLength) {
       if (value.length >= maxLength) {
         return true;
       } else {
-        throw new Error(
-          `The field must have a maximum of ${maxLength} characters`
-        );
+        throw new Error(`The field must have a maximum of ${maxLength} characters`);
       }
     }
 
     return true;
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
     if (e) {
       e.preventDefault();
     }
     setError(null);
 
-    //displaySave
     if (!isInputDifferentFromPrevious) {
       handleCancelEditing();
       return;
@@ -108,7 +120,7 @@ export default function EditableText({
 
     try {
       validate(inputText);
-      await onSave(inputText);
+      onSave(inputText);
       setWasJustSaved(true);
       setPreviouslySavedValue(inputText);
       setIsInputDifferentFromPrevious(false);
@@ -156,16 +168,16 @@ export default function EditableText({
                             disabled={isSaving || !isInputDifferentFromPrevious}
                             className="absolute bg-emerald-500 w-12 z-0 h-full"
                           >
-                            {isSaving ? (
-                              <FaSpinner className="animate-spin" />
-                            ) : (
-                              'Save'
-                            )}
+                            {isSaving ? <FaSpinner className="animate-spin" /> : 'Save'}
                           </ButtonAdmin>
                         </animated.div>
                       )
                   )}
-                  <ButtonAdmin className="bg-red-500" onClick={handleCancelEditing} disabled={isSaving}>
+                  <ButtonAdmin
+                    className="bg-red-500"
+                    onClick={handleCancelEditing}
+                    disabled={isSaving}
+                  >
                     Cancel
                   </ButtonAdmin>
                 </>

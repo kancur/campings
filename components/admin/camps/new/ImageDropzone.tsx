@@ -3,28 +3,22 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 export default function DropZone({ fileToUpload, setFileToUpload }) {
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
 
-  const {
-    acceptedFiles,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      setFileToUpload(
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-    },
-  });
+  const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } =
+    useDropzone({
+      accept: 'image/*',
+      onDrop: (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        setFileToUpload(
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      },
+    });
 
-  const removeAll = (e) => {
+  const removeAll = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     acceptedFiles.length = 0;
     acceptedFiles.splice(0, acceptedFiles.length);
@@ -51,8 +45,7 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
     <div>
       File to upload:{' '}
       <span className="font-mono bg-gray-200 p-1">
-        {fileToUpload?.name} (
-        {Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
+        {fileToUpload?.name} ({Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
       </span>{' '}
       <span onClick={removeAll} className="text-red-500 underline">
         Remove
@@ -79,7 +72,7 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
           <p>Drag 'n' drop an image here, or click to select file</p>
         )}
       </div>
-      <p>{error}</p>
+      {/* <p>{error}</p> */}
     </div>
   );
 }

@@ -1,32 +1,24 @@
 import Image from 'next/image';
 import { STATIC_HOST } from '../../OPTIONS';
 import Link from 'next/link';
-
-interface Camp {
-  featured_image: string;
-  villages: { parents?: { county_name: string | null }; name: string }[];
-  distance: number;
-  slug: string;
-  name: string;
-  shortDescription: string;
-}
+import { CampListingInterface } from '../../interfaces/baseInterfaces';
 
 export function CampListing({
   camp,
   previewImage,
 }: {
-  camp: Camp;
+  camp: CampListingInterface | undefined;
   previewImage?: string;
 }) {
-  const featured = `${STATIC_HOST}/${camp.featured_image}`;
+  const featured = `${STATIC_HOST}/${camp?.featured_image}`;
 
-  const parentVillage = camp.villages ? camp.villages[0] : null;
-  const distance = camp.distance
-    ? `${Math.round(camp.distance / 1000)} km`
-    : '';
+  const parentVillage = camp?.villages ? camp?.villages[0] : null;
+  const distance = camp?.distance
+    ? `${Math.round(camp?.distance / 1000)} km`
+    : 'N/A';
 
   return (
-    <Link href={`/kemp/${camp.slug}`}>
+    <Link href={`/kemp/${camp?.slug}`}>
       <a>
         <div className="overflow-hidden hover:shadow-lg hover:scale-101 duration-75 transition-all shadow-md bg-white grid grid-cols-1 sm:grid-cols-3 rounded-lg max-w-screen-md flex-1">
           <div className="col-span-1 relative">
@@ -37,7 +29,7 @@ export function CampListing({
                 src={
                   previewImage
                     ? previewImage
-                    : camp.featured_image
+                    : camp?.featured_image
                     ? featured
                     : '/camp_placeholder.png'
                 }

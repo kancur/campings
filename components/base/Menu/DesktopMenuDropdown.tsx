@@ -2,8 +2,9 @@ import React from 'react';
 import { useTransition, animated } from 'react-spring';
 import Link from 'next/link';
 import classNames from 'classnames';
+import { AuthContext } from '../../../interfaces/baseInterfaces';
 
-export function DesktopMenuDropdown({ auth, isDropOpen }) {
+export function DesktopMenuDropdown({ auth, isDropOpen }: { auth: AuthContext, isDropOpen: boolean }) {
   const transitions = useTransition(isDropOpen, {
     from: { opacity: 0 },
     enter: { opacity: 1 },

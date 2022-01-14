@@ -1,34 +1,32 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ButtonAdmin from '../general/ButtonAdmin';
 import EditableText from '../general/EditableText';
 import DeleteButtonWithConfirm from './DeleteButtonWithConfirm';
 import { FRONTEND_API_ROUTE } from '../../../OPTIONS';
+import { CampWithVillages } from '../../../interfaces/baseInterfaces';
 
 export default function CampTable(props) {
   const [camps, setCamps] = useState(props.camps);
 
-  const handleSave = (_id, field, value) => {
+  const handleSave = (_id: string, field: string, value: string) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve('failed somehow'), 1000);
     });
   };
 
-  async function getConfirm() {
-    return await GetConfirmation();
-  }
-
-  async function handleCampDelete(id) {
+  async function handleCampDelete(id: string) {
     fetch(`${FRONTEND_API_ROUTE}/camping/${id}`, {
       method: 'DELETE',
     }).then((res) =>
       res.json().then((data) => {
         if (data.status === 'deleted') {
-          setCamps(camps.filter((camp) => camp._id !== id));
+          setCamps(camps.filter((camp: CampWithVillages) => camp._id !== id));
         }
       })
     );
   }
+  console.log(camps[0]);
 
   return (
     <div className="min-w-full admin-main-wrapper">
@@ -42,7 +40,7 @@ export default function CampTable(props) {
           </tr>
         </thead>
         <tbody>
-          {camps.map((camp) => (
+          {camps.map((camp: CampWithVillages) => (
             <tr key={camp._id}>
               <Td>
                 <div className="flex">
@@ -76,7 +74,7 @@ export default function CampTable(props) {
   );
 }
 
-const Th = ({ children }) => (
+const Th = ({ children }: { children?: React.ReactNode }) => (
   <th
     scope="col"
     className="px-5 py-3 border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
@@ -85,7 +83,7 @@ const Th = ({ children }) => (
   </th>
 );
 
-const Td = ({ children }) => (
+const Td = ({ children }: { children?: React.ReactNode }) => (
   <td className="px-1 py-1 md:px-5 md:py-4 border-b border-gray-200">
     <div>
       <div className="text-gray-900 whitespace-no-wrap">{children}</div>

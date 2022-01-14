@@ -1,12 +1,8 @@
 import { createContext, useContext } from 'react';
 import useProvideAuth from '../hooks/useProvideAuth';
-import { User } from '../interfaces/baseInterfaces';
+import { AuthContext } from '../interfaces/baseInterfaces';
 
-type AuthContext = {
-  user: User;
-  isLoading: boolean;
-  logout: () => void;
-}
+
 const authContext = createContext<AuthContext>(null);
 
 

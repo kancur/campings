@@ -3,14 +3,10 @@ import { FaTrashAlt } from 'react-icons/fa';
 import ButtonAdmin from '../general/ButtonAdmin';
 import ConfirmationDialog from '../general/ConfirmationDialog';
 
-const myRef = React.createRef();
+const myRef = React.createRef<ConfirmationDialog>();
 
 export default function DeleteButtonWithConfirm({ onConfirm, confirmationMsg }) {
   const [isOpen, setIsOpen] = useState(false);
-  const getConfirmation = async () => {
-    const modal = myRef.current;
-    return modal.show();
-  };
 
   const handleClick = async () => {
     setIsOpen(true);

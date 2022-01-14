@@ -1,11 +1,5 @@
 import { Dropdown } from '../../general/SearchSuggestionsDropdown';
-import {
-  FaMountain,
-  FaHome,
-  FaTree,
-  FaThumbtack,
-  FaWater,
-} from 'react-icons/fa';
+import { FaMountain, FaHome, FaTree, FaThumbtack, FaWater } from 'react-icons/fa';
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
 import PlateauIcon from '../../../public/icons/Plateau';
@@ -19,12 +13,22 @@ const TentIcon = (props) => (
   </svg>
 );
 
+type LocationPickerDropdownProps = {
+  locations: {
+    name: string;
+    type: string;
+    county_name: string;
+  }[];
+  activeIndex: number;
+  handleClick: (index: number) => void;
+  handleClose: () => void;
+};
 export default function LocationPickerDropdown({
   locations,
   activeIndex,
   handleClick,
   handleClose,
-}) {
+}: LocationPickerDropdownProps) {
   // selectedIndex is used for styling purposes
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -46,7 +50,7 @@ export default function LocationPickerDropdown({
                 'flex items-center py-1 pr-3 cursor-pointer',
                 index === selectedIndex && 'bg-gray-200'
               )}
-              tabIndex="-1"
+              tabIndex={-1}
               role="menuitem"
             >
               <div className="flex-shrink-0">{getIcon(loc.type)}</div>
@@ -71,17 +75,11 @@ function getIcon(type) {
     case 'basin':
       return <FaTree className="h-4 w-4 px-2 text-emerald-600 box-content" />;
     case 'valley':
-      return (
-        <ValleyIcon className="h-4 w-4 px-2 text-indigo-500 box-content fill-current" />
-      );
+      return <ValleyIcon className="h-4 w-4 px-2 text-indigo-500 box-content fill-current" />;
     case 'flat':
-      return (
-        <FlatIcon className="h-4 w-4 px-2 text-amber-800 box-content fill-current" />
-      );
+      return <FlatIcon className="h-4 w-4 px-2 text-amber-800 box-content fill-current" />;
     case 'plain':
-      return (
-        <FlatIcon className="h-4 w-4 px-2 text-amber-800 box-content fill-current" />
-      );
+      return <FlatIcon className="h-4 w-4 px-2 text-amber-800 box-content fill-current" />;
     case 'plateau':
       return <PlateauIcon className="suggestion-icon text-emerald-800" />;
     case 'waterbody':
@@ -90,6 +88,5 @@ function getIcon(type) {
       return <TentIcon className="suggestion-icon text-pink-500" />;
     default:
       return <FaThumbtack className="suggestion-icon text-gray-500" />;
-      break;
   }
 }

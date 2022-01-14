@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonAdmin from '../../general/ButtonAdmin';
 import CampPreview from './CampPreview';
 import ImageDropzone from './ImageDropzone';
@@ -7,21 +7,17 @@ import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
 import { InputSlug } from './parts/InputSlug';
 import { FRONTEND_API_ROUTE } from '../../../../OPTIONS';
+import { CampData } from '../../../../interfaces/baseInterfaces';
 
-
-export default function EditOrAddCamp({ campDataFetched }) {
+export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: CampData }) {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [campData, setCampData] = useState({});
-  const [fileToUpload, setFileToUpload] = useState();
+  const [campData, setCampData] = useState<CampData>(undefined);
+  const [fileToUpload, setFileToUpload] = useState(null);
   const [saveState, setSaveState] = useState('idle');
 
-  const upsertCampData = (data) => {
+  const upsertCampData = (data: {}) => {
     setCampData((prevData) => ({ ...prevData, ...data }));
   };
-
-  useEffect(() => {
-    console.log(campData);
-  }, [campData]);
 
   useEffect(() => {
     if (fileToUpload) {
@@ -36,10 +32,10 @@ export default function EditOrAddCamp({ campDataFetched }) {
     }
   }, [campDataFetched]);
 
-  const handleSave = async (e) => {
-    setSaveState('saving');
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    setSaveState('saving');
+
     const payload = {
       name: campData.name,
       slug: campData.slug,
@@ -62,7 +58,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.status === 'saved'){
+        if (json.status === 'saved') {
           setSaveState('saved');
           setTimeout(() => {
             setSaveState('idle');
@@ -70,23 +66,19 @@ export default function EditOrAddCamp({ campDataFetched }) {
         }
         return json;
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
-  const handleSlugInput = (value) => {
+  const handleSlugInput = (value: React.ChangeEvent<HTMLInputElement>) => {
     upsertCampData({ slug: value });
   };
 
-  const handleNameInput = (e) => {
+  const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     upsertCampData({ name: e.target.value });
   };
 
-  const handleGetSlugClick = (e) => {
+  const handleGetSlugClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     upsertCampData({ slug: toSlug(campData.name) });
-  };
-
-  const mergeCoords = (coords) => {
-    upsertCampData({ coords });
   };
 
   return (
@@ -94,9 +86,7 @@ export default function EditOrAddCamp({ campDataFetched }) {
       {isEditMode ? (
         <h1 className="font-semibold text-2xl">
           Editing camp ID:{' '}
-          <span className="font-mono font-normal text-pink-700">
-            {campDataFetched._id}
-          </span>
+          <span className="font-mono font-normal text-pink-700">{campDataFetched._id}</span>
         </h1>
       ) : (
         <h1 className="font-semibold text-2xl">Add new campsite</h1>
@@ -149,35 +139,31 @@ export default function EditOrAddCamp({ campDataFetched }) {
             <label className="text-gray-700">
               Short description
               <Input
-                onInput={(e) =>
-                  upsertCampData({ shortDescription: e.target.value })
-                }
+                onInput={(e) => upsertCampData({ shortDescription: e.target.value })}
                 type="text"
                 id="shortDescription"
                 name="shortDescription"
                 placeholder="Nádherný kemp na úpätí Malej Fatry"
-                value={campData.shortDescription || ''}
+                value={campData?.shortDescription || ''}
               />
             </label>
 
             <label className="text-gray-700">
               Website
               <textarea
-                onInput={(e) => upsertCampData({ website: e.target.value })}
+                onInput={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  upsertCampData({ website: e.target.value })
+                }
                 rows={1}
-                type="text"
                 id="website"
                 name="website"
                 className={inputClasses}
                 placeholder="https://example.com"
-                value={campData.website || ''}
+                value={campData?.website || ''}
               />
             </label>
             <p>Featured image</p>
-            <ImageDropzone
-              fileToUpload={fileToUpload}
-              setFileToUpload={setFileToUpload}
-            />
+            <ImageDropzone fileToUpload={fileToUpload} setFileToUpload={setFileToUpload} />
           </div>
         </form>
       </div>

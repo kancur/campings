@@ -2,7 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 
-export function MenuItemWrapper({ children, href, ...props }) {
+type MenuItemWrapperProps = {
+  children: React.ReactNode;
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+  props?: any;
+}
+
+export function MenuItemWrapper({ children, href, ...props }: MenuItemWrapperProps) {
   const menuItemClassnames = classNames(
     'flex',
     'items-center',

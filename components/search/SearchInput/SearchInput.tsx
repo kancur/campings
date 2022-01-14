@@ -5,7 +5,7 @@ import useDebouncedSearch from '../../../hooks/useDebouncedSearch';
 import { ArrowTopNotification } from '../../general/ArrowTopNotification';
 
 const useMainSearch = () =>
-  useDebouncedSearch((query) => searchSuggestions(query));
+  useDebouncedSearch((query: string) => searchSuggestions(query));
 
 export default function LocationPicker(props) {
   const [activeIndex, setActiveIndex] = useState(-1);

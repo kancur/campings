@@ -1,12 +1,12 @@
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import { useState } from 'react';
-import { useAsync } from 'react-async-hook';
+import { useAsync, UseAsyncReturn } from 'react-async-hook';
 import useConstant from 'use-constant';
 
 // debounce time in miliseconds
 const DEBOUNCE_TIME = 50;
 
-const useDebouncedSearch = (searchFunction: (inputText: string) => void) => {
+const useDebouncedSearch = (searchFunction: (inputText: string) => void): [string, (arg0: string) => void, UseAsyncReturn<any>] => {
   const [inputText, setInputText] = useState('');
 
   const debouncedSearchFunction = useConstant(() =>

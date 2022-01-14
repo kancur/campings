@@ -2,7 +2,7 @@ import Footer from '../base/Footer';
 import Header from '../base/Header';
 import AdminSidebar from './Sidebar';
 
-export default function MainInterface({ children }) {
+export default function MainAdminInterface({ children }: { children: React.ReactNode }) {
   return (
     <div className="top-0 right-0 bottom-0 left-0 md:absolute md:h-screen flex flex-col">
       <Header />
