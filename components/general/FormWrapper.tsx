@@ -8,7 +8,7 @@ type FormWrapperProps = {
   /**
    * Children of the wrapper (most likely the form itself)
    */
-  children: any;
+  children: React.ReactNode;
 };
 
 /**
