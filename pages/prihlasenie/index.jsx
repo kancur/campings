@@ -14,7 +14,6 @@ const EMAIL_DOESNT_EXIST = 'Zadaný email neexistuje';
 const INCORRECT_PASSWORD = 'Nesprávne heslo';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [cookies, setCookie] = useCookies(['jwt']);
   const [formData, setFormData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
