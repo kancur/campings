@@ -2,18 +2,12 @@ import SearchInput from './SearchInput/SearchInput';
 import Router from 'next/router';
 import { SearchButton } from './SearchButton';
 import React, { useEffect, useState } from 'react';
+import { SearchData } from '../../interfaces/baseInterfaces';
 
-export default function SearchForm(props) {
-  type Data = {
-    query: string;
-    type: 'suggestion' | 'query';
-    data?: {
-      slug: string;
-      type: 'village' | 'waterbody' | 'camp';
-    };
-  };
+export default function SearchForm({shouldFocus}: {shouldFocus: boolean}) {
 
-  const [inputData, setInputData] = useState<Data>();
+
+  const [inputData, setInputData] = useState<SearchData | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -21,9 +15,12 @@ export default function SearchForm(props) {
     setError('');
   }, [inputData]);
 
-  const handleSubmit = (data: Data = inputData) => {
+  const handleSubmit = (data: SearchData | null = inputData) => {
+    if (data === null) return;
+    
     if (data.type === 'suggestion') {
-      const { type, slug } = data.data;
+      const type = data?.data?.type
+      const slug = data?.data?.slug
       //if (type.length === 0) return;
       switch (type) {
         case 'village':
@@ -47,7 +44,7 @@ export default function SearchForm(props) {
           setError('Prosím zadaj aspoň 3 znaky 😉');
           return;
         }
-        Router.push(`/search/?q=${encodeURIComponent(inputData.query)}`);
+        Router.push(`/search/?q=${encodeURIComponent(inputData?.query || '')}`);
       }
     }
   };
@@ -61,7 +58,7 @@ export default function SearchForm(props) {
       }}
     >
       <SearchInput
-        shouldFocus={props.shouldFocus}
+        shouldFocus={shouldFocus}
         setInputData={setInputData}
         inputData={inputData}
         handleSubmit={handleSubmit}

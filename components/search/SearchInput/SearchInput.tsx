@@ -1,13 +1,22 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { searchSuggestions } from '../../../helpers/search';
 import SuggestionsDropdown from './SuggestionsDropdown';
 import useDebouncedSearch from '../../../hooks/useDebouncedSearch';
 import { ArrowTopNotification } from '../../general/ArrowTopNotification';
+import { SearchData, SearchSuggestion } from '../../../interfaces/baseInterfaces';
 
 const useMainSearch = () =>
   useDebouncedSearch((query: string) => searchSuggestions(query));
 
-export default function LocationPicker(props) {
+type LocationPickerProps = {
+  setInputData: ({}: SearchData) => void;
+  handleSubmit: ({}: SearchData) => void;
+  inputData: SearchData | null;
+  shouldFocus: boolean;
+  error: string;
+}
+
+export default function LocationPicker(props: LocationPickerProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentSuggestions, setCurrentSuggestions] = useState([]);
@@ -20,7 +29,7 @@ export default function LocationPicker(props) {
     }
   }, [searchResults]);
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.setInputData({ type: 'query', query: e.target.value });
     setInputVisibleValue(e.target.value);
     setSearchQuery(e.target.value);
@@ -36,9 +45,9 @@ export default function LocationPicker(props) {
     handleActiveIndexChange(activeIndex);
   }, [activeIndex]);
 
-  const handleActiveIndexChange = (index) => {
+  const handleActiveIndexChange = (index: number) => {
     if (index > -1) {
-      const selectedSuggestionData = currentSuggestions[index];
+      const selectedSuggestionData: SearchSuggestion = currentSuggestions[index];
       if (selectedSuggestionData) {
         setInputVisibleValue(selectedSuggestionData.name);
         props.setInputData({
@@ -52,13 +61,13 @@ export default function LocationPicker(props) {
     }
   };
 
-  const handleDropdownClick = (index) => {
+  const handleDropdownClick = (index: number) => {
     setShowSuggestions(false);
     props.handleSubmit({ type: 'suggestion', data: currentSuggestions[index] });
   };
 
   // handling of up, down and enter keys when focused on input
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e : React.KeyboardEvent) => {
     if (showSuggestions) {
       if (e.code === 'ArrowUp') {
         e.preventDefault();

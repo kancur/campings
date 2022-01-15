@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useAuth } from '../../../context/authContext';
 import classNames from 'classnames';
 import { FaBars } from 'react-icons/fa';
-import {
-  CommonMenuItems,
-  LoggedInMenuItems,
-  LoggedOutMenuItems,
-} from './MenuItems';
+import { CommonMenuItems, LoggedInMenuItems, LoggedOutMenuItems } from './MenuItems';
 import { useRouter } from 'next/router';
 
-export default function HeaderNav({ setIsMobileMenuOpen }) {
+export default function HeaderNav({
+  setIsMobileMenuOpen,
+}: {
+  setIsMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const router = useRouter();
   const auth = useAuth();
 
   const handleLogOut = () => {
-    auth.logOut();
+    auth.logout();
     router.push('/dovidenia');
   };
 
@@ -33,15 +33,11 @@ export default function HeaderNav({ setIsMobileMenuOpen }) {
           <nav className="hidden sm:flex text-gray-600">
             <ul className="flex">
               <CommonMenuItems />
-              {auth.user ? (
-                <LoggedInMenuItems logout={handleLogOut} auth={auth} />
-              ) : (
-                <LoggedOutMenuItems auth={auth} />
-              )}
+              {auth.user ? <LoggedInMenuItems auth={auth} /> : <LoggedOutMenuItems />}
             </ul>
           </nav>
           <FaBars
-            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            onClick={() => setIsMobileMenuOpen((prev: boolean) => !prev)}
             className="w-6 h-6 text-gray-500 flex sm:hidden"
           />
         </>

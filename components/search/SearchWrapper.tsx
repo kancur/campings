@@ -3,7 +3,7 @@ import SearchForm from './SearchForm';
 
 // source: https://depositphotos.com/stock-photos/spruce-forest.html?filter=all&qview=50904623
 
-export default function SearchWrapper({ shouldFocus }: {shouldFocus?: boolean}) {
+export default function SearchWrapper({ shouldFocus = false }: {shouldFocus?: boolean}) {
   return (
     <div
       style={{

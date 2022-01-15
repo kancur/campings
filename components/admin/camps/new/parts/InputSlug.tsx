@@ -3,7 +3,16 @@ import { FaAngleDoubleDown } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
 
-export function InputSlug({ handleGetSlugClick, fetchedSlug, handleSlugInput, slug, isEditMode }) {
+
+type InputSlugProps = {
+  handleGetSlugClick: () => void;
+  fetchedSlug?: string;
+  handleSlugInput: (input: string) => void;
+  slug?: string;
+  isEditMode?: boolean;
+}
+
+export function InputSlug({ handleGetSlugClick, fetchedSlug, handleSlugInput, slug, isEditMode }: InputSlugProps) {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
 
   useEffect(() => {
@@ -12,7 +21,7 @@ export function InputSlug({ handleGetSlugClick, fetchedSlug, handleSlugInput, sl
 
   const handleRevert = () => {
     setIsEditEnabled(false);
-    handleSlugInput(fetchedSlug);
+    handleSlugInput(fetchedSlug ? fetchedSlug : '');
   };
 
   const handleInput = (e : React.ChangeEvent<HTMLInputElement>) => {

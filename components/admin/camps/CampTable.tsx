@@ -6,7 +6,11 @@ import DeleteButtonWithConfirm from './DeleteButtonWithConfirm';
 import { FRONTEND_API_ROUTE } from '../../../OPTIONS';
 import { CampWithVillages } from '../../../interfaces/baseInterfaces';
 
-export default function CampTable(props) {
+type CampTableProps = {
+  camps: CampWithVillages[];
+}
+
+export default function CampTable(props: CampTableProps) {
   const [camps, setCamps] = useState(props.camps);
 
   const handleSave = (_id: string, field: string, value: string) => {

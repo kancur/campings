@@ -1,8 +1,13 @@
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { FileWithPreview } from '../../../../interfaces/baseInterfaces';
 
-export default function DropZone({ fileToUpload, setFileToUpload }) {
+type DropZoneProps = {
+  fileToUpload: FileWithPreview | null;
+  setFileToUpload: (file: FileWithPreview | null) => void;
+};
+export default function DropZone({ fileToUpload, setFileToUpload }: DropZoneProps) {
   // const [error, setError] = useState();
 
   const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } =
@@ -41,11 +46,15 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
     { 'border-red-400': isDragReject }
   );
 
+  const fileToUploadSizeString = fileToUpload
+    ? `${((fileToUpload?.size / 1000_000) * 100) / 100} MB`
+    : 'N/A';
+
   const ImageData = () => (
     <div>
       File to upload:{' '}
       <span className="font-mono bg-gray-200 p-1">
-        {fileToUpload?.name} ({Math.round((fileToUpload?.size / 1000_000) * 100) / 100} MB)
+        {fileToUpload?.name} {fileToUploadSizeString}
       </span>{' '}
       <span onClick={removeAll} className="text-red-500 underline">
         Remove
@@ -57,7 +66,7 @@ export default function DropZone({ fileToUpload, setFileToUpload }) {
   useEffect(() => {
     if (fileToUpload?.preview) {
       return () => {
-        URL.revokeObjectURL(fileToUpload.preview);
+        URL.revokeObjectURL(fileToUpload?.preview);
       };
     }
   }, [fileToUpload]);

@@ -16,7 +16,7 @@ function AddWantToVisit({ id }: { id: string }) {
   useEffect(() => {
     if (favorite.camps.length > 0) {
       const isInFavorites = favorite.camps.some(
-        (favoriteCamp: FavoriteCamp) => favoriteCamp.camp._id === id
+        (favoriteCamp) => favoriteCamp.camp._id === id
       );
       if (isAdded !== isInFavorites) {
         setIsAdded(isInFavorites);

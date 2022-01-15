@@ -7,13 +7,13 @@ import { useSpring, animated } from 'react-spring';
 import { useMediaQuery } from 'react-responsive';
 import MobileMenu from './Menu/MobileMenu';
 
-export default function Header(props) {
+export default function Header({children}: {children?: React.ReactNode}) {
   // use to open/close the menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // handles display:none of the menu, so its not focusable when not visible
   const [isMenuDisplayNone, setMenuDisplayNone] = useState(true);
   // measures the height of the mobile menu
-  const [ref, { height }] = useMeasure();
+  const [ref, { height }] = useMeasure<HTMLDivElement>();
   const isNotMobile = useMediaQuery({ query: '(min-width: 640px)' });
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function Header(props) {
             <HeaderNav setIsMobileMenuOpen={setIsMobileMenuOpen} />
           </div>
         </div>
-        {props.children}
+        {children}
       </header>
       <animated.div style={mobileMenuStyles}>
         <div ref={ref} className={`${isMenuDisplayNone ? 'hidden' : ''}`}>

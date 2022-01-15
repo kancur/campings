@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next'
+
 
 // checking if user is logged in
-export async function authLoggedIn(req) {
+export async function authLoggedIn(req: NextApiRequest) {
   const cookies = req.cookies;
 
   if (!cookies.jwt) return NextResponse.redirect('/prihlasenie');

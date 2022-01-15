@@ -1,8 +1,8 @@
-import { CampListingInterface } from '../../../../interfaces/baseInterfaces';
+import { CampData, CampDataEdit, CampListingInterface } from '../../../../interfaces/baseInterfaces';
 import { CampListing } from '../../../general/CampListing';
 
 type CampPreviewProps = {
-  camp: CampListingInterface | undefined;
+  camp: CampData;
   previewImage?: string;
 }
 

@@ -27,7 +27,7 @@ type MapWithPinPointProps = {
  * Returns a map of slovakia with pins on the map.
  */
 function MapWithPinPoints({ coords, className, ...props }: MapWithPinPointProps) {
-  const [ref, { width }] = useMeasure();
+  const [ref, { width }] = useMeasure<HTMLDivElement>();
   const [height, setHeight] = useState(0);
 
   useEffect(() => {

@@ -7,12 +7,19 @@ import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
 import { InputSlug } from './parts/InputSlug';
 import { FRONTEND_API_ROUTE } from '../../../../OPTIONS';
-import { CampData } from '../../../../interfaces/baseInterfaces';
+import { CampData, CampDataEdit, FileWithPreview } from '../../../../interfaces/baseInterfaces';
 
-export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: CampData }) {
+const emptyCampData = {
+  coords: null,
+  name: '',
+  slug: '',
+  _id: '',
+};
+
+export default function EditOrAddCamp({ campDataFetched }: { campDataFetched?: CampData | null }) {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [campData, setCampData] = useState<CampData>(undefined);
-  const [fileToUpload, setFileToUpload] = useState(null);
+  const [campData, setCampData] = useState<CampData>(emptyCampData);
+  const [fileToUpload, setFileToUpload] = useState<FileWithPreview | null>(null);
   const [saveState, setSaveState] = useState('idle');
 
   const upsertCampData = (data: {}) => {
@@ -37,20 +44,17 @@ export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: Ca
     setSaveState('saving');
 
     const payload = {
-      name: campData.name,
-      slug: campData.slug,
+      name: campData.name || '',
+      slug: campData.slug || '',
       coords: campData.coords,
-      short_description: campData.shortDescription,
+      short_description: campData.shortDescription || '',
+      _id: campData._id,
     };
 
-    if (campData._id) {
-      payload['_id'] = campData._id;
-    }
-
     const formData = new FormData();
-    formData.append('slug', campData.slug);
+    formData.append('slug', payload.slug);
     formData.append('payload', JSON.stringify(payload));
-    formData.append('featured_image', campData.featuredImage);
+    formData.append('featured_image', campData.featuredImage || '');
 
     fetch(`${FRONTEND_API_ROUTE}/camping`, {
       method: 'POST',
@@ -69,7 +73,7 @@ export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: Ca
       .catch((error) => console.error(error));
   };
 
-  const handleSlugInput = (value: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSlugInput = (value?: string) => {
     upsertCampData({ slug: value });
   };
 
@@ -77,8 +81,8 @@ export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: Ca
     upsertCampData({ name: e.target.value });
   };
 
-  const handleGetSlugClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    upsertCampData({ slug: toSlug(campData.name) });
+  const handleGetSlugClick = () => {
+    upsertCampData({ slug: toSlug(campData.name || '') });
   };
 
   return (
@@ -86,7 +90,7 @@ export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: Ca
       {isEditMode ? (
         <h1 className="font-semibold text-2xl">
           Editing camp ID:{' '}
-          <span className="font-mono font-normal text-pink-700">{campDataFetched._id}</span>
+          <span className="font-mono font-normal text-pink-700">{campDataFetched?._id}</span>
         </h1>
       ) : (
         <h1 className="font-semibold text-2xl">Add new campsite</h1>
@@ -113,7 +117,7 @@ export default function EditOrAddCamp({ campDataFetched }: { campDataFetched: Ca
                 maxLength={60}
                 placeholder="The name of the camp"
                 value={campData?.name || ''}
-                valid={campData?.name?.length > 3}
+                valid={(campData?.name?.length || 0) > 3}
               />
             </label>
 

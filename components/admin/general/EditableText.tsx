@@ -79,7 +79,7 @@ export default function EditableText({
     }
   };
 
-  const validate = (value) => {
+  const validate = (value: string) => {
     // empty value in text field is valid if minlength is not set or zero
     if (!value && (!minLength || minLength == 0)) {
       return true;

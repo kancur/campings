@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../../context/authContext';
+import { AuthContext } from '../../../interfaces/baseInterfaces';
 import {
   CommonMenuItems,
   LoggedOutMenuItems,
@@ -16,7 +17,7 @@ export default function MobileMenu({ close } : { close: () => void }) {
       <nav className="p-2 bg-gray-50">
         <ul className="flex flex-col gap-1" onClick={handleMenuItemClick}>
           <CommonMenuItems />
-          {!auth.user && <LoggedOutMenuItems auth={auth} />}
+          {!auth.user && <LoggedOutMenuItems />}
         </ul>
       </nav>
       {auth.user && <UserInformationMobile auth={auth} />}
@@ -25,13 +26,13 @@ export default function MobileMenu({ close } : { close: () => void }) {
 }
 
 
-function UserInformationMobile({ auth }) {
+function UserInformationMobile({ auth }: { auth: AuthContext }) {
   return (
     <div className="px-4">
       <div className="border-t-2 border-gray-200 py-4 text-sm text-gray-600 space-y-2">
         <div className="flex gap-2">
           <span className="font-semibold">Tvoj email:</span>
-          <span className="font-mono">{auth.user.email}</span>
+          <span className="font-mono">{auth?.user?.email || ''}</span>
         </div>
         <button
           onClick={() => auth.logout()}

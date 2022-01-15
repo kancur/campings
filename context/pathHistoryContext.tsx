@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-// @ts-ignore
-const previousPathContext = createContext();
+type PathHistoryContextType = string;
+const previousPathContext = createContext<PathHistoryContextType>('');
 
-export function PreviousPathProvider({ children }) {
+
+export function PreviousPathProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [pathHistory, setPathHistory] = useState([]);
+  const [pathHistory, setPathHistory] = useState<string[]>([]);
 
   useEffect(() => {
     setPathHistory((prev) => [...prev, router.asPath]);

@@ -3,17 +3,15 @@ import AdminLayout from '../../../../components/admin/AdminLayout';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FRONTEND_API_ROUTE } from '../../../../OPTIONS';
+import { CampData, CampDataEdit } from '../../../../interfaces/baseInterfaces';
 
-const EditCampPage = dynamic(
-  () => import('../../../../components/admin/camps/new/EditOrAddCamp'),
-  {
-    ssr: false,
-  }
-);
+const EditCampPage = dynamic(() => import('../../../../components/admin/camps/new/EditOrAddCamp'), {
+  ssr: false,
+});
 
 function EditCampPageComponent() {
-  const [campData, setCampData] = useState(null);
-  const [error, setError] = useState();
+  const [campData, setCampData] = useState<CampData | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const router = useRouter();
   const campId = router?.query?.campId;
 
@@ -30,7 +28,7 @@ function EditCampPageComponent() {
         .then((jsonData) => jsonData && setCampData(jsonData))
         .catch((error) => {
           setError(error);
-          console.log(error);
+          console.error(error);
         });
     }
   }, [campId]);

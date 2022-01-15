@@ -25,13 +25,18 @@ export interface CampListingInterface extends Camp {
 }
 
 export interface CampData extends Camp {
-  coords: Coords;
+  coords?: Coords | null;
   description?: string;
   shortDescription?: string;
   url?: string;
   featuredImage?: string;
+  featured_image?: string;
   website?: string;
+  villages?: Village[]
+  distance?: number;
 }
+
+export type CampDataEdit = Partial<CampData>;
 
 export interface Village {
   distance: number;
@@ -58,7 +63,7 @@ export interface FavoriteCamp {
 }
 
 export interface AuthContext {
-  user: User;
+  user: User | null;
   isLoading: boolean;
   logout: () => void;
 }
@@ -73,3 +78,20 @@ export type SearchTypes =
   | 'plateau'
   | 'waterbody'
   | 'camp';
+
+export interface SearchData {
+  query?: string;
+  type: 'suggestion' | 'query';
+  data?: SearchSuggestion;
+}
+
+export interface SearchSuggestion {
+  county_name: string;
+  name: string;
+  slug: string;
+  type: SearchTypes;
+}
+
+export interface FileWithPreview extends File {
+  preview: string;
+}

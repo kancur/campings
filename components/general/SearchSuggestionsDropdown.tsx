@@ -1,4 +1,4 @@
-export function Dropdown({ children }) {
+export function Dropdown({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative inline-block">
       <div

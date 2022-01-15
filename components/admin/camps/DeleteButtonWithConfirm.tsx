@@ -5,7 +5,11 @@ import ConfirmationDialog from '../general/ConfirmationDialog';
 
 const myRef = React.createRef<ConfirmationDialog>();
 
-export default function DeleteButtonWithConfirm({ onConfirm, confirmationMsg }) {
+type DeleteButtonWithConfirmProps = {
+  onConfirm: () => void;
+  confirmationMsg: string;
+}
+export default function DeleteButtonWithConfirm({ onConfirm, confirmationMsg }: DeleteButtonWithConfirmProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async () => {

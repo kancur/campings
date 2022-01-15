@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Input, inputClasses } from '../../../../general/Input';
 import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
-import convertObjValuesToStrings from '../../../../../helpers/objValuesToString';
 
 interface Coords {
   lat: number;
@@ -13,23 +12,27 @@ interface ClosestVillage {
   coords: Coords;
 }
 
-export function InputCoords({ upsertCampData, fetchedCoords }) {
+type InputCoordsProps = {
+  upsertCampData: (data: {}) => void;
+  fetchedCoords?: Coords | null;
+}
+export function InputCoords({ upsertCampData, fetchedCoords }: InputCoordsProps) {
   const [coords, setCoords] = useState('');
   const [coordsObj, setCoordsObj] = useState<Coords | undefined>(undefined);
   const [isValid, setIsValid] = useState(true);
   const [closestVillage, setClosestVillage] = useState<ClosestVillage | undefined>(undefined);
 
-  function fetchClosestVillage(controller) {
+  function fetchClosestVillage(controller: AbortController | null) {
     const params = {
       ...coordsObj,
       limit: 1,
     };
 
-    const paramsAsStrings = convertObjValuesToStrings(params);
+    var queryString = Object.keys(params).map((key ) => key + '=' + params[key as keyof typeof params]).join('&');
 
-    const searchParams = new URLSearchParams(paramsAsStrings);
+    const searchParams = new URLSearchParams(queryString);
     fetch(`${FRONTEND_API_ROUTE}/village/close/?${searchParams.toString()}`, {
-      signal: controller.signal,
+      signal: controller?.signal,
     })
       .then((res) => res.json())
       .then((json) => setClosestVillage(json[0]))
@@ -52,13 +55,13 @@ export function InputCoords({ upsertCampData, fetchedCoords }) {
     }
   }, [fetchedCoords]);
 
-  const coordsToString = ({ lat, lon }) => [lat, lon].join(', ');
+  const coordsToString = ({ lat, lon }: Coords) => [lat, lon].join(', ');
 
-  const isLatitude = (lat) =>
-    lat !== undefined && lat.length > 0 && isFinite(lat) && Math.abs(lat) <= 90;
+  const isLatitude = (lat: string) =>
+    lat !== undefined && lat.length > 0 && isFinite(Number(lat)) && Math.abs(Number(lat)) <= 90;
 
-  const isLongitude = (lon) =>
-    lon !== undefined && lon.length > 0 && isFinite(lon) && Math.abs(lon) <= 180;
+  const isLongitude = (lon: string) =>
+    lon !== undefined && lon.length > 0 && isFinite(Number(lon)) && Math.abs(Number(lon)) <= 180;
 
   const handleCoordsInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCoords(e.target.value);

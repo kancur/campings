@@ -3,11 +3,13 @@ import { FaMountain, FaHome, FaTree, FaThumbtack, FaWater } from 'react-icons/fa
 import ValleyIcon from '../../../public/icons/Valley-tree';
 import FlatIcon from '../../../public/icons/Flat';
 import PlateauIcon from '../../../public/icons/Plateau';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { SearchTypes } from '../../../interfaces/baseInterfaces';
 
-const TentIcon = (props) => (
+
+const TentIcon = (props: React.ComponentPropsWithoutRef<"svg">) => (
   <svg viewBox="0 0 455 455" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M430.473 415.471l-187.43-301.385 55.25-88.84-25.84-15.717-47.216 75.924L178.02 9.529l-25.84 15.716 55.25 88.841L20 415.471s-20 30 0 30h410.473c19.527 0 0-30 0-30zm-146.433 0L225.38 294.72l-58.906 120.751h-33.679s22.208-189.968 92.642-189.91c70.377.058 92.257 189.91 92.257 189.91z" />
   </svg>
@@ -53,7 +55,7 @@ export default function LocationPickerDropdown({
               tabIndex={-1}
               role="menuitem"
             >
-              <div className="flex-shrink-0">{getIcon(loc.type)}</div>
+              <div className="flex-shrink-0">{getIcon(loc.type as SearchTypes)}</div>
               <div className="text-left">
                 <p>{loc.name}</p>
                 <p className="text-xs text-gray-400">{loc.county_name}</p>
@@ -66,7 +68,7 @@ export default function LocationPickerDropdown({
   );
 }
 
-function getIcon(type) {
+function getIcon(type: SearchTypes) {
   switch (type) {
     case 'village':
       return <FaHome className="h-4 w-4 px-2 text-amber-500 box-content" />;

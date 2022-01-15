@@ -20,6 +20,7 @@ export default function useProvideAuth() {
     } catch (error) {
       console.error(error);
       setIsLoading(false);
+      throw(error);
     }
   };
 

@@ -5,8 +5,8 @@ const Admin = dynamic(() => import("../../../../components/admin/camps/new/EditO
   ssr: false,
 })
 
-const AddNewCampComponent = () => <Admin />
-
-export default AddNewCampComponent
+const AddNewCampComponent = () => <Admin campDataFetched={null} />
 
 AddNewCampComponent.Layout = AdminLayout
+export default AddNewCampComponent
+

@@ -16,7 +16,7 @@ type ConfirmationDialogProps = {
 
 export default class ConfirmationDialog extends React.Component<ConfirmationDialogProps> {
   Yoffset: number;
-  constructor(props) {
+  constructor(props: ConfirmationDialogProps) {
     super(props);
     this.Yoffset = 0;
   }
