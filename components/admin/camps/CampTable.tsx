@@ -30,7 +30,6 @@ export default function CampTable(props: CampTableProps) {
       })
     );
   }
-  console.log(camps[0]);
 
   return (
     <div className="min-w-full admin-main-wrapper">
