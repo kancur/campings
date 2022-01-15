@@ -44,12 +44,11 @@ export default function LoginPage() {
           });
           setIsFetching(false);
 
+          const REDIRECT_BLACKLIST = ['/dovidenia', '/prihlasenie', '/registracia'];
           // handle redirect based on previous path
-          if (prevPath === '/dovidenia') {
+          if (REDIRECT_BLACKLIST.includes(prevPath)) {
             Router.push('/');
           } else if (prevPath === undefined) {
-            Router.push('/');
-          } else if (prevPath === '/prihlasenie') {
             Router.push('/');
           } else {
             Router.push(prevPath);
