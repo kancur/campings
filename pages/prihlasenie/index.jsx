@@ -59,7 +59,7 @@ export default function LoginPage() {
       .catch(function (error) {
         setIsFetching(false);
         const errorBody = error?.response?.data?.error;
-        if (!errorBody) return console.log('error:', error);
+        if (!errorBody) return console.error('error:', error);
 
         if (errorBody.toLowerCase() == 'incorrect email') {
           setError((prev) => ({ ...prev, email: EMAIL_DOESNT_EXIST }));
