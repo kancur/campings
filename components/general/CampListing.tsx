@@ -1,22 +1,18 @@
 import Image from 'next/image';
 import { STATIC_HOST } from '../../OPTIONS';
 import Link from 'next/link';
-import { CampData, CampDataEdit, CampListingInterface, Village } from '../../interfaces/baseInterfaces';
+import {
+  CampData,
+  CampDataEdit,
+  CampListingInterface,
+  Village,
+} from '../../interfaces/baseInterfaces';
 
-export function CampListing({
-  camp,
-  previewImage,
-}: {
-  camp: CampData;
-  previewImage?: string;
-}) {
-  console.log(camp)
+export function CampListing({ camp, previewImage }: { camp: CampData; previewImage?: string }) {
   const featured = `${STATIC_HOST}/${camp?.featured_image}`;
 
-  const parentVillage : Village | null = camp?.villages ? camp?.villages[0] : null;
-  const distance = camp?.distance
-    ? `${Math.round(camp?.distance / 1000)} km`
-    : 'N/A';
+  const parentVillage: Village | null = camp?.villages ? camp?.villages[0] : null;
+  const distance = camp?.distance ? `${Math.round(camp?.distance / 1000)} km` : null;
 
   return (
     <Link href={`/kemp/${camp?.slug}`}>
@@ -47,7 +43,7 @@ export function CampListing({
                   : ''}
               </p>
             </div>
-            <p className="text-gray-500">{distance}</p>
+            {distance && <p className="text-gray-500">{distance}</p>}
             <p className="">{camp?.shortDescription}</p>
           </div>
         </div>
