@@ -1,6 +1,9 @@
 # Najkempy.sk
 A searchable directory of campings in Slovakia made in Next.js
 
+## ❗News❗
+Whole repo refractored to TypeScript (strict mode) ✔️
+
 ## Live Version
 **:link: [Click here to visit Najkempy.sk](https://najkempy.sk/)**
 
