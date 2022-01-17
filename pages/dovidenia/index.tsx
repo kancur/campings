@@ -8,9 +8,7 @@ export default function LoggedOutPage() {
         Prejdi na <Link href="/">domovskú stránku</Link>.
       </p>
       <Link href="/prihlasenie">
-        <button className="button bg-emerald-500 hover:bg-emerald-400">
-          Prihlásiť sa
-        </button>
+        <button className="button bg-emerald-500 hover:bg-emerald-400">Prihlásiť sa</button>
       </Link>
     </div>
   );

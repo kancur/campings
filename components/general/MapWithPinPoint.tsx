@@ -20,13 +20,12 @@ type MapWithPinPointProps = {
    */
   coords: Coords[];
   className?: string;
-  props: any;
 };
 
 /**
  * Returns a map of slovakia with pins on the map.
  */
-function MapWithPinPoints({ coords, className, ...props }: MapWithPinPointProps) {
+function MapWithPinPoints({ coords, className, ...props }: MapWithPinPointProps & React.HTMLAttributes<HTMLDivElement>) {
   const [ref, { width }] = useMeasure<HTMLDivElement>();
   const [height, setHeight] = useState(0);
 

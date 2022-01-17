@@ -1,37 +1,50 @@
 import { Input } from '../../components/general/Input';
 import { useCookies } from 'react-cookie';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import LoaderFullscreen from '../../components/general/LoaderFullscreen';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
 import { usePreviousPath } from '../../context/pathHistoryContext';
 import Link from 'next/link';
+import { AxiosError } from 'axios';
 const axios = require('axios').default;
 
 const EMAIL_DOESNT_EXIST = 'Zadaný email neexistuje';
 const INCORRECT_PASSWORD = 'Nesprávne heslo';
 
+
+type IError = {
+  email?: string | null;
+  password?: string | null;
+}
+
 export default function LoginPage() {
   const [cookies, setCookie] = useCookies(['jwt']);
   const [formData, setFormData] = useState({});
   const [isFetching, setIsFetching] = useState(false);
-  const [error, setError] = useState({ email: null, password: null });
+  const [error, setError] = useState<IError>({ email: null, password: null });
   const prevPath = usePreviousPath();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onSubmit = (e) => {
+  type AxiosResponse = {
+    data: {
+      jwt: string;
+    };
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
     setError({ email: null, password: null });
     e.preventDefault();
     setIsFetching(true);
     axios
       .post(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/auth/login`, formData)
-      .then(function (response) {
+      .then(function (response: AxiosResponse) {
         if (response.data.jwt) {
           // since this will not be an http-only cookie, it can be fetched by any script from document.cookie
           // unsafe and suspectible to attacks, but doesnt really matter for this website
@@ -53,7 +66,7 @@ export default function LoginPage() {
           }
         }
       })
-      .catch(function (error) {
+      .catch(function (error: AxiosError) {
         setIsFetching(false);
         const errorBody = error?.response?.data?.error;
         if (!errorBody) return console.error('error:', error);
@@ -97,7 +110,11 @@ export default function LoginPage() {
   );
 }
 
-const Button = ({ children, ...props }) => (
+type IButton = {
+  children: React.ReactNode;
+}
+
+const Button = ({ children, ...props }: IButton & React.ComponentProps<'button'>) => (
   <button
     {...props}
     className="bg-emerald-600 hover:bg-emerald-500 transition-colors duration-75 py-3 px-4 rounded-xl text-gray-100 font-semibold text-lg focus:ring-2"

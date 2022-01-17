@@ -3,17 +3,20 @@ import Main from '../../components/base/Main';
 import Link from 'next/link';
 import Image from 'next/image';
 import MapWithPinPoints from '../../components/general/MapWithPinPoint';
-import { STATIC_HOST } from '../../OPTIONS';
 import AddWantToVisit from '../../components/camp/AddWantToVisit';
 import { useAuth } from '../../context/authContext';
+import { CampData, CampListingInterface } from '../../interfaces/baseInterfaces';
 
-const Camppage = ({ camp }) => {
+const Camppage = ({ camp }: { camp: CampData }) => {
   const haveVillageInfo = camp?.villages && camp?.villages.length > 0;
-  const closestVillageDistance = camp.villages[0].distance;
   const closestVillage = haveVillageInfo ? camp?.closest_village : null;
+  const closestVillageDistance = camp.villages ? camp.villages[0].distance : null;
   const auth = useAuth();
 
-  const distanceSpelledOut = (meters) => {
+  const distanceSpelledOut = (meters: number | null) => {
+    if (meters === null) {
+      return 'N/A';
+    }
     if (meters < 1000) {
       const rounded = Math.round(meters / 10) * 10;
       return `${rounded} metrov`;
@@ -43,7 +46,7 @@ const Camppage = ({ camp }) => {
           <div className="relative h-40 w-full">
             <Image
               priority
-              src={`${STATIC_HOST}/${camp.featured_image}`}
+              src={`${process.env.STATIC_HOST}/${camp.featured_image}`}
               layout="fill"
               objectFit="cover"
             />
@@ -52,16 +55,14 @@ const Camppage = ({ camp }) => {
 
         <div className="max-w-3xl w-full border-gray-100 space-y-4 p-3 sm:p-4">
           <div className="space-y-1 sm:space-y-2">
-            <h1 className="text-2xl sm:text-4xl font-semibold text-pink-500">
-              {camp.name}
-            </h1>
+            <h1 className="text-2xl sm:text-4xl font-semibold text-pink-500">{camp.name}</h1>
 
             {haveVillageInfo && (
               <p className="sm:text-lg text-gray-500">
-                <Link href={`/obec/${closestVillage.slug}`}>
-                  <a>{closestVillage.name}</a>
+                <Link href={`/obec/${closestVillage?.slug}`}>
+                  <a>{closestVillage?.name}</a>
                 </Link>
-                , okres {closestVillage.parents.county_name}
+                , okres {closestVillage?.parents?.county_name}
               </p>
             )}
 
@@ -71,17 +72,16 @@ const Camppage = ({ camp }) => {
           </div>
 
           <div className="flex justify-center mx-auto max-w-xs">
-            <MapWithPinPoints coords={[camp.coords]} />
+            {camp.coords && <MapWithPinPoints coords={[camp.coords]} />}
           </div>
 
           {haveVillageInfo && (
             <p className="sm:text-lg">
-              Kemp vzdialený {distanceSpelledOut(closestVillageDistance)} od
-              obce{' '}
-              <Link href={`/obec/${closestVillage.slug}`}>
-                <a>{closestVillage.name}</a>
+              Kemp vzdialený {distanceSpelledOut(closestVillageDistance)} od obce{' '}
+              <Link href={`/obec/${closestVillage?.slug}`}>
+                <a>{closestVillage?.name}</a>
               </Link>{' '}
-              v okrese {closestVillage.parents.county_name}.
+              v okrese {closestVillage?.parents?.county_name}.
             </p>
           )}
         </div>
@@ -93,7 +93,7 @@ const Camppage = ({ camp }) => {
 export async function getStaticPaths() {
   const res = await fetch(`${process.env.BACKEND_HOST}/api/camping/list/`);
   const data = await res.json();
-  const paths = data.map(({ slug }) => {
+  const paths = data.map(({ slug }: { slug: string }) => {
     return {
       params: {
         camp_slug: slug,
@@ -107,13 +107,11 @@ export async function getStaticPaths() {
   return { paths: pathsToBePrerendered, fallback: 'blocking' };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: { params: { camp_slug: string } }) {
   const campSlug = params.camp_slug;
   const encodedSlug = encodeURI(campSlug);
 
-  const res = await fetch(
-    `${process.env.BACKEND_HOST}/api/camping/slug/${encodedSlug}`
-  );
+  const res = await fetch(`${process.env.BACKEND_HOST}/api/camping/slug/${encodedSlug}`);
 
   if (res.status !== 200) {
     return {

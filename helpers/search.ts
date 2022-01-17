@@ -1,4 +1,4 @@
-import { Coords, SearchTypes } from '../interfaces/baseInterfaces.js';
+import { CampData, Coords, SearchTypes } from '../interfaces/baseInterfaces.js';
 
 type SearchSuggestions =
   | {
@@ -20,7 +20,7 @@ export async function searchSuggestions(query: string): Promise<SearchSuggestion
   }
 }
 
-type campSearchResult = {
+/* type campSearchResult = {
   _id: string;
   name: string;
   score: number;
@@ -39,15 +39,15 @@ type campSearchResult = {
       region_name?: string;
     }
   }
-}
+} */
 
-export async function campSearch(query: string): Promise<campSearchResult[] | {error: Error}> {
+export async function campSearch(query: string): Promise<CampData[] | {error: string}> {
   try {
     const fetched = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/search/camps?q=${query}`);
     const json = await fetched.json();
 
     return json;
   } catch (error) {
-    return { error: error };
+    throw error;
   }
 }

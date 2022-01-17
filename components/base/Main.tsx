@@ -1,8 +1,8 @@
+
 type MainProps = {
   children: React.ReactNode;
-  props?: any;
 };
 
-export default function Main({ children, ...props }: MainProps) {
+export default function Main({ children, ...props }: MainProps & React.HTMLAttributes<HTMLDivElement>) {
   return <main {...props}>{children}</main>;
 }

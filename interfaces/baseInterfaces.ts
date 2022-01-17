@@ -15,13 +15,14 @@ export interface Camp {
   name: string;
   slug: string;
   id?: string;
+  featured_image?: string;
 }
 
 export interface CampListingInterface extends Camp {
-  featured_image?: string;
-  villages?: { parents?: { county_name: string | null }; name: string }[];
+  villages?: { parents?: { county_name: string | null }; name: string; distance: number }[];
   distance?: number;
   shortDescription?: string;
+  closest_village?: Village;
 }
 
 export interface CampData extends Camp {
@@ -32,8 +33,10 @@ export interface CampData extends Camp {
   featuredImage?: string;
   featured_image?: string;
   website?: string;
-  villages?: Village[]
+  villages?: Village[];
   distance?: number;
+  closest_village?: Village;
+
 }
 
 export type CampDataEdit = Partial<CampData>;
@@ -44,6 +47,7 @@ export interface Village {
   lon: number;
   name: string;
   _id: string;
+  slug: string;
   parents?: {
     county_id?: number;
     county_name?: string;

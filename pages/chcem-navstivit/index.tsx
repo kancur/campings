@@ -5,16 +5,14 @@ import Link from 'next/link';
 import { FaTrash } from 'react-icons/fa';
 import PopularDestinations from '../../components/base/Popular/PopularDestinations';
 import Image from 'next/image';
+import { FavoriteCamp } from '../../interfaces/baseInterfaces';
 
 function index() {
   const favorite = useFavoriteCamps();
 
-  const listItemStyle = classNames(
-    'text-gray-700',
-    'py-2'
-  );
+  const listItemStyle = classNames('text-gray-700', 'py-2');
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     favorite.delete(id);
   };
 
@@ -28,9 +26,7 @@ function index() {
           <p className="text-lg p-4 text-center text-pink-500">
             Zatiaľ nemáš pridané žiadne obľúbené kempy.
           </p>
-          <h2 className="text-2xl">
-            Nájdi kemp v niektorých z obľúbených lokalít:
-          </h2>
+          <h2 className="text-2xl">Nájdi kemp v niektorých z obľúbených lokalít:</h2>
           <PopularDestinations />
         </div>
       )}

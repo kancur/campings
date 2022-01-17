@@ -2,8 +2,9 @@ import Search from '../../components/search/SearchWrapper';
 import LocationHeading from '../../components/locationPage/LocationHeading';
 import { CampListing } from '../../components/general/CampListing';
 import Main from '../../components/base/Main';
+import { Camp, Village } from '../../interfaces/baseInterfaces';
 
-const VillagePage = ({ village, campings }) => {
+const VillagePage = ({ village, campings }: {village: Village, campings: Camp[]}) => {
   return (
     <>
       <Search />
@@ -11,7 +12,7 @@ const VillagePage = ({ village, campings }) => {
         <LocationHeading
           pretitle="Skvelé kempy neďaleko obce"
           title={village.name}
-          subtitle={'Okres ' + village.parents.county_name}
+          subtitle={'Okres ' + village?.parents?.county_name || ''}
         />
 
         <div className="camp-listing-wrapper">
@@ -27,7 +28,7 @@ const VillagePage = ({ village, campings }) => {
 export async function getStaticPaths() {
   const res = await fetch(`${process.env.BACKEND_HOST}/api/village/list/`);
   const data = await res.json();
-  const paths = data.map(({ slug }) => {
+  const paths = data.map(({ slug }: {slug: string}) => {
     return {
       params: {
         village_slug: slug,
@@ -41,7 +42,7 @@ export async function getStaticPaths() {
   return { paths: pathsToBePrerendered, fallback: 'blocking' };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: {params: {village_slug: string}}) {
   const village_slug = params.village_slug;
   const encodedName = encodeURI(village_slug);
 
