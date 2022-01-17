@@ -38,6 +38,14 @@ export default function SignupPage() {
   });
   const prevPath = usePreviousPath();
 
+  useEffect(() => {
+    setError({
+      email: null,
+      password: null,
+      passwordConfirmatiom: null,
+    });
+  }, [formData]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -71,7 +79,7 @@ export default function SignupPage() {
       setIsFetching(true);
       axios
         .post(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/auth/signup`, formData)
-        .then(function (response: {data: {jwt: string}}) {
+        .then(function (response: { data: { jwt: string } }) {
           if (response.data.jwt) {
             // since this will not be an http-only cookie, it can be fetched by any script from document.cookie
             // unsafe and suspectible to attacks, but doesnt really matter for this website
@@ -102,7 +110,9 @@ export default function SignupPage() {
     }
   };
 
-  const ErrorLabel = ({ children }: {children: React.ReactNode}) => <p className="text-red-500 flex gap-2">{children}</p>;
+  const ErrorLabel = ({ children }: { children: React.ReactNode }) => (
+    <p className="text-red-500 flex gap-2">{children}</p>
+  );
 
   const passwordCheckClassnames = classNames({
     'ring-2 ring-red-500 focus:ring-red-500': error.passwordConfirmatiom,
@@ -153,7 +163,7 @@ export default function SignupPage() {
 
 type IButton = {
   children: React.ReactNode;
-}
+};
 
 const Button = ({ children, ...props }: IButton & React.ComponentProps<'button'>) => (
   <button
