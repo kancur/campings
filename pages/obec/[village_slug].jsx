@@ -25,7 +25,6 @@ const VillagePage = ({ village, campings }) => {
 };
 
 export async function getStaticPaths() {
-  const { BACKEND_HOST } = require('../../OPTIONS');
   const res = await fetch(`${process.env.BACKEND_HOST}/api/village/list/`);
   const data = await res.json();
   const paths = data.map(({ slug }) => {

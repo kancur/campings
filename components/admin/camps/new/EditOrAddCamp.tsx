@@ -6,7 +6,6 @@ import { Input, inputClasses } from '../../../general/Input';
 import { InputCoords } from './parts/InputCoords';
 import toSlug from '../../../../helpers/toSlug';
 import { InputSlug } from './parts/InputSlug';
-import { FRONTEND_API_ROUTE } from '../../../../OPTIONS';
 import { CampData, CampDataEdit, FileWithPreview } from '../../../../interfaces/baseInterfaces';
 
 const emptyCampData = {
@@ -56,7 +55,7 @@ export default function EditOrAddCamp({ campDataFetched }: { campDataFetched?: C
     formData.append('payload', JSON.stringify(payload));
     formData.append('featured_image', campData.featuredImage || '');
 
-    fetch(`${FRONTEND_API_ROUTE}/camping`, {
+    fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/camping`, {
       method: 'POST',
       body: formData,
     })

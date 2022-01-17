@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect, ContextType } from 'react';
 import axios from 'axios';
-import { FRONTEND_API_ROUTE } from '../OPTIONS';
 import { useAuth } from './authContext';
 import { FavoriteCamp } from '../interfaces/baseInterfaces';
 
@@ -19,7 +18,7 @@ export function FavoriteCampsProvider({ children }: { children: React.ReactNode 
 
   const addToFavorites = (id: string) => {
     axios
-      .post(`${FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
+      .post(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
       .then((data) => {
         setFavoriteCamps(data.data);
       })
@@ -28,7 +27,7 @@ export function FavoriteCampsProvider({ children }: { children: React.ReactNode 
 
   const deleteFromFavorites = (id: string) => {
     axios
-      .delete(`${FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/user/camp-favorites/${id}`)
       .then((data) => {
         setFavoriteCamps(data.data);
       })
@@ -39,7 +38,7 @@ export function FavoriteCampsProvider({ children }: { children: React.ReactNode 
   useEffect(() => {
     if (auth.user) {
       axios
-        .get(`${FRONTEND_API_ROUTE}/user/camp-favorites/`)
+        .get(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/user/camp-favorites/`)
         .then(({ data }) => {
           setFavoriteCamps(data);
         })

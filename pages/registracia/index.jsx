@@ -1,6 +1,5 @@
 import { Input } from '../../components/general/Input';
 import { useCookies } from 'react-cookie';
-import { FRONTEND_API_ROUTE } from '../../OPTIONS';
 import { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import classNames from 'classnames';
@@ -54,7 +53,7 @@ export default function SignupPage() {
     if (!error.email && !error.password && !error.passwordConfirmatiom) {
       setIsFetching(true);
       axios
-        .post(`${FRONTEND_API_ROUTE}/auth/signup`, formData)
+        .post(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/auth/signup`, formData)
         .then(function (response) {
           if (response.data.jwt) {
             // since this will not be an http-only cookie, it can be fetched by any script from document.cookie

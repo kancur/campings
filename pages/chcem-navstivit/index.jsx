@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { FaTrash } from 'react-icons/fa';
 import PopularDestinations from '../../components/base/Popular/PopularDestinations';
 import Image from 'next/image';
-import { STATIC_HOST } from '../../OPTIONS';
 
 function index() {
   const favorite = useFavoriteCamps();
@@ -47,7 +46,7 @@ function index() {
                     <Image
                       src={
                         featuredImageSrc
-                          ? `${STATIC_HOST}/${featuredImageSrc}`
+                          ? `${process.env.NEXT_PUBLIC_STATIC_HOST}/${featuredImageSrc}`
                           : '/camp_placeholder.png'
                       }
                       layout="fill"

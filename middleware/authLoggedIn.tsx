@@ -23,8 +23,9 @@ export async function authLoggedIn(req: NextApiRequest) {
     return NextResponse.next();
 
   } catch (error) {
-    return new Response(`Auth error: ${error.message}`, {
+    /* return new Response(`Auth error: ${error.message}`, {
       status: 401,
-    });
+    }); */
+    console.log(`Auth error: ${error.message}`)
   }
 }

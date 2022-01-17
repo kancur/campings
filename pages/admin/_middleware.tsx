@@ -1,7 +1,6 @@
 import { NextApiRequest } from 'next';
 import { NextMiddlewareResult } from 'next/dist/server/web/types';
 import { NextResponse } from 'next/server';
-import { BACKEND_HOST } from '../../OPTIONS';
 
 // checking if user is admin
 export async function middleware(req: NextApiRequest): Promise<NextMiddlewareResult> {

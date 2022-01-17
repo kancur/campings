@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import ButtonAdmin from '../general/ButtonAdmin';
 import EditableText from '../general/EditableText';
 import DeleteButtonWithConfirm from './DeleteButtonWithConfirm';
-import { FRONTEND_API_ROUTE } from '../../../OPTIONS';
 import { CampWithVillages } from '../../../interfaces/baseInterfaces';
 
 type CampTableProps = {
@@ -20,7 +19,7 @@ export default function CampTable(props: CampTableProps) {
   };
 
   async function handleCampDelete(id: string) {
-    fetch(`${FRONTEND_API_ROUTE}/camping/${id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/camping/${id}`, {
       method: 'DELETE',
     }).then((res) =>
       res.json().then((data) => {

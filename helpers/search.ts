@@ -1,5 +1,4 @@
 import { Coords, SearchTypes } from '../interfaces/baseInterfaces.js';
-import { FRONTEND_API_ROUTE } from '../OPTIONS.js';
 
 type SearchSuggestions =
   | {
@@ -13,7 +12,7 @@ type SearchSuggestions =
 // server side search
 export async function searchSuggestions(query: string): Promise<SearchSuggestions> {
   try {
-    const fetched = await fetch(`${FRONTEND_API_ROUTE}/search?q=${query}`);
+    const fetched = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/search?q=${query}`);
     const json = await fetched.json();
     return json;
   } catch (error) {
@@ -44,7 +43,7 @@ type campSearchResult = {
 
 export async function campSearch(query: string): Promise<campSearchResult[] | {error: Error}> {
   try {
-    const fetched = await fetch(`${FRONTEND_API_ROUTE}/search/camps?q=${query}`);
+    const fetched = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/search/camps?q=${query}`);
     const json = await fetched.json();
 
     return json;

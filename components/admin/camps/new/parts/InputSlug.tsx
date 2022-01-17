@@ -1,7 +1,6 @@
 import { Input, inputClasses } from '../../../../general/Input';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
 
 
 type InputSlugProps = {
@@ -28,7 +27,7 @@ export function InputSlug({ handleGetSlugClick, fetchedSlug, handleSlugInput, sl
     const value = e.target.value.replace(/\s/g, '');
     handleSlugInput(value);
 
-    fetch(`${FRONTEND_API_ROUTE}/camping/slug-check/?${value}`)
+    fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/camping/slug-check/?${value}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.unique) {

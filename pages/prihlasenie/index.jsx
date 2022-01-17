@@ -1,6 +1,5 @@
 import { Input } from '../../components/general/Input';
 import { useCookies } from 'react-cookie';
-import { BACKEND_HOST, FRONTEND_API_ROUTE } from '../../OPTIONS';
 import { useEffect, useState } from 'react';
 import FormWrapper from '../../components/general/FormWrapper';
 import LoaderFullscreen from '../../components/general/LoaderFullscreen';
@@ -31,7 +30,7 @@ export default function LoginPage() {
     e.preventDefault();
     setIsFetching(true);
     axios
-      .post(`${FRONTEND_API_ROUTE}/auth/login`, formData)
+      .post(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/auth/login`, formData)
       .then(function (response) {
         if (response.data.jwt) {
           // since this will not be an http-only cookie, it can be fetched by any script from document.cookie

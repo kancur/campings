@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CampWithVillages } from '../../../interfaces/baseInterfaces';
 import CampTable from './CampTable';
-const { FRONTEND_API_ROUTE } = require('../../../OPTIONS');
 
 export default function CampListPage() {
   const [campData, setCampData] = useState<CampWithVillages[]>();
@@ -9,7 +8,7 @@ export default function CampListPage() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${FRONTEND_API_ROUTE}/camping/list/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/camping/list/`);
         const json = await res.json();
         setCampData(json);
       } catch (error) {

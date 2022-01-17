@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { STATIC_HOST } from '../../OPTIONS';
 import Link from 'next/link';
 import {
   CampData,
@@ -9,7 +8,7 @@ import {
 } from '../../interfaces/baseInterfaces';
 
 export function CampListing({ camp, previewImage }: { camp: CampData; previewImage?: string }) {
-  const featured = `${STATIC_HOST}/${camp?.featured_image}`;
+  const featured = `${process.env.NEXT_PUBLIC_STATIC_HOST}/${camp?.featured_image}`;
 
   const parentVillage: Village | null = camp?.villages ? camp?.villages[0] : null;
   const distance = camp?.distance ? `${Math.round(camp?.distance / 1000)} km` : null;

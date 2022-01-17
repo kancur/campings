@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Input, inputClasses } from '../../../../general/Input';
-import { FRONTEND_API_ROUTE } from '../../../../../OPTIONS';
 
 interface Coords {
   lat: number;
@@ -31,7 +30,7 @@ export function InputCoords({ upsertCampData, fetchedCoords }: InputCoordsProps)
     var queryString = Object.keys(params).map((key ) => key + '=' + params[key as keyof typeof params]).join('&');
 
     const searchParams = new URLSearchParams(queryString);
-    fetch(`${FRONTEND_API_ROUTE}/village/close/?${searchParams.toString()}`, {
+    fetch(`${process.env.NEXT_PUBLIC_FRONTEND_API_ROUTE}/village/close/?${searchParams.toString()}`, {
       signal: controller?.signal,
     })
       .then((res) => res.json())

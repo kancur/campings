@@ -91,7 +91,6 @@ const Camppage = ({ camp }) => {
 };
 
 export async function getStaticPaths() {
-  //const { BACKEND_HOST, STATIC_HOST } = require('../../OPTIONS');
   const res = await fetch(`${process.env.BACKEND_HOST}/api/camping/list/`);
   const data = await res.json();
   const paths = data.map(({ slug }) => {
