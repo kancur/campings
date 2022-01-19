@@ -46,7 +46,7 @@ const Camppage = ({ camp }: { camp: CampData }) => {
           <div className="relative h-40 w-full">
             <Image
               priority
-              src={`${process.env.STATIC_HOST}/${camp.featured_image}`}
+              src={`${process.env.NEXT_PUBLIC_STATIC_HOST}/${camp.featured_image}`}
               layout="fill"
               objectFit="cover"
             />
